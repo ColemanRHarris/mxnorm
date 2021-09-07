@@ -1,10 +1,11 @@
 #' Generates mx_dataset
 #'
-#' Takes in data from data.frame of cell-level multiplexed data to create a mx_dataset
+#' Takes in data from data.frame of cell-level multiplexed data to create a mx_dataset S3 object.
 #'
-#' @param data multiplexed data to normalize. Data assumed to be a data.frame with cell-level data.
-#' @param image_id String image identifier of input `data`. This must be a column in the `data` data.frame.
+#' @param data multiplexed data to normalize. Data assumed to be a data.frame
+#' with cell-level data.
 #' @param slide_id String slide identifier of input `data`. This must be a column in the `data` data.frame.
+#' @param image_id String image identifier of input `data`. This must be a column in the `data` data.frame.
 #' @param marker_cols vector of column name(s) in `data` corresponding to marker values.
 #' @param metadata_cols other identifiers of the input `data` (default=NULL). This must be a vector of column name(s) in the `data` data.frame.
 #'
@@ -12,18 +13,31 @@
 #' @export
 #'
 #' @examples
-#' mx_dataset(rnorm(100),1,1,1)
+#' mx_dataset(mx_sample, "slide_id", "image_id",
+#'   c("marker1_vals","marker2_vals","marker3_vals"),
+#'   c("metadata1_vals"))
 mx_dataset = function(data,
-                      image_id,
                       slide_id,
+                      image_id,
                       marker_cols,
                       metadata_cols = NULL){
-    ## transform input data into data.frame object with these columns: {markerValue, image_id, slide_id, ... metadata ...}
+    ## trim `data` to remove any columns not in parameters
+    data = .trim_dataset(data,slide_id,image_id,marker_cols,metadata_cols)
 
-    ## transform into long
+    ## use `data` as base of S3 object
+    mx_obj = new_mx_dataset(data,
+                            slide_id = slide_id,
+                            image_id = image_id,
+                            marker_cols = marker_cols,
+                            metadata_cols = metadata_cols)
 
-    ## add basic information attributes about data to mx_dataset object (e.g. list of metadata_cols, number of cols and rows, etc.)
-    return(ncol(data))
+    ## add attributes for slide_id and image_id (column name)
+
+    ## add attributes for markers (# markers, column names of markers)
+
+    ## add attributes for metadata (boolean, # metadata cols, column names of metadata)
+
+    return(mx_obj)
 }
 
 ## unit test 1: `slide_id` and `image_id` and `marker_cols` exist in `data`.
