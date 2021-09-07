@@ -16,7 +16,7 @@ mx_dataset = function(data,
                       image_id,
                       slide_id,
                       marker_cols,
-                      metadata_cols = NULL, ...){
+                      metadata_cols = NULL){
     ## transform input data into data.frame object with these columns: {markerValue, image_id, slide_id, ... metadata ...}
 
     ## transform into long
