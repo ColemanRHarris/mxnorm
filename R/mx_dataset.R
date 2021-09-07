@@ -12,6 +12,7 @@
 #' @export
 #'
 #' @examples
+#' mx_dataset(rnorm(100),1,1,1)
 mx_dataset = function(data,
                       image_id,
                       slide_id,

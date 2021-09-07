@@ -23,3 +23,6 @@ data.frame object in the mx_dataset format with attribute for input type
 \description{
 Takes in data from data.frame of cell-level multiplexed data to create a mx_dataset
 }
+\examples{
+mx_dataset(rnorm(100),1,1,1)
+}
