@@ -2,3 +2,4 @@
 ^\.Rproj\.user$
 ^LICENSE\.md$
 R/.create_sample_data.R
+^README\.Rmd$

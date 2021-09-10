@@ -1,0 +1,54 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# mxnorm
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+A package designed to handle multiplexed imaging data in R, implementing normalization methods and quality metrics detailed in our paper [here](https://doi.org/10.1101/2021.07.16.452359).
+
+## Installation
+
+You can install the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("ColemanRHarris/mxnorm")
+```
+## Example
+
+This is a basic example using the `mx_sample` dataset, which is simulated data to demonstrate the package's functionality.
+
+```{r sample}
+library(mxnorm)
+head(mx_sample)
+```
+
+How to build the `mx_dataset` object with `mx_sample` data in the `mxnorm` package:
+
+```{r example}
+mx_dataset = mx_dataset(data=mx_sample,
+                        slide_id="slide_id",
+                        image_id="image_id",
+                        marker_cols=c("marker1_vals","marker2_vals","marker3_vals"),
+                        metadata_cols=c("metadata1_vals"))
+```
+
+The structure of the now built `mx_dataset` object:
+
+```{r str}
+str(mx_dataset)
+```
