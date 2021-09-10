@@ -21,7 +21,7 @@ mx_dataset = function(data,
                       marker_cols,
                       metadata_cols = NULL){
 
-    ## trim `data` to remove any columns not in parameters
+    ## trim `data` to remove any columns not given by parameters
     data = trim_dataset(data,slide_id,image_id,marker_cols,metadata_cols)
 
     ## use `data` as base of S3 object
@@ -32,6 +32,9 @@ mx_dataset = function(data,
                             image_id = image_id,
                             marker_cols = marker_cols,
                             metadata_cols = metadata_cols)
+
+    ## validate object
+    mx_obj = validate_mx_dataset(mx_obj)
 
     return(mx_obj)
 }

@@ -14,6 +14,12 @@ new_mx_dataset <- function(data = data.frame(),
                            image_id = character(),
                            marker_cols = vector(),
                            metadata_cols = NULL){
+    ## confirm types are correct
+    stopifnot(is.data.frame(data))
+    stopifnot(is.character(slide_id))
+    stopifnot(is.character(image_id))
+
+    ## create object
     ret = list(data = data,
          slide_id = slide_id,
          image_id = image_id,
