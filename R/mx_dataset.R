@@ -36,7 +36,5 @@ mx_dataset = function(data,
     ## validate object
     mx_obj = validate_mx_dataset(mx_obj)
 
-    return(mx_obj)
+    mx_obj
 }
-## unit test 3: should run if generated with equivalent slide_id and image_id
-## unit test 4: warning if data input size is larger than some value.
