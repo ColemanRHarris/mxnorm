@@ -20,10 +20,16 @@ validate_mx_normalize_params <- function(mx_data,
     ## check & validate method override
     if(!is.null(method_override)){
         if(method!="None"){
-            stop("method argument must be 'None' when using method_override")
+            stop(
+                "method argument must be 'None' when using method_override",
+                call. = FALSE
+             )
         }
         if(class(method_override)!="function"){
-            stop("method_override must be a function")
+            stop(
+                "method_override must be a function",
+                call. = FALSE
+            )
         }
     }
     mx_data

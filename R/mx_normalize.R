@@ -16,7 +16,10 @@ mx_normalize <- function(mx_data,
                          method = "None",
                          method_override = NULL){
     ## validate parameters
-    mx_obj = validate_mx_normalize_params(mx_data,scale,method,method_override)
+    mx_obj = validate_mx_normalize_params(mx_data,
+                                          scale,
+                                          method,
+                                          method_override)
 
     ## validate method_override function
     ## check if UDF works with mx_sample
@@ -26,13 +29,9 @@ mx_normalize <- function(mx_data,
     #    mx_obj = validate_method_override(...)
     #}
 
-    ## --- perform scale transformation (internal function)
-    ## check & run if none
-    ## check & run if log10
-    ## check & run if mean_divide
-    ## check & run if log10_mean_divide
-
-    #mx_obj = scale_mx_dataset(...)
+    ## scale transformation
+    mx_obj = scale_mx_dataset(mx_data,
+                              scale)
 
     ## --- perform normalization (internal function)
     ## check & run if none
