@@ -17,18 +17,24 @@ validate_mx_dataset <- function(x){
     ## check for infinite values
     if(any(data_values == Inf | data_values == -Inf)){
         stop(
-            "All data values must be finite",
+            "Infinite values detected - data cannot contain infinite values",
             call. = FALSE
         )
     }
 
-    ##
+    ## check for numeric
     if(!all(unlist(lapply(data_values,is.numeric)))){
         stop(
-            "All data values must be numeric",
+            "Non-numeric values detected - data cannot contain non-numeric values",
+            call. = FALSE
+        )
+    }
+
+    if(any(is.na(data_values))){
+        stop(
+            "NA values detected - data cannot contain NA values",
             call. = FALSE
         )
     }
     x
 }
-## check for non-negative?

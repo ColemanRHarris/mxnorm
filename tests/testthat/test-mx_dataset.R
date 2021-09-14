@@ -26,11 +26,14 @@ test_that("object error messages works", {
 test_that("validate works", {
     x <- mx_sample
     y <- mx_sample
+    z <- mx_sample
 
     x$marker1_vals[5] = Inf
     y$marker1_vals[6] = "7"
+    z$marker1_vals[7] = NA
 
     expect_error(mx_dataset(x, "slide_id", "image_id", c("marker1_vals","marker2_vals","marker3_vals"), c("metadata1_vals")))
     expect_error(mx_dataset(y, "slide_id", "image_id", c("marker1_vals","marker2_vals","marker3_vals"), c("metadata1_vals")))
+    expect_error(mx_dataset(z, "slide_id", "image_id", c("marker1_vals","marker2_vals","marker3_vals"), c("metadata1_vals")))
 })
 
