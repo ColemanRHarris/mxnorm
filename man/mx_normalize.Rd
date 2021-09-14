@@ -4,7 +4,13 @@
 \alias{mx_normalize}
 \title{Normalizes multiplexed data}
 \usage{
-mx_normalize(mx_data, scale = "None", method = "None", method_override = NULL)
+mx_normalize(
+  mx_data,
+  scale = "None",
+  method = "None",
+  method_override = NULL,
+  ...
+)
 }
 \arguments{
 \item{mx_data}{\code{mx_dataset} object to normalize}

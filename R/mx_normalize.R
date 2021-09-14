@@ -14,7 +14,8 @@
 mx_normalize <- function(mx_data,
                          scale = "None",
                          method = "None",
-                         method_override = NULL){
+                         method_override = NULL,
+                         ...){
     ## validate parameters
     mx_obj = validate_mx_normalize_params(mx_data,
                                           scale,
@@ -25,13 +26,9 @@ mx_normalize <- function(mx_data,
     mx_obj = scale_mx_dataset(mx_data,
                               scale)
 
-    ## validate method_override function
-    ## check if UDF works with mx_sample
-    ## transform_works(): confirms no Inf values, no NAs, dim(new)=dim(old)
-
-    #if(!is.null(method_override)){
-    #    mx_obj = validate_method_override(...)
-    #}
+    ## if method_override
+    ## check that all necessary params passed to mx_normalize()
+    ## check that method_override runs on mx_sample, with incl. params, and passes validation
 
     ## --- perform normalization (internal function)
     ## check & run if none
@@ -41,9 +38,7 @@ mx_normalize <- function(mx_data,
 
     #mx_obj = normalize_mx_dataset(...)
 
-    ## validate if normalization works/reasonable
-    ## transform_works(): confirms no Inf values, no NAs, dim(new)=dim(old)
-
+    ## validate if normalization works/reasonable, even if method_override (needed in both cases)
     #mx_obj = validate_mx_normalize(...)
 
     mx_obj
