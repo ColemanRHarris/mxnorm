@@ -21,6 +21,10 @@ mx_normalize <- function(mx_data,
                                           method,
                                           method_override)
 
+    ## scale transformation
+    mx_obj = scale_mx_dataset(mx_data,
+                              scale)
+
     ## validate method_override function
     ## check if UDF works with mx_sample
     ## transform_works(): confirms no Inf values, no NAs, dim(new)=dim(old)
@@ -28,10 +32,6 @@ mx_normalize <- function(mx_data,
     #if(!is.null(method_override)){
     #    mx_obj = validate_method_override(...)
     #}
-
-    ## scale transformation
-    mx_obj = scale_mx_dataset(mx_data,
-                              scale)
 
     ## --- perform normalization (internal function)
     ## check & run if none

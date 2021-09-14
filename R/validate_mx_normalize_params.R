@@ -5,7 +5,7 @@
 #' @param method normalization method to perform on the input data. Options include: c("None", "ComBat","Registration")
 #' @param method_override optional user-defined function to perform own normalization method (default=NULL).
 #'
-#' @return
+#' @return `mx_dataset` object
 #'
 #' @examples
 validate_mx_normalize_params <- function(mx_data,
