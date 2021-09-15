@@ -23,7 +23,7 @@ validate_method_override <- function(mx_data,
     mx_obj = method_override(mx_data,...)
 
     ## run validation
-    mx_obj = validate_mx_normalize(mx_obj)
+    mx_obj = validate_mx_dataset(mx_obj)
 
     mx_data
 }

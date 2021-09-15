@@ -18,14 +18,14 @@ validate_mx_dataset <- function(x){
     method = x$method
 
     ## check uploaded data
-    check_data_values(data_values)
+    b = check_data_values(data_values)
 
     ## only runs if x contains normalized data
     if(!is.null(norm_data)){
         norm_values = norm_data[,marker_cols]
 
         ## check normalized data
-        check_data_values(norm_values)
+        b = check_data_values(norm_values)
 
         ## throw error if scale not present
         if(is.null(scale)){
@@ -53,6 +53,11 @@ validate_mx_dataset <- function(x){
     x
 }
 
+#' Internal function to check data values in validation step
+#'
+#' @inheritParams validate_mx_dataset
+#'
+#' @return boolean TRUE if passes
 check_data_values <- function(data_values){
     ## check for infinite values
     if(any(data_values == Inf | data_values == -Inf)){
@@ -77,4 +82,6 @@ check_data_values <- function(data_values){
             call. = FALSE
         )
     }
+
+    TRUE
 }

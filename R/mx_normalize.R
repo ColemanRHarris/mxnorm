@@ -46,8 +46,8 @@ mx_normalize <- function(mx_data,
 
     #mx_obj = normalize_mx_dataset(...)
 
-    ## validate if normalization works/reasonable, even if method_override (needed in both cases)
-    #mx_obj = validate_mx_normalize(...)
+    ## validate to confirm if normalization works
+    mx_obj = validate_mx_dataset(mx_obj)
 
     mx_obj
 }
