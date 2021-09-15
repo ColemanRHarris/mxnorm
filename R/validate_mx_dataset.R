@@ -55,7 +55,7 @@ validate_mx_dataset <- function(x){
 
 #' Internal function to check data values in validation step
 #'
-#' @inheritParams validate_mx_dataset
+#' @param data_values data.frame values to check if valid
 #'
 #' @return boolean TRUE if passes
 check_data_values <- function(data_values){
