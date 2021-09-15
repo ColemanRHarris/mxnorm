@@ -8,6 +8,7 @@
 #'
 #' @references Johnson, W. E., Li, C., & Rabinovic, A. (2007). Adjusting batch effects in microarray expression data using empirical Bayes methods. *Biostatistics*, 8(1), 118-127.
 #'
+#' @importFrom rlang .data
 #' @importFrom magrittr %>%
 #'
 #' @return ComBat adjusted values
@@ -38,7 +39,7 @@ run_combat = function(marker,
     ndat$pre_gamma_ic = ndat$pre_gamma_ic
 
     ndat[,paste0("Adj_",marker)] = ndat[,marker] - ndat$alpha_c - ndat$pre_gamma_ic
-    sigma_c = var(ndat[,paste0("Adj_",marker)])
+    sigma_c = stats::var(ndat[,paste0("Adj_",marker)])
     ndat[,marker] = (ndat[,marker] - mean(ndat[,marker]))/sigma_c
 
     ## get gammas (slide means)
@@ -61,11 +62,11 @@ run_combat = function(marker,
     ### -------COMBAT HYPERPARAMETERS-------
     ## slide level mean
     gamma_c = mean(ndat$gamma_ic)
-    tau_c = var(ndat$gamma_ic)
+    tau_c = stats::var(ndat$gamma_ic)
 
     ## slide level variances
     M_c = mean(ndat$delta_ijc)
-    S_c = var(ndat$delta_ijc)
+    S_c = stats::var(ndat$delta_ijc)
 
     ## delta hyperparams
     omega_c = (M_c + 2*S_c)/S_c
@@ -171,7 +172,7 @@ update_delta = function(batch_chan,
 
     delta_num = batch_chan %>%
         dplyr::group_by_at(slide_var) %>%
-        dplyr::summarise(avg = sum((delta_vals - gamma_ic)^2),.groups='drop')
+        dplyr::summarise(avg = sum((.data$delta_vals - .data$gamma_ic)^2),.groups='drop')
 
     delta_denom = batch_chan %>%
         dplyr::group_by_at(slide_var) %>%

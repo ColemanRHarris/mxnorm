@@ -46,7 +46,7 @@ run_registration = function(marker,
     fdobj_basis = fda::create.bspline.basis(rangeval = rang, norder = fdobj_norder,nbasis=fdobj_nbasis) ## create bspline basis with cubic splines (approx hist)
     wbasis = fda::create.bspline.basis(rangeval = rang, norder = w_norder,nbasis=w_norder) ## create bspline basis with linear (transform data)
     Wfd0   <- fda::fd(matrix(0,wbasis$nbasis,1),wbasis) ## setup `fda` object
-    WfdPar <- fda::fdPar(Wfd0, Lfdobj = int2Lfd(0),lambda = 0) ## setup roughness for `fda` object
+    WfdPar <- fda::fdPar(Wfd0, Lfdobj = fda::int2Lfd(0),lambda = 0) ## setup roughness for `fda` object
 
     ## ---- initial registration (warp functions)
     fdobj   <- fda::smooth.basis(argvals, densY, fdobj_basis, fdnames = c("x", "samples", "density"))$fd ## estimates the densities using bsplines
@@ -57,7 +57,7 @@ run_registration = function(marker,
         w = sapply(x1, function(y) sum(y>offset))
         y0s = weighted.mean.fd(fdobj, w=w)
     }else{
-        y0s = mean.fd(fdobj) ## get mean curve from registration
+        y0s = fda::mean.fd(fdobj) ## get mean curve from registration
     }
 
     y0s$coefs = do.call(cbind, rep(list(y0s$coefs), ncol(fdobj$coefs)))
@@ -108,6 +108,6 @@ weighted.mean.fd = function (x, w, ...)
     fdnames <- x$fdnames
     fdnames[[2]] <- "mean"
     fdnames[[3]] <- paste("mean", fdnames[[3]])
-    meanfd <- fd(coefmean, basisobj, fdnames)
+    meanfd <- fda::fd(coefmean, basisobj, fdnames)
     meanfd
 }

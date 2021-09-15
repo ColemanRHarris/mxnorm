@@ -19,7 +19,7 @@ normalize_mx_registration(
 \arguments{
 \item{mx_data}{\code{mx_dataset} object to normalize}
 
-\item{...}{optional additional arguments for \code{normalize_mx_registration}}
+\item{len, weighted, offset, fdobj_norder, fdobj_nbasis, w_norder, w_nbasis, ...}{optional additional arguments for \code{normalize_mx_registration}}
 }
 \value{
 \code{mx_dataset} object with normalized data with updated attribute \code{norm_data} (data.frame) and new attribute \code{method} (character)

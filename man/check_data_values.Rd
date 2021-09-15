@@ -6,6 +6,9 @@
 \usage{
 check_data_values(data_values)
 }
+\arguments{
+\item{data_values}{data.frame values to check if valid}
+}
 \value{
 boolean TRUE if passes
 }

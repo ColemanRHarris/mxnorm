@@ -9,7 +9,7 @@ normalize_mx_combat(mx_data, remove_zeroes = TRUE, tol = 1e-04, ...)
 \arguments{
 \item{mx_data}{\code{mx_dataset} object to normalize}
 
-\item{...}{optional additional arguments for \code{normalize_mx_combat}}
+\item{remove_zeroes, tol, ...}{optional additional arguments for \code{normalize_mx_combat}}
 }
 \value{
 \code{mx_dataset} object with normalized data with updated attribute \code{norm_data} (data.frame) and new attribute \code{method} (character)
