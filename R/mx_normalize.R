@@ -31,7 +31,7 @@ mx_normalize <- function(mx_data,
     mx_obj = scale_mx_dataset(mx_data,
                               scale)
 
-    ## **check method override function
+    ## check method override function
     if(!is.null(method_override)){
         validate_method_override(mx_sample,
                                  method_override,
