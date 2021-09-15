@@ -12,7 +12,7 @@ scale_mx_dataset(mx_data, scale)
 \item{scale}{scale transformation to perform on the input data. Options include: c("None", "log10", "mean_divide","log10_mean_divide")}
 }
 \value{
-\code{mx_dataset} object with scaled data
+\code{mx_dataset} object with scaled data, added attributes: \code{norm_data} (data.frame) and \code{scale} (character)
 }
 \description{
 Internal function to scale mx_dataset

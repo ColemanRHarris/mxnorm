@@ -21,7 +21,7 @@ mx_normalize(
 
 \item{method_override}{optional user-defined function to perform own normalization method (default=NULL).}
 
-\item{...}{optional additional arguments for \code{method_override} method}
+\item{...}{optional additional arguments for normalization functions}
 }
 \value{
 Multiplexed data normalized according to the method specified, in the \code{mx_dataset} format. Normalized data will be included a new table with normalized values and attributes describing the transformation.
@@ -33,5 +33,5 @@ Normalizes some given image input according to the method specified
 mx_sample = mx_dataset(mx_sample, "slide_id", "image_id",
   c("marker1_vals","marker2_vals","marker3_vals"),
   c("metadata1_vals"))
-mx_normalize(mx_sample, scale="log10",method="None")
+mx_normalize(mx_sample, scale="log10",method="ComBat")
 }

@@ -2,5 +2,10 @@
 
 export(mx_dataset)
 export(mx_normalize)
+importFrom(data.table,rbindlist)
+importFrom(dplyr,"group_by,mutate,across")
+importFrom(dplyr,"group_by_at,summarise,count,distinct")
+importFrom(fda,"create.bspline.basis,fd,fdPar,smooth.basis,mean.fd,register.fd,eval.fd")
 importFrom(magrittr,"%>%")
 importFrom(rlang,.data)
+importFrom(stats,"density,weighted.mean")

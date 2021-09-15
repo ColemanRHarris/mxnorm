@@ -15,7 +15,7 @@
 #' mx_sample = mx_dataset(mx_sample, "slide_id", "image_id",
 #'   c("marker1_vals","marker2_vals","marker3_vals"),
 #'   c("metadata1_vals"))
-#' mx_normalize(mx_sample, scale="log10",method="None")
+#' mx_normalize(mx_sample, scale="log10",method="ComBat")
 mx_normalize <- function(mx_data,
                          scale = "None",
                          method = "None",
@@ -39,7 +39,7 @@ mx_normalize <- function(mx_data,
     }
 
     ## perform normalization
-    mx_obj = normalize_mx_dataset(mx_data,
+    mx_obj = normalize_mx_dataset(mx_obj,
                                   method,
                                   method_override,
                                   ...)

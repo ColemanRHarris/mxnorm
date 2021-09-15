@@ -1,12 +1,14 @@
 ## Internal function to combat-adjust for one marker
 #'
-#' @param marker column name of marker to ComBat adjust
+#' @param marker column name of marker to normalize
 #' @param slide_var column name of slide identifier
 #' @param ndat multiplexed data to normalize. Data assumed to be a data.frame with cell-level data.
 #' @param remove_zeroes boolean to remove zeroes from ComBat analysis (default=TRUE)
 #' @param tol tolerance of ComBat algorithm (default=0.0001)
 #'
 #' @references Johnson, W. E., Li, C., & Rabinovic, A. (2007). Adjusting batch effects in microarray expression data using empirical Bayes methods. *Biostatistics*, 8(1), 118-127.
+#'
+#' @importFrom magrittr %>%
 #'
 #' @return ComBat adjusted values
 run_combat = function(marker,

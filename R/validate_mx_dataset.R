@@ -42,7 +42,7 @@ validate_mx_dataset <- function(x){
         }
 
         ## throw error if new data is wrong
-        if(dim(norm_data) != dim(data)){
+        if(any(dim(norm_data) != dim(data))){
             stop(
                 "Dimensions of normalized data do not match input data",
                 call. = FALSE
