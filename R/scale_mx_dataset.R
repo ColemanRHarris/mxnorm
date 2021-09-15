@@ -3,7 +3,7 @@
 #' @param mx_data `mx_dataset` object to normalize
 #' @param scale scale transformation to perform on the input data. Options include: c("None", "log10", "mean_divide","log10_mean_divide")
 #'
-#' @return `mx_dataset` object with scaled data
+#' @return `mx_dataset` object with scaled data, added attributes: `norm_data` (data.frame) and `scale` (character)
 #' @importFrom rlang .data
 scale_mx_dataset <- function(mx_data,
                              scale){

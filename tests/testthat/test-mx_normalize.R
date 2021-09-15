@@ -14,3 +14,8 @@ test_that("multiplication works", {
 ## if scale is "None", norm_data = data
 ## min of norm_data is >= 0
 ## scale == mx_dataset scale attr
+
+# --- method override works
+## basic method_override example passes
+## args not passed for method_override
+
