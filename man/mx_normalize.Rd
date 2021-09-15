@@ -20,6 +20,8 @@ mx_normalize(
 \item{method}{normalization method to perform on the input data. Options include: c("None", "ComBat","Registration")}
 
 \item{method_override}{optional user-defined function to perform own normalization method (default=NULL).}
+
+\item{...}{optional additional arguments for \code{method_override} method}
 }
 \value{
 Multiplexed data normalized according to the method specified, in the \code{mx_dataset} format. Normalized data will be included a new table with normalized values and attributes describing the transformation.

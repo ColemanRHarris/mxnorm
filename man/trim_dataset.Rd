@@ -2,7 +2,7 @@
 % Please edit documentation in R/trim_dataset.R
 \name{trim_dataset}
 \alias{trim_dataset}
-\title{Internal function to trim mx_dataset}
+\title{Internal function to trim input data for \code{mx_dataset()}}
 \usage{
 trim_dataset(data, slide_id, image_id, marker_cols, metadata_cols = NULL)
 }
@@ -18,8 +18,8 @@ trim_dataset(data, slide_id, image_id, marker_cols, metadata_cols = NULL)
 \item{metadata_cols}{other identifiers of the input \code{data} (default=NULL). This must be a vector of column name(s) in the \code{data} data.frame.}
 }
 \value{
-subset of data
+subset of data input to \code{mx_dataset()} (data.frame)
 }
 \description{
-Internal function to trim mx_dataset
+Internal function to trim input data for \code{mx_dataset()}
 }

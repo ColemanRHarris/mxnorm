@@ -1,13 +1,8 @@
 #' Internal function to validate mx_normalize args
 #'
-#' @param mx_data `mx_dataset` object to normalize
-#' @param scale scale transformation to perform on the input data. Options include: c("None", "log10", "mean_divide","log10_mean_divide")
-#' @param method normalization method to perform on the input data. Options include: c("None", "ComBat","Registration")
-#' @param method_override optional user-defined function to perform own normalization method (default=NULL).
+#' @inheritParams mx_normalize
 #'
 #' @return `mx_dataset` object
-#'
-#' @examples
 validate_mx_normalize_params <- function(mx_data,
                                          scale,
                                          method,

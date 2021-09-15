@@ -1,12 +1,10 @@
-#' Internal function to validate mx_dataset
+#' Internal function to validate mx_dataset object
 #'
 #' @param x mx_dataset object to validate
 #'
-#' @return mx_dataset object
-#'
-#' @examples
+#' @return if valid, mx_dataset object from input
 validate_mx_dataset <- function(x){
-    ## collect values
+    ## collect default values
     data = x$data
     slide_id = x$slide_id
     image_id = x$image_id
@@ -14,6 +12,48 @@ validate_mx_dataset <- function(x){
     metadata_cols = x$metadata_cols
     data_values = data[,marker_cols]
 
+    ## collected potential norm values
+    norm_data = x$norm_data
+    scale = x$scale
+    method = x$method
+
+    ## check uploaded data
+    check_data_values(data_values)
+
+    ## only runs if x contains normalized data
+    if(!is.null(norm_data)){
+        norm_values = norm_data[,marker_cols]
+
+        ## check normalized data
+        check_data_values(norm_values)
+
+        ## throw error if scale not present
+        if(is.null(scale)){
+            stop(
+                "Scale attribute not present in mx_dataset object"
+            )
+        }
+
+        ## throw error if method not present
+        if(is.null(method)){
+            stop(
+                "Method attribute not present in mx_dataset object"
+            )
+        }
+
+        ## throw error if new data is wrong
+        if(dim(norm_data) != dim(data)){
+            stop(
+                "Dimensions of normalized data do not match input data",
+                call. = FALSE
+            )
+        }
+    }
+
+    x
+}
+
+check_data_values <- function(data_values){
     ## check for infinite values
     if(any(data_values == Inf | data_values == -Inf)){
         stop(
@@ -30,11 +70,11 @@ validate_mx_dataset <- function(x){
         )
     }
 
+    ## check for NAs
     if(any(is.na(data_values))){
         stop(
             "NA values detected - data cannot contain NA values",
             call. = FALSE
         )
     }
-    x
 }

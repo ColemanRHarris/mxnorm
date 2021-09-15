@@ -6,6 +6,7 @@
 #' @param scale scale transformation to perform on the input data. Options include: c("None", "log10", "mean_divide","log10_mean_divide")
 #' @param method normalization method to perform on the input data. Options include: c("None", "ComBat","Registration")
 #' @param method_override optional user-defined function to perform own normalization method (default=NULL).
+#' @param ... optional additional arguments for `method_override` method
 #'
 #' @return Multiplexed data normalized according to the method specified, in the `mx_dataset` format. Normalized data will be included a new table with normalized values and attributes describing the transformation.
 #' @export
@@ -29,6 +30,11 @@ mx_normalize <- function(mx_data,
     ## if method_override
     ## check that all necessary params passed to mx_normalize()
     ## check that method_override runs on mx_sample, with incl. params, and passes validation
+    if(!is.null(method_override)){
+        validate_method_override(mx_data,
+                                 method_override,
+                                 ...)
+    }
 
     ## --- perform normalization (internal function)
     ## check & run if none

@@ -3,5 +3,6 @@
 export("%>%")
 export(mx_dataset)
 export(mx_normalize)
+export(validate_method_override)
 importFrom(magrittr,"%>%")
 importFrom(rlang,.data)

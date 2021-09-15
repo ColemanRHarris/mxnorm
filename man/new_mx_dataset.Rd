@@ -2,7 +2,7 @@
 % Please edit documentation in R/new_mx_dataset.R
 \name{new_mx_dataset}
 \alias{new_mx_dataset}
-\title{Constructor for mx_dataset}
+\title{Constructor for mx_dataset object}
 \usage{
 new_mx_dataset(
   data = data.frame(),
@@ -24,8 +24,8 @@ new_mx_dataset(
 \item{metadata_cols}{other identifiers of the input \code{data} (default=NULL). This must be a vector of column name(s) in the \code{data} data.frame.}
 }
 \value{
-mx_dataset object
+mx_dataset object with attributes \code{data} (data.frame), \code{slide_id} (character), \code{image_id} (character), \code{marker_cols} (vector), \code{metadata_cols} (default: NULL, otherwise vector).
 }
 \description{
-Constructor for mx_dataset
+Constructor for mx_dataset object
 }

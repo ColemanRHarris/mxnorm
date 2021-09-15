@@ -2,7 +2,7 @@
 % Please edit documentation in R/validate_mx_dataset.R
 \name{validate_mx_dataset}
 \alias{validate_mx_dataset}
-\title{Internal function to validate mx_dataset}
+\title{Internal function to validate mx_dataset object}
 \usage{
 validate_mx_dataset(x)
 }
@@ -13,5 +13,5 @@ validate_mx_dataset(x)
 mx_dataset object
 }
 \description{
-Internal function to validate mx_dataset
+Internal function to validate mx_dataset object
 }
