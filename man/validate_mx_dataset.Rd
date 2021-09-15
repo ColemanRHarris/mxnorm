@@ -10,7 +10,7 @@ validate_mx_dataset(x)
 \item{x}{mx_dataset object to validate}
 }
 \value{
-mx_dataset object
+if valid, mx_dataset object from input
 }
 \description{
 Internal function to validate mx_dataset object

@@ -9,13 +9,22 @@ validate_method_override <- function(mx_data,
                                      method_override,
                                      ...){
     ## check that all params in method_override are passed
-    margs = formals(method_override)
+    argg = names(list(...))
+    margs = names(formals(method_override))
+
+    if(!all(margs %in% argg)){
+        stop(
+            "The method_override function requires variables not passed",
+            call. = FALSE
+             )
+    }
 
     ## check that method_override runs on mx_sample, with incl. params, and passes validation
     mx_obj = method_override(mx_data,...)
 
+    ## run validation
     mx_obj = validate_mx_normalize(mx_obj)
 
-
-    mx_obj
+    mx_data
 }
+

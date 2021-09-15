@@ -12,6 +12,10 @@
 #' @export
 #'
 #' @examples
+#' mx_sample = mx_dataset(mx_sample, "slide_id", "image_id",
+#'   c("marker1_vals","marker2_vals","marker3_vals"),
+#'   c("metadata1_vals"))
+#' mx_normalize(mx_sample, scale="log10",method="None")
 mx_normalize <- function(mx_data,
                          scale = "None",
                          method = "None",
@@ -27,11 +31,9 @@ mx_normalize <- function(mx_data,
     mx_obj = scale_mx_dataset(mx_data,
                               scale)
 
-    ## if method_override
-    ## check that all necessary params passed to mx_normalize()
-    ## check that method_override runs on mx_sample, with incl. params, and passes validation
+    ## **check method override function
     if(!is.null(method_override)){
-        validate_method_override(mx_data,
+        validate_method_override(mx_sample,
                                  method_override,
                                  ...)
     }

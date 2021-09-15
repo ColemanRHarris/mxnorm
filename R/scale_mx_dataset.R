@@ -5,8 +5,6 @@
 #'
 #' @return `mx_dataset` object with scaled data
 #' @importFrom rlang .data
-#'
-#' @examples
 scale_mx_dataset <- function(mx_data,
                              scale){
     ## factors s.t. log10 transform is not undefined
