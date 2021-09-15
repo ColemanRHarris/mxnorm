@@ -9,7 +9,7 @@ validate_mx_dataset <- function(x){
     ## collect values
     data = x$data
     slide_id = x$slide_id
-    image_id = x$slide_id
+    image_id = x$image_id
     marker_cols = x$marker_cols
     metadata_cols = x$metadata_cols
     data_values = data[,marker_cols]
