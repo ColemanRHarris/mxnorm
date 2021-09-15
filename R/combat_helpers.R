@@ -132,6 +132,7 @@ run_combat = function(marker,
 ## Update ComBat gamma (mean) parameters each iteration of the algorithm
 #'
 #' @param batch_chan,gamma_c,tau_c,channel,slide_var Internal objects created/used in `run_combat`
+#' @importFrom magrittr %>%
 #'
 #' @return Updated gamma values
 update_gamma = function(batch_chan,
@@ -161,6 +162,7 @@ update_gamma = function(batch_chan,
 ## Update ComBat delta (variance) parameters each iteration of the algorithm
 #'
 #' @param batch_chan,beta_c,omega_c,channel,slide_var Internal objects created/used in `run_combat`
+#' @importFrom magrittr %>%
 #'
 #' @return Updated delta values
 update_delta = function(batch_chan,
@@ -190,6 +192,7 @@ update_delta = function(batch_chan,
 ## Internal function to check convergence of gamma terms
 #'
 #' @param batch_chan,gamma_stars,slide_var Internal objects created/used in `run_combat`
+#' @importFrom magrittr %>%
 #'
 #' @return MAE between previous and updated gamma values
 gamma_conv = function(batch_chan,
@@ -204,6 +207,7 @@ gamma_conv = function(batch_chan,
 ## Internal function to check convergence of delta terms
 #'
 #' @param batch_chan,delta_stars,slide_var Internal objects created/used in `run_combat`
+#' @importFrom magrittr %>%
 #'
 #' @return MAE between previous and updated delta values
 delta_conv = function(batch_chan,
