@@ -37,6 +37,8 @@ library(mxnorm)
 head(mx_sample)
 ```
 
+### `mx_dataset` objects
+
 How to build the `mx_dataset` object with `mx_sample` data in the `mxnorm` package:
 
 ```{r example}
@@ -49,6 +51,28 @@ mx_dataset = mx_dataset(data=mx_sample,
 
 The structure of the now built `mx_dataset` object:
 
-```{r str}
+```{r ex str}
 str(mx_dataset)
 ```
+
+### Normalization with `mx_normalize()`
+
+And now we can normalize this data using the `mx_normalize()` function:
+```{r norm}
+mx_norm = mx_normalize(mx_data = mx_dataset,
+                       scale = "log10",
+                       method="None")
+```
+
+Which now includes the following attributes:
+
+```{r norm str}
+str(mx_norm)
+```
+
+And has normalized data in the following form:
+
+```{r norm data}
+head(mx_norm$norm_data)
+```
+
