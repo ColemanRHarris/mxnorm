@@ -1,4 +1,4 @@
-## Internal function to register one marker
+#' @title Internal function to register one marker
 #'
 #' @param marker column name of marker to normalize
 #' @param slide_var column name of slide identifier
@@ -77,7 +77,7 @@ run_registration = function(marker,
     return(ndat[,normed_marker]) ## combine data into initial form with registered values included
 }
 
-## Calculate weighted mean of fda object
+#' @title Calculate weighted mean of fda object
 #'
 #' @param x,w,... Internal objects created/used in `run_registration`
 #'

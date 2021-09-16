@@ -5,6 +5,7 @@
 #'
 #' @importFrom rlang .data
 #' @importFrom magrittr %>%
+#' @importFrom dplyr all_of
 #'
 #' @return `mx_dataset` object with scaled data, added attributes: `norm_data` (data.frame) and `scale` (character)
 scale_mx_dataset <- function(mx_data,
@@ -32,14 +33,14 @@ scale_mx_dataset <- function(mx_data,
         ## get column length slide means
         y = x %>%
             dplyr::group_by(.data[[mx_data$slide_id]]) %>%
-            dplyr::mutate(dplyr::across(cols,mean))
+            dplyr::mutate(dplyr::across(all_of(cols),mean))
 
         ## divide
         x[,cols] = x[,cols]/y[,cols]
 
         ## rescale
         x = x %>%
-             dplyr::mutate(dplyr::across(cols,function(a){a + -min(a)}))
+             dplyr::mutate(dplyr::across(all_of(cols),function(a){a + -min(a)}))
 
         mx_data$norm_data = x
     }
@@ -50,7 +51,7 @@ scale_mx_dataset <- function(mx_data,
         ## get column length slide means
         y = x %>%
             dplyr::group_by(.data[[mx_data$slide_id]]) %>%
-            dplyr::mutate(dplyr::across(cols,mean))
+            dplyr::mutate(dplyr::across(all_of(cols),mean))
 
         ## divide
         x[,cols] = x[,cols]/y[,cols]
@@ -58,7 +59,7 @@ scale_mx_dataset <- function(mx_data,
 
         ## rescale
         x= x %>%
-            dplyr::mutate(dplyr::across(cols,function(a){a + -min(a)}))
+            dplyr::mutate(dplyr::across(all_of(cols),function(a){a + -min(a)}))
 
         mx_data$norm_data = x
     }

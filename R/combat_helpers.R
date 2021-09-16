@@ -1,4 +1,4 @@
-## Internal function to combat-adjust for one marker
+#' @title Internal function to combat-adjust for one marker
 #'
 #' @param marker column name of marker to normalize
 #' @param slide_var column name of slide identifier
@@ -129,7 +129,7 @@ run_combat = function(marker,
 }
 
 
-## Update ComBat gamma (mean) parameters each iteration of the algorithm
+#' @title Update ComBat gamma (mean) parameters each iteration of the algorithm
 #'
 #' @param batch_chan,gamma_c,tau_c,channel,slide_var Internal objects created/used in `run_combat`
 #' @importFrom magrittr %>%
@@ -159,7 +159,7 @@ update_gamma = function(batch_chan,
     return(gamma_ic_star)
 }
 
-## Update ComBat delta (variance) parameters each iteration of the algorithm
+#' @title Update ComBat delta (variance) parameters each iteration of the algorithm
 #'
 #' @param batch_chan,beta_c,omega_c,channel,slide_var Internal objects created/used in `run_combat`
 #' @importFrom magrittr %>%
@@ -189,7 +189,7 @@ update_delta = function(batch_chan,
     return(delta_ijc_star)
 }
 
-## Internal function to check convergence of gamma terms
+#' @title Internal function to check convergence of gamma terms
 #'
 #' @param batch_chan,gamma_stars,slide_var Internal objects created/used in `run_combat`
 #' @importFrom magrittr %>%
@@ -204,7 +204,7 @@ gamma_conv = function(batch_chan,
                                gams[,slide_var]),]$gamma_ic - gamma_stars$avg))) ## MAE
 }
 
-## Internal function to check convergence of delta terms
+#' @title Internal function to check convergence of delta terms
 #'
 #' @param batch_chan,delta_stars,slide_var Internal objects created/used in `run_combat`
 #' @importFrom magrittr %>%

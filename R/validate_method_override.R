@@ -9,7 +9,7 @@ validate_method_override <- function(mx_data,
                                      method_override,
                                      ...){
     ## check that all params in method_override are passed
-    argg = names(list(...))
+    argg = c("mx_data",names(list(...)))
     margs = names(formals(method_override))
 
     if(!all(margs %in% argg)){
@@ -21,10 +21,12 @@ validate_method_override <- function(mx_data,
 
     ## check that method_override runs on mx_sample, with incl. params, and passes validation
     mx_obj = method_override(mx_data,...)
+    mx_obj$method = "Validation"
 
     ## run validation
     mx_obj = validate_mx_dataset(mx_obj)
 
+    ## return original data bc no changes needed
     mx_data
 }
 
