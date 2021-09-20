@@ -4,7 +4,7 @@
 #' @param method_override user-defined function to perform own normalization method
 #' @param ... optional additional arguments for `method_override` method
 #'
-#' @return `mx_dataset` object
+#' @return boolean indicating a pass
 validate_method_override <- function(mx_data,
                                      method_override,
                                      ...){
@@ -27,6 +27,6 @@ validate_method_override <- function(mx_data,
     mx_obj = validate_mx_dataset(mx_obj)
 
     ## return original data bc no changes needed
-    mx_data
+    TRUE
 }
 

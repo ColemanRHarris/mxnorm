@@ -33,7 +33,7 @@ mx_normalize <- function(mx_data,
 
     ## check method override function
     if(!is.null(method_override)){
-        validate_method_override(mxnorm::mx_sample,
+        y = validate_method_override(mxnorm::mx_sample,
                                  method_override,
                                  ...)
     }

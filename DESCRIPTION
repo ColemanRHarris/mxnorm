@@ -24,4 +24,5 @@ Imports:
     rlang,
     fda,
     stats,
-    data.table
+    data.table,
+    reticulate
