@@ -57,3 +57,8 @@ test_that("validate works", {
     expect_error(mx_dataset(z, "slide_id", "image_id", c("marker1_vals","marker2_vals","marker3_vals"), c("metadata1_vals")))
 })
 
+test_that("metadata catch works",{
+    x = mx_dataset(mx_sample,"slide_id", "image_id", c("marker1_vals","marker2_vals","marker3_vals"), c("metadata1_vals"))
+    x$data = x$data[,-6]
+    expect_error(validate_mx_dataset(x))
+})

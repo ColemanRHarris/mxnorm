@@ -10,7 +10,10 @@ validate_mx_dataset <- function(x){
     image_id = x$image_id
     marker_cols = x$marker_cols
     metadata_cols = x$metadata_cols
+
+    ## confirm data exists
     data_values = data[,marker_cols]
+    if(!is.null(metadata_cols)){meta_values = data[,metadata_cols]}
 
     ## collected potential norm values
     norm_data = x$norm_data
@@ -23,6 +26,7 @@ validate_mx_dataset <- function(x){
     ## only runs if x contains normalized data
     if(!is.null(norm_data)){
         norm_values = norm_data[,marker_cols]
+        if(!is.null(metadata_cols)){metanorm_values = norm_data[,metadata_cols]}
 
         ## check normalized data
         b = check_data_values(norm_values)
