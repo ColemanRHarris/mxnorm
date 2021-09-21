@@ -18,9 +18,8 @@ get_misclass_thold <- function(threshold_override,
     }
     ## validate function if user-defined
     if(class(threshold_override) == "function"){
-        y = validate_threshold_override(mxnorm::mx_sample,
-                                    threshold_override,
-                                    ...)
+        threshold_override = validate_threshold_override(threshold_override,
+                                        ...)
     }
 
     threshold_override

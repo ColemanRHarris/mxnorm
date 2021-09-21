@@ -19,7 +19,7 @@ mx_normalize(
 
 \item{method}{normalization method to perform on the input data. Options include: c("None", "ComBat","Registration")}
 
-\item{method_override}{optional user-defined function to perform own normalization method (default=NULL).}
+\item{method_override}{optional user-defined function to perform own normalization method (default=NULL). If using a user-defined function, it must include a \code{mx_data} parameter.}
 
 \item{...}{optional additional arguments for normalization functions}
 }
@@ -30,7 +30,7 @@ Multiplexed data normalized according to the method specified, in the \code{mx_d
 Normalizes some given image input according to the method specified
 }
 \examples{
-mx_sample = mx_dataset(mx_sample, "slide_id", "image_id",
+mx_sample = mx_dataset(mxnorm::mx_sample, "slide_id", "image_id",
   c("marker1_vals","marker2_vals","marker3_vals"),
   c("metadata1_vals"))
 mx_normalize(mx_sample, scale="log10",method="ComBat")

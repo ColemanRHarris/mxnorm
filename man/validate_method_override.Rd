@@ -4,17 +4,15 @@
 \alias{validate_method_override}
 \title{Internal function to validate method_override function}
 \usage{
-validate_method_override(mx_data, method_override, ...)
+validate_method_override(method_override, ...)
 }
 \arguments{
-\item{mx_data}{\code{mx_dataset} object to normalize}
-
 \item{method_override}{user-defined function to perform own normalization method}
 
 \item{...}{optional additional arguments for \code{method_override} method}
 }
 \value{
-\code{mx_dataset} object
+boolean indicating a pass
 }
 \description{
 Internal function to validate method_override function

@@ -13,7 +13,7 @@ validate_mx_normalize_params(mx_data, scale, method, method_override)
 
 \item{method}{normalization method to perform on the input data. Options include: c("None", "ComBat","Registration")}
 
-\item{method_override}{optional user-defined function to perform own normalization method (default=NULL).}
+\item{method_override}{optional user-defined function to perform own normalization method (default=NULL). If using a user-defined function, it must include a \code{mx_data} parameter.}
 }
 \value{
 \code{mx_dataset} object

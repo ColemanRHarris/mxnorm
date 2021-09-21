@@ -68,11 +68,11 @@ test_that("method override works",{
     mx_obj = scale_mx_dataset(mx_obj,"None")
 
     ## basic method_override example passes
-    expect_equal(validate_method_override(mx_obj,function(mx_data){mx_data}),mx_obj)
-    expect_equal(validate_method_override(mx_obj,function(mx_data,x){mx_data},x=1),mx_obj)
+    expect_equal(validate_method_override(function(mx_data){mx_data}),TRUE)
+    expect_equal(validate_method_override(function(mx_data,x){mx_data},x=1),TRUE)
 
     ## args not passed for method_override
-    expect_error(validate_method_override(mx_obj,function(mx_data,x){mx_data}))
+    expect_error(validate_method_override(function(mx_data,x){mx_data}))
 })
 
 test_that("normalization works",{

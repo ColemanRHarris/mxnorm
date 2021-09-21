@@ -5,8 +5,8 @@
 #' @return `mx_dataset` object
 validate_otsu_misclass_params <- function(mx_data,
                                           table,
-                                          metadata_cols = NULL,
-                                          threshold_override = NULL){
+                                          metadata_cols,
+                                          threshold_override){
     ## check args
     table = match.arg(table,c("raw","normalized","both"))
 
@@ -30,11 +30,12 @@ validate_otsu_misclass_params <- function(mx_data,
         if(c == "character"){
             threshold_override = match.arg(threshold_override,c("isodata", "li", "local", "mean", "minimum", "multiotsu", "niblack", "otsu", "sauvola", "triangle","yen"))
         }
-        else if(c != "function"){
+        if(c != "function"){
             stop(
                 "threshold_override must be a function or thresholding algorithm listed in the Python skimage package",
                 call.=FALSE
             )
         }
     }
+    mx_data
 }

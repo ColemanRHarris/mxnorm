@@ -2,14 +2,15 @@
 % Please edit documentation in R/otsu_misclass.R
 \name{otsu_misclass}
 \alias{otsu_misclass}
-\title{Title}
+\title{Calculate misclassification metrics using specified threshold for an \code{mx_dataset} object.}
 \usage{
 otsu_misclass(
   mx_data,
   table,
   metadata_cols = NULL,
   threshold_override = NULL,
-  plot_out = TRUE
+  plot_out = TRUE,
+  ...
 )
 }
 \arguments{
@@ -19,13 +20,18 @@ otsu_misclass(
 
 \item{metadata_cols}{column name(s) in \code{mx_data} used to generate stratified results (default=NULL), e.g. a facet parameter.}
 
-\item{threshold_override}{optional user-defined function or alternate thresholding algorithm in Python skimage module \code{filters}. Options include supplying a function or any of the following: c("isodata", "li", "local", "mean", "minimum", "multiotsu", "niblack", "otsu", "sauvola", "triangle"). More detail available here:https://scikit-image.org/docs/dev/api/skimage.filters.html}
+\item{threshold_override}{optional user-defined function or alternate thresholding algorithm in Python skimage module \code{filters}. Options include supplying a function or any of the following: c("isodata", "li", "local", "mean", "minimum", "multiotsu", "niblack", "otsu", "sauvola", "triangle","yen"). More detail available here:https://scikit-image.org/docs/dev/api/skimage.filters.html. If using a user-defined function, it must include a \code{thold_data} parameter.}
 
-\item{plot_out}{boolean to generate Otsu misclassification plot (default=FALSE)}
+\item{plot_out}{boolean to generate Otsu misclassification plots (default=FALSE)}
+
+\item{...}{optional additional arguments for Otsu misclassification functions}
 }
 \value{
 \code{mx_dataset} object with analysis results of Otsu misclassification in \code{otsu_data} table
 }
 \description{
-Title
+Calculate misclassification metrics using specified threshold for an \code{mx_dataset} object.
+}
+\references{
+Otsu, N. (1979). A threshold selection method from gray-level histograms. IEEE transactions on systems, man, and cybernetics, 9(1), 62-66.
 }
