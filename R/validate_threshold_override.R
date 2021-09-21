@@ -3,8 +3,6 @@
 #' @inheritParams otsu_misclass
 #'
 #' @return threshold_override function if it passes
-#'
-#' @examples
 validate_threshold_override <- function(threshold_override,
                                         ...){
     ## check that all params in threshold_override are passed
