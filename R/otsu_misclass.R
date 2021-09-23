@@ -30,17 +30,21 @@ otsu_misclass <- function(mx_data,
     threshold = get_misclass_thold(threshold_override,
                                ...)
 
-    ## **run Otsu misclassification
+    ## create otsu dataset
     mx_obj = otsu_mx_dataset(mx_obj,
                              table,
-                             threshold,
-                             metadata_cols)
+                             metadata_cols,
+                             threshold)
+
+    ## run misclassification
+    mx_obj = otsu_mx_misclassification(mx_obj,
+                                       table)
 
     ## **plot out if desired
-    if(plot_out){
-        plot_mx_density(mx_obj,table)
-        plot_mx_proportions(mx_obj,table)
-    }
+    # if(plot_out){
+    #     plot_mx_density(mx_obj,table)
+    #     plot_mx_proportions(mx_obj,table)
+    # }
 
     mx_obj
 }

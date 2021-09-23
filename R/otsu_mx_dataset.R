@@ -1,4 +1,4 @@
-#' Internal function to run otsu misclassification analysis
+#' Internal function to generate table for otsu misclassification analysis
 #'
 #' @inheritParams otsu_misclass
 #' @param threshold thresolding function as defined using `otsu_misclass()`
@@ -63,6 +63,5 @@ otsu_mx_dataset <- function(mx_data,
 
     mx_data$otsu_data = otsu_data
 
-    ## run misclassification analysis
-
+    mx_data
 }

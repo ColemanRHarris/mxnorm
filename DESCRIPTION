@@ -25,4 +25,5 @@ Imports:
     fda,
     stats,
     data.table,
-    reticulate
+    reticulate,
+    caret

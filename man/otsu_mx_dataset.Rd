@@ -2,7 +2,7 @@
 % Please edit documentation in R/otsu_mx_dataset.R
 \name{otsu_mx_dataset}
 \alias{otsu_mx_dataset}
-\title{Internal function to run otsu misclassification analysis}
+\title{Internal function to generate table for otsu misclassification analysis}
 \usage{
 otsu_mx_dataset(mx_data, table, metadata_cols, threshold)
 }
@@ -19,5 +19,5 @@ otsu_mx_dataset(mx_data, table, metadata_cols, threshold)
 \code{mx_dataset} object with \code{otsu_data} attribute added and misclassification results
 }
 \description{
-Internal function to run otsu misclassification analysis
+Internal function to generate table for otsu misclassification analysis
 }

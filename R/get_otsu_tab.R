@@ -25,7 +25,7 @@ get_otsu_tab <- function(tdat,
                                  table=table,
                                  slide_threshold=threshold(reticulate::np_array(get(x))),
                                  .groups = 'drop') %>%
-                dplyr::mutate(marker_threshold=(tdat %>% summarise(m=threshold(reticulate::np_array(get(x)))))$m)
+                dplyr::mutate(marker_threshold=(tdat %>% dplyr::summarise(m=threshold(reticulate::np_array(get(x)))))$m)
         })
     } else{ ##otherwise just use the data
         lapply(X=cols,function(x){
@@ -35,7 +35,7 @@ get_otsu_tab <- function(tdat,
                                  table=table,
                                  slide_threshold=threshold(get(x)),
                                  .groups = 'drop') %>%
-                dplyr::mutate(marker_threshold=(tdat %>% summarise(m=threshold(get(x))))$m)
+                dplyr::mutate(marker_threshold=(tdat %>% dplyr::summarise(m=threshold(get(x))))$m)
         })
 
     }
