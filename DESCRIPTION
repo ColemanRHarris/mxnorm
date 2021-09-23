@@ -26,4 +26,5 @@ Imports:
     stats,
     data.table,
     reticulate,
-    caret
+    caret,
+    e1071

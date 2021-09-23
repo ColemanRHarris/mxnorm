@@ -10,7 +10,7 @@ run_registration(
   ndat,
   len = 512,
   weighted = TRUE,
-  offset = 1e-04,
+  offset = 0.0001,
   fdobj_norder = 4,
   fdobj_nbasis = 21,
   w_norder = 2,

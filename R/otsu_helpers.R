@@ -6,7 +6,7 @@
 #'
 #' @return decimal value of misclassification error
 check_threshold = function(vec,thr1,thr2){
-    tab = caret::confusionMatrix(factor(vec>thr1),factor(vec>thr2),)$table
+    tab = caret::confusionMatrix(factor(vec>thr1,levels = c(TRUE,FALSE)),factor(vec>thr2,levels = c(TRUE,FALSE)),)$table
 
     return(sum(tab/sum(tab) * (1-diag(2))))
 }

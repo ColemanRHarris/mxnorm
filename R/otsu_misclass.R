@@ -3,7 +3,7 @@
 #' @param mx_data `mx_dataset` object used to compute Otsu misclassification metrics
 #' @param table  dataset in `mx_data` used to compute metrics. Options include: c("raw","normalized","both"), e.g. a y-axis parameter.
 #' @param metadata_cols column name(s) in `mx_data` used to generate stratified results (default=NULL), e.g. a facet parameter.
-#' @param threshold_override optional user-defined function or alternate thresholding algorithm in Python skimage module `filters`. Options include supplying a function or any of the following: c("isodata", "li", "local", "mean", "minimum", "multiotsu", "niblack", "otsu", "sauvola", "triangle","yen"). More detail available here:https://scikit-image.org/docs/dev/api/skimage.filters.html. If using a user-defined function, it must include a `thold_data` parameter.
+#' @param threshold_override optional user-defined function or alternate thresholding algorithm adaptable from Python skimage module `filters` (Note: not all algorithms in `filters` adapted). Options include supplying a function or any of the following: c("isodata", "li", "mean", "otsu", "triangle","yen"). More detail available here:https://scikit-image.org/docs/dev/api/skimage.filters.html. If using a user-defined function, it must include a `thold_data` parameter.
 #' @param plot_out boolean to generate Otsu misclassification plots (default=FALSE)
 #' @param ... optional additional arguments for Otsu misclassification functions
 #'

@@ -20,7 +20,7 @@ otsu_misclass(
 
 \item{metadata_cols}{column name(s) in \code{mx_data} used to generate stratified results (default=NULL), e.g. a facet parameter.}
 
-\item{threshold_override}{optional user-defined function or alternate thresholding algorithm in Python skimage module \code{filters}. Options include supplying a function or any of the following: c("isodata", "li", "local", "mean", "minimum", "multiotsu", "niblack", "otsu", "sauvola", "triangle","yen"). More detail available here:https://scikit-image.org/docs/dev/api/skimage.filters.html. If using a user-defined function, it must include a \code{thold_data} parameter.}
+\item{threshold_override}{optional user-defined function or alternate thresholding algorithm adaptable from Python skimage module \code{filters} (Note: not all algorithms in \code{filters} adapted). Options include supplying a function or any of the following: c("isodata", "li", "mean", "otsu", "triangle","yen"). More detail available here:https://scikit-image.org/docs/dev/api/skimage.filters.html. If using a user-defined function, it must include a \code{thold_data} parameter.}
 
 \item{plot_out}{boolean to generate Otsu misclassification plots (default=FALSE)}
 

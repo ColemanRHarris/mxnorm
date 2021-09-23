@@ -7,7 +7,7 @@
 get_misclass_thold(threshold_override, ...)
 }
 \arguments{
-\item{threshold_override}{optional user-defined function or alternate thresholding algorithm in Python skimage module \code{filters}. Options include supplying a function or any of the following: c("isodata", "li", "local", "mean", "minimum", "multiotsu", "niblack", "otsu", "sauvola", "triangle","yen"). More detail available here:https://scikit-image.org/docs/dev/api/skimage.filters.html. If using a user-defined function, it must include a \code{thold_data} parameter.}
+\item{threshold_override}{optional user-defined function or alternate thresholding algorithm adaptable from Python skimage module \code{filters} (Note: not all algorithms in \code{filters} adapted). Options include supplying a function or any of the following: c("isodata", "li", "mean", "otsu", "triangle","yen"). More detail available here:https://scikit-image.org/docs/dev/api/skimage.filters.html. If using a user-defined function, it must include a \code{thold_data} parameter.}
 
 \item{...}{optional additional arguments for Otsu misclassification functions}
 }
