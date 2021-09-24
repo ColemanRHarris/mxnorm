@@ -8,7 +8,6 @@
 #' @return `mx_dataset` object with `otsu_data` attribute added and misclassification results
 otsu_mx_dataset <- function(mx_data,
                             table,
-                            metadata_cols,
                             threshold){
     ## check if threshold is in skf to use np_array
     use_np_array = FALSE
@@ -61,7 +60,7 @@ otsu_mx_dataset <- function(mx_data,
             data.table::rbindlist()
     }
 
-    mx_data$otsu_data = otsu_data
+    mx_data$otsu_data = data.frame(otsu_data)
 
     mx_data
 }

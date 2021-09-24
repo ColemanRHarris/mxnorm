@@ -5,7 +5,6 @@
 #' @return `mx_dataset` object
 validate_otsu_misclass_params <- function(mx_data,
                                           table,
-                                          metadata_cols,
                                           threshold_override){
     ## check args
     table = match.arg(table,c("raw","normalized","both"))

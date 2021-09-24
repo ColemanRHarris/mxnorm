@@ -22,11 +22,11 @@ check_threshold = function(vec,thr1,thr2){
 #' @importFrom magrittr %>%
 #'
 #' @return `data.frame` with Otsu misclassification metrics
-otsu_mx_error = function(tdat,table,otsu_data,slides,cols){
+otsu_mx_error = function(tdat,table,otsu_data,slides,cols,slide_id){
     lapply(cols,function(x){
         lapply(slides,function(s){
-            vec = tdat[tdat$slide_id==s,x]
-            idx = which(otsu_data$slide_id == s & otsu_data$marker == x & otsu_data$table == table)
+            vec = tdat[tdat[,slide_id]==s,x]
+            idx = which(otsu_data[,slide_id] == s & otsu_data$marker == x & otsu_data$table == table)
             check_threshold(vec,otsu_data[idx,]$slide_threshold,otsu_data[idx,]$marker_threshold)
         })
     }) %>% unlist()

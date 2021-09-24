@@ -8,6 +8,7 @@ otsu_mx_misclassification <- function(mx_data,
     ## setup local params
     cols = mx_data$marker_cols
     otsu_data = mx_data$otsu_data
+    slide_id = mx_data$slide_id
 
     ## if both
     if(table == "both"){
@@ -20,7 +21,8 @@ otsu_mx_misclassification <- function(mx_data,
                               table = "raw",
                               otsu_data,
                               slides,
-                              cols)
+                              cols,
+                              slide_id)
 
         ## setup params
         tdat = mx_data$norm_data
@@ -31,7 +33,8 @@ otsu_mx_misclassification <- function(mx_data,
                               table = "normalized",
                               otsu_data,
                               slides,
-                              cols)
+                              cols,
+                              slide_id)
 
         ## rbind
         mdat = c(mdat1,mdat2)
@@ -48,7 +51,8 @@ otsu_mx_misclassification <- function(mx_data,
                               table = "raw",
                               otsu_data,
                               slides,
-                              cols)
+                              cols,
+                              slide_id)
     }
 
     ## if normalized
@@ -62,7 +66,8 @@ otsu_mx_misclassification <- function(mx_data,
                               table = "normalized",
                               otsu_data,
                               slides,
-                              cols)
+                              cols,
+                              slide_id)
     }
 
     otsu_data$misclass_error = mdat
