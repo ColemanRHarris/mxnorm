@@ -79,7 +79,6 @@ test_that("create dataset works",{
     ## create otsu dataset
     mx_obj = otsu_mx_dataset(mx_obj,
                              table="both",
-                             metadata_cols=c("metadata1_vals"),
                              threshold)
 
     expect_equal(is.null(mx_obj$otsu_data),FALSE)
@@ -103,7 +102,6 @@ test_that("misclassification works",{
     ## create otsu dataset
     mx_obj = otsu_mx_dataset(mx_obj,
                              table="both",
-                             metadata_cols=c("metadata1_vals"),
                              threshold)
 
     ## misclass

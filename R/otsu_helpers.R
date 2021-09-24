@@ -18,6 +18,7 @@ check_threshold = function(vec,thr1,thr2){
 #' @param otsu_data otsu dataset created using `otsu_mx_dataset()`
 #' @param slides vector of slides in the dataset
 #' @param cols vector of marker columns
+#' @param slide_id slide identifier in `mx_data`
 #'
 #' @importFrom magrittr %>%
 #'

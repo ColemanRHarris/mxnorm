@@ -24,7 +24,7 @@ data.frame object in the mx_dataset format with attribute for input type
 Takes in data from data.frame of cell-level multiplexed data to create a mx_dataset S3 object.
 }
 \examples{
-mx_dataset(mx_sample, "slide_id", "image_id",
+mx_data = mx_dataset(mxnorm::mx_sample, "slide_id", "image_id",
   c("marker1_vals","marker2_vals","marker3_vals"),
   c("metadata1_vals"))
 }

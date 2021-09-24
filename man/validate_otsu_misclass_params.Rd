@@ -4,19 +4,12 @@
 \alias{validate_otsu_misclass_params}
 \title{Internal function to validate parameters passed to \code{otsu_misclass}}
 \usage{
-validate_otsu_misclass_params(
-  mx_data,
-  table,
-  metadata_cols,
-  threshold_override
-)
+validate_otsu_misclass_params(mx_data, table, threshold_override)
 }
 \arguments{
 \item{mx_data}{\code{mx_dataset} object used to compute Otsu misclassification metrics}
 
 \item{table}{dataset in \code{mx_data} used to compute metrics. Options include: c("raw","normalized","both"), e.g. a y-axis parameter.}
-
-\item{metadata_cols}{column name(s) in \code{mx_data} used to generate stratified results (default=NULL), e.g. a facet parameter.}
 
 \item{threshold_override}{optional user-defined function or alternate thresholding algorithm adaptable from Python skimage module \code{filters} (Note: not all algorithms in \code{filters} adapted). Options include supplying a function or any of the following: c("isodata", "li", "mean", "otsu", "triangle","yen"). More detail available here:https://scikit-image.org/docs/dev/api/skimage.filters.html. If using a user-defined function, it must include a \code{thold_data} parameter.}
 }

@@ -4,7 +4,7 @@
 \alias{otsu_mx_error}
 \title{Internal helper function to compute and return Otsu table}
 \usage{
-otsu_mx_error(tdat, table, otsu_data, slides, cols)
+otsu_mx_error(tdat, table, otsu_data, slides, cols, slide_id)
 }
 \arguments{
 \item{tdat}{table of raw or normalized values}
@@ -16,6 +16,8 @@ otsu_mx_error(tdat, table, otsu_data, slides, cols)
 \item{slides}{vector of slides in the dataset}
 
 \item{cols}{vector of marker columns}
+
+\item{slide_id}{slide identifier in \code{mx_data}}
 }
 \value{
 \code{data.frame} with Otsu misclassification metrics

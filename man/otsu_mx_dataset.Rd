@@ -4,14 +4,12 @@
 \alias{otsu_mx_dataset}
 \title{Internal function to generate table for otsu misclassification analysis}
 \usage{
-otsu_mx_dataset(mx_data, table, metadata_cols, threshold)
+otsu_mx_dataset(mx_data, table, threshold)
 }
 \arguments{
 \item{mx_data}{\code{mx_dataset} object used to compute Otsu misclassification metrics}
 
 \item{table}{dataset in \code{mx_data} used to compute metrics. Options include: c("raw","normalized","both"), e.g. a y-axis parameter.}
-
-\item{metadata_cols}{column name(s) in \code{mx_data} used to generate stratified results (default=NULL), e.g. a facet parameter.}
 
 \item{threshold}{thresolding function as defined using \code{otsu_misclass()}}
 }

@@ -4,21 +4,12 @@
 \alias{otsu_misclass}
 \title{Calculate misclassification metrics using specified threshold for an \code{mx_dataset} object.}
 \usage{
-otsu_misclass(
-  mx_data,
-  table,
-  metadata_cols = NULL,
-  threshold_override = NULL,
-  plot_out = TRUE,
-  ...
-)
+otsu_misclass(mx_data, table, threshold_override = NULL, plot_out = FALSE, ...)
 }
 \arguments{
 \item{mx_data}{\code{mx_dataset} object used to compute Otsu misclassification metrics}
 
 \item{table}{dataset in \code{mx_data} used to compute metrics. Options include: c("raw","normalized","both"), e.g. a y-axis parameter.}
-
-\item{metadata_cols}{column name(s) in \code{mx_data} used to generate stratified results (default=NULL), e.g. a facet parameter.}
 
 \item{threshold_override}{optional user-defined function or alternate thresholding algorithm adaptable from Python skimage module \code{filters} (Note: not all algorithms in \code{filters} adapted). Options include supplying a function or any of the following: c("isodata", "li", "mean", "otsu", "triangle","yen"). More detail available here:https://scikit-image.org/docs/dev/api/skimage.filters.html. If using a user-defined function, it must include a \code{thold_data} parameter.}
 
@@ -31,6 +22,13 @@ otsu_misclass(
 }
 \description{
 Calculate misclassification metrics using specified threshold for an \code{mx_dataset} object.
+}
+\examples{
+mx_data = mx_dataset(mxnorm::mx_sample, "slide_id", "image_id",
+  c("marker1_vals","marker2_vals","marker3_vals"),
+  c("metadata1_vals"))
+mx_data = mx_normalize(mx_data, scale="log10",method="None")
+mx_data = otsu_misclass(mx_data, table="normalized")
 }
 \references{
 Otsu, N. (1979). A threshold selection method from gray-level histograms. IEEE transactions on systems, man, and cybernetics, 9(1), 62-66.

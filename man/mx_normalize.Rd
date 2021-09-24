@@ -30,8 +30,8 @@ Multiplexed data normalized according to the method specified, in the \code{mx_d
 Normalizes some given image input according to the method specified
 }
 \examples{
-mx_sample = mx_dataset(mxnorm::mx_sample, "slide_id", "image_id",
+mx_data = mx_dataset(mxnorm::mx_sample, "slide_id", "image_id",
   c("marker1_vals","marker2_vals","marker3_vals"),
   c("metadata1_vals"))
-mx_normalize(mx_sample, scale="log10",method="ComBat")
+mx_data = mx_normalize(mx_data, scale="log10",method="None")
 }

@@ -13,6 +13,11 @@
 #' @export
 #'
 #' @examples
+#' mx_data = mx_dataset(mxnorm::mx_sample, "slide_id", "image_id",
+#'   c("marker1_vals","marker2_vals","marker3_vals"),
+#'   c("metadata1_vals"))
+#' mx_data = mx_normalize(mx_data, scale="log10",method="None")
+#' mx_data = otsu_misclass(mx_data, table="normalized")
 otsu_misclass <- function(mx_data,
                           table,
                           threshold_override = NULL,
