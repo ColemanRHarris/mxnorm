@@ -71,6 +71,12 @@ otsu_mx_misclassification <- function(mx_data,
     }
 
     otsu_data$misclass_error = mdat
+
+    ## fix slide id naming
+    if(!("slide_id" %in% colnames(otsu_data))){
+        colnames(otsu_data)[colnames(otsu_data) == slide_id] <- "slide_id"
+    }
+
     mx_data$otsu_data = otsu_data
 
     mx_data

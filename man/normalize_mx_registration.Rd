@@ -8,7 +8,7 @@ normalize_mx_registration(
   mx_data,
   len = 512,
   weighted = TRUE,
-  offset = 0.0001,
+  offset = 1e-04,
   fdobj_norder = 4,
   fdobj_nbasis = 21,
   w_norder = 2,

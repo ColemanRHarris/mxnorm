@@ -20,6 +20,9 @@ validate_mx_dataset <- function(x){
     scale = x$scale
     method = x$method
 
+    ## collected potential otsu values
+    otsu_data = x$otsu_data
+
     ## check uploaded data
     b = check_data_values(data_values)
 
@@ -52,6 +55,11 @@ validate_mx_dataset <- function(x){
                 call. = FALSE
             )
         }
+    }
+
+    if(!is.null(otsu_data)){
+        otsu_values = otsu_data[,c("slide_threshold","marker_threshold","misclass_error")]
+        b = check_data_values(otsu_values)
     }
 
     x

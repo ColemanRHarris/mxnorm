@@ -27,4 +27,5 @@ Imports:
     data.table,
     reticulate,
     caret,
-    e1071
+    e1071,
+    ggplot2
