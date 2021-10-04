@@ -13,14 +13,14 @@ knitr::opts_chunk$set(
 )
 ```
 
-# mxnorm
+# mxnorm: An R package to normalize multiplexed imaging data.
 
 <!-- badges: start -->
 <!-- badges: end -->
 
 A package designed to handle multiplexed imaging data in R, implementing normalization methods and quality metrics detailed in our paper [here](https://doi.org/10.1101/2021.07.16.452359).
 
-## Installation
+# Installation
 
 You can install the development version from [GitHub](https://github.com/) with:
 
@@ -28,7 +28,7 @@ You can install the development version from [GitHub](https://github.com/) with:
 # install.packages("devtools")
 devtools::install_github("ColemanRHarris/mxnorm")
 ```
-## Example
+# Analysis Example
 
 This is a basic example using the `mx_sample` dataset, which is simulated data to demonstrate the package's functionality.
 
@@ -37,7 +37,7 @@ library(mxnorm)
 head(mx_sample)
 ```
 
-### `mx_dataset` objects
+## `mx_dataset` objects
 
 How to build the `mx_dataset` object with `mx_sample` data in the `mxnorm` package:
 
@@ -55,7 +55,7 @@ The structure of the now built `mx_dataset` object:
 str(mx_dataset)
 ```
 
-### Normalization with `mx_normalize()`
+## Normalization with `mx_normalize()`
 
 And now we can normalize this data using the `mx_normalize()` function:
 ```{r norm}
@@ -64,15 +64,51 @@ mx_norm = mx_normalize(mx_data = mx_dataset,
                        method="None")
 ```
 
-Which now includes the following attributes:
-
-```{r norm str}
-str(mx_norm)
-```
-
-And has normalized data in the following form:
+The `mx_dataset` object has normalized data in the following form:
 
 ```{r norm data}
 head(mx_norm$norm_data)
 ```
 
+And the `mx_dataset` object now includes the following attributes:
+
+```{r norm str}
+str(mx_norm)
+```
+
+## Otsu misclassification metrics with `otsu_misclass()`
+
+Using the above normalized data, we can run misclassification metrics to determine how well our normalization method performs:
+```{r otsu}
+mx_otsu = otsu_misclass(mx_norm,
+                        table="both",
+                        threshold_override = NULL,
+                        plot_out = FALSE)
+```
+
+This adds an Otsu misclassification table to the `mx_dataset` object in the following form:
+```{r}
+head(mx_otsu$otsu_data)
+```
+
+And the `mx_dataset` object now includes the following attributes:
+
+```{r otsu str}
+str(mx_otsu)
+```
+
+# Visualizations
+
+We can also begin to visualize these results using some of `mxnorm`'s plotting features built using `ggplot2`. 
+
+First, we can visualize the densities of the marker values as follows:
+
+```{r mx dens}
+plot_mx_density(mx_otsu)
+```
+
+We can also visualize the results of the Otsu misclassification analysis stratified by slide and marker:
+
+```{r mx var}
+plot_mx_variance(mx_otsu)
+```
