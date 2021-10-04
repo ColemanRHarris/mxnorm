@@ -43,8 +43,8 @@ run_otsu_misclass <- function(mx_data,
 
     ## plot out if desired
     if(plot_out){
-        plot_mx_density(mx_obj)
-        plot_mx_misclass(mx_obj)
+        print(plot_mx_density(mx_obj))
+        print(plot_mx_misclass(mx_obj))
     }
 
     mx_obj

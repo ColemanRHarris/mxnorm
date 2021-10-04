@@ -118,6 +118,21 @@ test_that("misclassification works",{
 })
 
 test_that("plot out works",{
-    ## need to update when plotting added
-    expect_equal(2*2,4)
+    ## create object
+    mx_obj = mx_dataset(data=mxnorm::mx_sample,
+                        slide_id="slide_id",
+                        image_id="image_id",
+                        marker_cols=c("marker1_vals","marker2_vals","marker3_vals"),
+                        metadata_cols=c("metadata1_vals"))
+    mx_obj = mx_normalize(mx_data=mx_obj,
+                          scale="log10",
+                          method="None")
+    ## should print out
+    mx_obj = run_otsu_misclass(mx_obj,
+                                table="both",
+                                threshold_override = NULL,
+                                plot_out = TRUE)
+
+    ## just confirm object exists as a simple test of plotting (e.g. no errors)
+    expect_equal(class(mx_obj),"mx_dataset")
 })
