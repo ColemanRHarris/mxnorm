@@ -1,11 +1,12 @@
 #' Visualize Otsu misclassification metrics by marker and slide
 #'
-#' @param mx_data `mx_dataset` object that been used with `otsu_misclass()` to compute Otsu misclassification metrics
+#' @param mx_data `mx_dataset` object that been used with `otsu_misclass()` to compute Otsu misclassification metrics. Note that the table attribute must be set when running `otsu_misclass()`.
 #'
 #' @return `ggplot2` object with misclassification plot
 #' @export
 #'
 #' @import ggplot2
+#' @importFrom magrittr %>%
 #'
 #' @examples
 #' mx_data = mx_dataset(mxnorm::mx_sample, "slide_id", "image_id",
@@ -26,29 +27,19 @@ plot_mx_variance <- function(mx_data){
     otsu_data = mx_data$otsu_data
     jitter_val = mean(otsu_data$misclass_error) * 0.1
     point_size = 4
-    misclass_error = NULL ## set to not get CRAN notes
-    slide_id = NULL ## set to not get CRAN notes
 
-    ## calculate additional values
+    ## set to not get CRAN notes
+    misclass_error = NULL
+    slide_id = NULL
 
-    ## slide means
+    ## calculate additional values - slide means
     mean_vals = otsu_data %>%
         dplyr::group_by(slide_id,table) %>%
         dplyr::summarise(m1 = mean(misclass_error),.groups="drop")
-
-    ## table means
-    rug_vals =  otsu_data %>%
-        dplyr::group_by(table) %>%
-        dplyr::summarise(m2 = mean(misclass_error),.groups="drop")
 
     ## generate plots
     ggplot(otsu_data) +
         geom_jitter(aes_string(x="misclass_error",y="slide_id",color="marker"),size=point_size,height=0,width=jitter_val) +
         geom_point(data = mean_vals,aes_string(x="m1",y="slide_id"),color="black",fill="white",shape=23,size=point_size) +
-        facet_wrap(~table,nrow=2,ncol=1) +
-        #geom_rug(data = rug_vals,mapping=aes(x=m2)) +
-        scale_color_discrete("Marker") +
-        scale_x_continuous("Misclassification Error")+
-        scale_y_discrete("")+
-        theme(axis.text.y = element_text(hjust = 0))
+        facet_wrap(~table,nrow=2,ncol=1)
 }

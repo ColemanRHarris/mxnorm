@@ -7,7 +7,7 @@
 plot_mx_variance(mx_data)
 }
 \arguments{
-\item{mx_data}{\code{mx_dataset} object that been used with \code{otsu_misclass()} to compute Otsu misclassification metrics}
+\item{mx_data}{\code{mx_dataset} object that been used with \code{otsu_misclass()} to compute Otsu misclassification metrics. Note that the table attribute must be set when running \code{otsu_misclass()}.}
 }
 \value{
 \code{ggplot2} object with misclassification plot

@@ -28,4 +28,5 @@ Imports:
     reticulate,
     caret,
     e1071,
-    ggplot2
+    ggplot2,
+    tidyr

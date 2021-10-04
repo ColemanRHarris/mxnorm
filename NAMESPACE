@@ -3,6 +3,7 @@
 export(mx_dataset)
 export(mx_normalize)
 export(otsu_misclass)
+export(plot_mx_density)
 export(plot_mx_variance)
 import(ggplot2)
 importFrom(dplyr,all_of)
