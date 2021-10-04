@@ -38,11 +38,15 @@ get_long_data <- function(mx_data){
                       value="marker_value")
     rm(base_data)
 
+    ## create join on to match naming conventions
+    join_on = c("slide_id","marker","table")
+    names(join_on) = c(mx_data$slide_id,"marker","table")
+
     ## add otsu data
     if(!is.null(odata)){
         long_data = long_data %>%
             dplyr::left_join(y = odata,
-                             by = c("slide_id","marker","table"))
+                             by = join_on)
         rm(odata)
     }
 

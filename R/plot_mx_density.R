@@ -25,12 +25,11 @@ plot_mx_density <- function(mx_data){
 
     ## get relevant values
     long_data = get_long_data(mx_data)
+    slide_id = mx_data$slide_id
 
-    ## set to not get CRAN notes
-    #misclass_error = NULL
-
+    ## plot
     ggplot(long_data) +
-        geom_density(aes_string(x="marker_value",color="slide_id")) +
-        geom_rug(aes_string(x="slide_threshold",color="slide_id")) +
+        geom_density(aes_string(x="marker_value",color=slide_id)) +
+        geom_rug(aes_string(x="slide_threshold",color=slide_id)) +
         facet_wrap(table~marker,scales = "free",nrow=2,ncol=length(mx_data$marker_cols))
 }
