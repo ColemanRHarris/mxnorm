@@ -127,7 +127,7 @@ Using the above normalized data, we can run misclassification metrics to
 determine how well our normalization method performs:
 
 ``` r
-mx_otsu = otsu_misclass(mx_norm,
+mx_otsu = run_otsu_misclass(mx_norm,
                         table="both",
                         threshold_override = NULL,
                         plot_out = FALSE)
@@ -194,13 +194,13 @@ First, we can visualize the densities of the marker values as follows:
 plot_mx_density(mx_otsu)
 ```
 
-<img src="man/figures/README-mx dens-1.png" width="100%" />
+<img src="man/figures/README-mx_dens-1.png" width="100%" />
 
 We can also visualize the results of the Otsu misclassification analysis
 stratified by slide and marker:
 
 ``` r
-plot_mx_variance(mx_otsu)
+plot_mx_misclass(mx_otsu)
 ```
 
-<img src="man/figures/README-mx var-1.png" width="100%" />
+<img src="man/figures/README-mx_var-1.png" width="100%" />

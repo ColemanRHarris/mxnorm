@@ -7,7 +7,7 @@
 plot_mx_density(mx_data)
 }
 \arguments{
-\item{mx_data}{\code{mx_dataset} object that been used with \code{otsu_misclass()} to compute Otsu misclassification metrics (necessary for the density rug plot). Note that the table attribute must be set when running \code{otsu_misclass()}.}
+\item{mx_data}{\code{mx_dataset} object that been used with \code{run_otsu_misclass()} to compute Otsu misclassification metrics (necessary for the density rug plot). Note that the table attribute must be set when running \code{run_otsu_misclass()}.}
 }
 \value{
 \code{ggplot2} object with density plot
@@ -20,6 +20,6 @@ mx_data = mx_dataset(mxnorm::mx_sample, "slide_id", "image_id",
   c("marker1_vals","marker2_vals","marker3_vals"),
   c("metadata1_vals"))
 mx_data = mx_normalize(mx_data, scale="log10",method="None")
-mx_data = otsu_misclass(mx_data, table="normalized")
+mx_data = run_otsu_misclass(mx_data, table="normalized")
 plot_mx_density(mx_data)
 }

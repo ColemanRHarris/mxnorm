@@ -1,6 +1,6 @@
 #' Internal function to select correct thresholding algorithm
 #'
-#' @inheritParams otsu_misclass
+#' @inheritParams run_otsu_misclass
 #'
 #' @return function to use as thresholding algorithm
 get_misclass_thold <- function(threshold_override,

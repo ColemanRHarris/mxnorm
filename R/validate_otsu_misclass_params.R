@@ -1,6 +1,6 @@
 #' Internal function to validate parameters passed to `otsu_misclass`
 #'
-#' @inheritParams otsu_misclass
+#' @inheritParams run_otsu_misclass
 #'
 #' @return `mx_dataset` object
 validate_otsu_misclass_params <- function(mx_data,

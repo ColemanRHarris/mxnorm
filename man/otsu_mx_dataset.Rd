@@ -11,7 +11,7 @@ otsu_mx_dataset(mx_data, table, threshold)
 
 \item{table}{dataset in \code{mx_data} used to compute metrics. Options include: c("raw","normalized","both"), e.g. a y-axis parameter.}
 
-\item{threshold}{thresolding function as defined using \code{otsu_misclass()}}
+\item{threshold}{thresolding function as defined using \code{run_otsu_misclass()}}
 }
 \value{
 \code{mx_dataset} object with \code{otsu_data} attribute added and misclassification results

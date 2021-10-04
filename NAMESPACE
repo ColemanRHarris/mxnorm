@@ -2,9 +2,9 @@
 
 export(mx_dataset)
 export(mx_normalize)
-export(otsu_misclass)
 export(plot_mx_density)
-export(plot_mx_variance)
+export(plot_mx_misclass)
+export(run_otsu_misclass)
 import(ggplot2)
 importFrom(dplyr,all_of)
 importFrom(magrittr,"%>%")

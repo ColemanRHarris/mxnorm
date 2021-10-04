@@ -1,6 +1,6 @@
 #' Visualize marker density before/after normalization by marker and slide
 #'
-#' @param mx_data `mx_dataset` object that been used with `otsu_misclass()` to compute Otsu misclassification metrics (necessary for the density rug plot). Note that the table attribute must be set when running `otsu_misclass()`.
+#' @param mx_data `mx_dataset` object that been used with `run_otsu_misclass()` to compute Otsu misclassification metrics (necessary for the density rug plot). Note that the table attribute must be set when running `run_otsu_misclass()`.
 #'
 #' @return `ggplot2` object with density plot
 #' @export
@@ -13,7 +13,7 @@
 #'   c("marker1_vals","marker2_vals","marker3_vals"),
 #'   c("metadata1_vals"))
 #' mx_data = mx_normalize(mx_data, scale="log10",method="None")
-#' mx_data = otsu_misclass(mx_data, table="normalized")
+#' mx_data = run_otsu_misclass(mx_data, table="normalized")
 #' plot_mx_density(mx_data)
 plot_mx_density <- function(mx_data){
     ## validate step

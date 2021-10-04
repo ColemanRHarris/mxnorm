@@ -1,6 +1,6 @@
 #' Internal function to validate user defined thresholding algorithm
 #'
-#' @inheritParams otsu_misclass
+#' @inheritParams run_otsu_misclass
 #'
 #' @return threshold_override function if it passes
 validate_threshold_override <- function(threshold_override,

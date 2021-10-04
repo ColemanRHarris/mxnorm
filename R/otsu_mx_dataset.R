@@ -1,7 +1,7 @@
 #' Internal function to generate table for otsu misclassification analysis
 #'
-#' @inheritParams otsu_misclass
-#' @param threshold thresolding function as defined using `otsu_misclass()`
+#' @inheritParams run_otsu_misclass
+#' @param threshold thresolding function as defined using `run_otsu_misclass()`
 #'
 #' @importFrom magrittr %>%
 #'

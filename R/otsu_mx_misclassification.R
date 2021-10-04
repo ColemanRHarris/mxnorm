@@ -1,6 +1,6 @@
 #' Internal function to run misclassification analysis on otsu table
 #'
-#' @inheritParams otsu_misclass
+#' @inheritParams run_otsu_misclass
 #'
 #' @return `mx_dataset` object with misclassification results
 otsu_mx_misclassification <- function(mx_data,
