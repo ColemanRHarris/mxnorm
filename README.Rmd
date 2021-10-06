@@ -111,7 +111,7 @@ mx_umap = run_reduce_umap(mx_otsu,
 
 This adds UMAP dimensions to our `mx_dataset` object in the following form:
 ```{r umap_data}
-head(mx_umap)
+head(mx_umap$umap_data)
 ```
 
 And the `mx_dataset` object now includes the following attributes:
