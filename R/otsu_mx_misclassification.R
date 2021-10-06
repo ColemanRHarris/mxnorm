@@ -78,7 +78,7 @@ otsu_mx_misclassification <- function(mx_data,
     }
 
     mx_data$otsu_data = otsu_data
-    mx_data$table = table
+    mx_data$otsu_table = table
 
     mx_data
 }
