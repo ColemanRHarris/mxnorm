@@ -76,7 +76,7 @@ And the `mx_dataset` object now includes the following attributes:
 str(mx_norm)
 ```
 
-## Otsu misclassification metrics with `otsu_misclass()`
+## Otsu misclassification metrics with `run_otsu_misclass()`
 
 Using the above normalized data, we can run misclassification metrics to determine how well our normalization method performs:
 ```{r otsu}
@@ -97,6 +97,29 @@ And the `mx_dataset` object now includes the following attributes:
 str(mx_otsu)
 ```
 
+## UMAP dimension reduction with `run_reduce_umap()`
+
+We can also use the UMAP algorithm to reduce the dimensions of our markers in the dataset as follows, using the `metadata_col` parameter for later (e.g., similar to a tissue type in practice with multiplexed data):
+
+```{r umap}
+mx_umap = run_reduce_umap(mx_otsu,
+                        table="both",
+                        marker_list = c("marker1_vals","marker2_vals","marker3_vals"),
+                        downsample_pct = 0.8,
+                        metadata_col = "metadata1_vals")
+```
+
+This adds UMAP dimensions to our `mx_dataset` object in the following form:
+```{r umap_data}
+head(mx_umap)
+```
+
+And the `mx_dataset` object now includes the following attributes:
+
+```{r umap_str}
+str(mx_umap)
+```
+
 # Visualizations
 
 We can also begin to visualize these results using some of `mxnorm`'s plotting features built using `ggplot2`. 
@@ -112,3 +135,10 @@ We can also visualize the results of the Otsu misclassification analysis stratif
 ```{r mx_var}
 plot_mx_misclass(mx_otsu)
 ```
+
+We can further visualize the results of the UMAP dimension reduction as follows:
+
+```{r mx_umap}
+plot_mx_umap(mx_umap,metadata_col = "metadata1_vals")
+```
+

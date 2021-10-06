@@ -19,7 +19,7 @@ plot_mx_density <- function(mx_data){
     ## validate step
     mx_data = validate_mx_dataset(mx_data)
     if(is.null(mx_data$otsu_data)){
-        stop("You must run the otsu_misclass() analysis before generating this plot.",
+        stop("You must run the run_otsu_misclass() analysis before generating this plot.",
              call.=FALSE)
     }
 
