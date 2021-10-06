@@ -14,7 +14,8 @@
 #'   c("marker1_vals","marker2_vals","marker3_vals"),
 #'   c("metadata1_vals"))
 #' mx_data = mx_normalize(mx_data, scale="log10",method="None")
-#' mx_data = run_reduce_umap(mx_data, table="normalized",c("marker1_vals","marker2_vals","marker3_vals"))
+#' mx_data = run_reduce_umap(mx_data, table="normalized",
+#' c("marker1_vals","marker2_vals","marker3_vals"))
 run_reduce_umap <- function(mx_data,
                             table,
                             marker_list,
@@ -42,6 +43,7 @@ run_reduce_umap <- function(mx_data,
     }
 
     mx_data$umap_data = udata
+    mx_data$umap_table = table
 
     mx_data
 }

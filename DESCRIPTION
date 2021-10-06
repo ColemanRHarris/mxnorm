@@ -29,4 +29,5 @@ Imports:
     caret,
     e1071,
     ggplot2,
-    tidyr
+    tidyr,
+    uwot

@@ -19,10 +19,10 @@ get_long_data <- function(mx_data){
     ## check if otsu data
     if(!is.null(mx_data$otsu_data)){
         odata = mx_data$otsu_data
-        if(mx_data$table == "both"){
+        if(mx_data$otsu_table == "both"){
             base_data = rbind(rdata,ndata)
             rm(rdata,ndata)
-        } else if(mx_data$table == "normalized"){
+        } else if(mx_data$otsu_table == "normalized"){
             base_data = ndata
             rm(rdata,ndata)
         } else{
