@@ -52,7 +52,7 @@ mx_dataset = mx_dataset(data=mx_sample,
 The structure of the now built `mx_dataset` object:
 
 ```{r ex_str}
-str(mx_dataset,collapse=TRUE)
+str(mx_dataset)
 ```
 
 ## Normalization with `mx_normalize()`
@@ -93,7 +93,7 @@ head(mx_otsu$otsu_data)
 
 And the `mx_dataset` object now includes the following attributes:
 
-```{r otsu_str,collapse=TRUE}
+```{r otsu_str}
 str(mx_otsu)
 ```
 
@@ -116,7 +116,7 @@ head(mx_umap$umap_data)
 
 And the `mx_dataset` object now includes the following attributes:
 
-```{r umap_str,collapse=TRUE}
+```{r umap_str}
 str(mx_umap)
 ```
 
@@ -137,7 +137,7 @@ head(mx_var$var_data)
 
 And the `mx_dataset` object now includes the following attributes:
 
-```{r var_str,collapse=TRUE}
+```{r var_str}
 str(mx_var)
 ```
 
