@@ -29,7 +29,7 @@ validate_reduce_umap_params <- function(mx_data,
         if(!is.null(metadata_cols)){
             if(!all(metadata_cols %in% colnames(mx_data$norm_data))){
                 stop(
-                    "The metadata columns provided do match the normalized data.",
+                    "The metadata columns provided do not match the normalized data.",
                     call. = FALSE
                 )
             }
@@ -48,7 +48,7 @@ validate_reduce_umap_params <- function(mx_data,
     if(!is.null(metadata_cols)){
         if(!all(metadata_cols %in% mx_data$metadata_cols)){
             stop(
-                "The metadata columns provided do match the raw data.",
+                "The metadata columns provided do not match the raw data.",
                 call. = FALSE
             )
         }

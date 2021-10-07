@@ -4,7 +4,7 @@
 \alias{normalize_mx_combat}
 \title{Internal function to normalize mx_dataset using ComBat}
 \usage{
-normalize_mx_combat(mx_data, remove_zeroes = TRUE, tol = 1e-04, ...)
+normalize_mx_combat(mx_data, remove_zeroes = TRUE, tol = 0.0001, ...)
 }
 \arguments{
 \item{mx_data}{\code{mx_dataset} object to normalize}

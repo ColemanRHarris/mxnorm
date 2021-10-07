@@ -4,7 +4,7 @@
 \alias{run_combat}
 \title{Internal function to combat-adjust for one marker}
 \usage{
-run_combat(marker, slide_var, ndat, remove_zeroes = TRUE, tol = 1e-04)
+run_combat(marker, slide_var, ndat, remove_zeroes = TRUE, tol = 0.0001)
 }
 \arguments{
 \item{marker}{column name of marker to normalize}

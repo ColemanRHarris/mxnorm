@@ -30,4 +30,6 @@ Imports:
     e1071,
     ggplot2,
     tidyr,
-    uwot
+    uwot,
+    lme4,
+    stringr
