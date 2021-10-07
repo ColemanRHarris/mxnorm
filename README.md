@@ -54,7 +54,7 @@ mx_dataset = mx_dataset(data=mx_sample,
 The structure of the now built `mx_dataset` object:
 
 ``` r
-str(mx_dataset)
+str(mx_dataset,collapse=TRUE)
 #> List of 5
 #>  $ data         :'data.frame':   3000 obs. of  6 variables:
 #>   ..$ slide_id      : chr [1:3000] "slide1" "slide1" "slide1" "slide1" ...
@@ -204,19 +204,19 @@ form:
 ``` r
 head(mx_umap$umap_data)
 #>      marker1_vals marker2_vals marker3_vals metadata1_vals table         U1
-#> 1619           69          926         8461             no   raw  -7.645852
-#> 2055           77          156         8221             no   raw -10.670881
-#> 1459           23          710         8469            yes   raw  -8.377994
-#> 458            67          282          227            yes   raw   8.542427
-#> 790             7          422         5766            yes   raw  -4.654197
-#> 1372           68          873         5218            yes   raw  -1.804141
-#>              U2
-#> 1619  -5.495466
-#> 2055  -4.106900
-#> 1459  -5.375186
-#> 458  -12.362357
-#> 790    9.461787
-#> 1372   8.947082
+#> 1358           42          559         9040            yes   raw -10.209344
+#> 2218           12          312         8556             no   raw  -8.239037
+#> 2593           43          192          229             no   raw   9.351186
+#> 2227           85          996         6391             no   raw  -8.145189
+#> 1431           31          513         9655            yes   raw  -9.774081
+#> 2762           52          604         6462             no   raw  -6.970824
+#>             U2
+#> 1358  9.110037
+#> 2218  6.775599
+#> 2593 12.236804
+#> 2227 -6.668778
+#> 1431 12.042977
+#> 2762 -5.991169
 ```
 
 And the `mx_dataset` object now includes the following attributes:
@@ -253,14 +253,91 @@ str(mx_umap)
 #>   ..$ misclass_error  : num [1:24] 0.008 0.0133 0.0187 0.008 0.0187 ...
 #>  $ otsu_table   : chr "both"
 #>  $ umap_data    :'data.frame':   4800 obs. of  7 variables:
-#>   ..$ marker1_vals  : num [1:4800] 69 77 23 67 7 68 52 74 64 86 ...
-#>   ..$ marker2_vals  : num [1:4800] 926 156 710 282 422 873 839 617 23 203 ...
-#>   ..$ marker3_vals  : num [1:4800] 8461 8221 8469 227 5766 ...
-#>   ..$ metadata1_vals: chr [1:4800] "no" "no" "yes" "yes" ...
+#>   ..$ marker1_vals  : num [1:4800] 42 12 43 85 31 52 5 13 19 96 ...
+#>   ..$ marker2_vals  : num [1:4800] 559 312 192 996 513 604 205 826 621 327 ...
+#>   ..$ marker3_vals  : num [1:4800] 9040 8556 229 6391 9655 ...
+#>   ..$ metadata1_vals: chr [1:4800] "yes" "no" "no" "no" ...
 #>   ..$ table         : chr [1:4800] "raw" "raw" "raw" "raw" ...
-#>   ..$ U1            : num [1:4800] -7.65 -10.67 -8.38 8.54 -4.65 ...
-#>   ..$ U2            : num [1:4800] -5.5 -4.11 -5.38 -12.36 9.46 ...
+#>   ..$ U1            : num [1:4800] -10.21 -8.24 9.35 -8.15 -9.77 ...
+#>   ..$ U2            : num [1:4800] 9.11 6.78 12.24 -6.67 12.04 ...
 #>  $ umap_table   : chr "both"
+#>  - attr(*, "class")= chr "mx_dataset"
+```
+
+## Variance components analysis with `run_var_proportions()`
+
+We can also leverage `lmer()` from the `lme4` package to perform random
+effect modeling on the data to determine how much variance is present at
+the slide level, as follows:
+
+``` r
+mx_var = run_var_proportions(mx_umap,
+                             table="both",
+                             metadata_cols = "metadata1_vals")
+```
+
+This adds UMAP dimensions to our `mx_dataset` object in the following
+form:
+
+``` r
+head(mx_var$var_data)
+#>     proportions    level       marker table
+#> 1: 0.0000000000    slide marker1_vals   raw
+#> 2: 1.0000000000 residual marker1_vals   raw
+#> 3: 0.0000000000    slide marker2_vals   raw
+#> 4: 1.0000000000 residual marker2_vals   raw
+#> 5: 0.0004371019    slide marker3_vals   raw
+#> 6: 0.9995628981 residual marker3_vals   raw
+```
+
+And the `mx_dataset` object now includes the following attributes:
+
+``` r
+str(mx_var)
+#> List of 13
+#>  $ data         :'data.frame':   3000 obs. of  6 variables:
+#>   ..$ slide_id      : chr [1:3000] "slide1" "slide1" "slide1" "slide1" ...
+#>   ..$ image_id      : chr [1:3000] "image1" "image1" "image1" "image1" ...
+#>   ..$ marker1_vals  : num [1:3000] 91 94 29 83 64 52 74 13 66 71 ...
+#>   ..$ marker2_vals  : num [1:3000] 274 944 446 542 162 693 797 774 213 204 ...
+#>   ..$ marker3_vals  : num [1:3000] 2465 5303 2140 258 3420 ...
+#>   ..$ metadata1_vals: chr [1:3000] "yes" "yes" "yes" "yes" ...
+#>  $ slide_id     : chr "slide_id"
+#>  $ image_id     : chr "image_id"
+#>  $ marker_cols  : chr [1:3] "marker1_vals" "marker2_vals" "marker3_vals"
+#>  $ metadata_cols: chr "metadata1_vals"
+#>  $ norm_data    :'data.frame':   3000 obs. of  6 variables:
+#>   ..$ slide_id      : chr [1:3000] "slide1" "slide1" "slide1" "slide1" ...
+#>   ..$ image_id      : chr [1:3000] "image1" "image1" "image1" "image1" ...
+#>   ..$ marker1_vals  : num [1:3000] 1.96 1.98 1.48 1.92 1.81 ...
+#>   ..$ marker2_vals  : num [1:3000] 2.44 2.98 2.65 2.73 2.21 ...
+#>   ..$ marker3_vals  : num [1:3000] 3.39 3.72 3.33 2.41 3.53 ...
+#>   ..$ metadata1_vals: chr [1:3000] "yes" "yes" "yes" "yes" ...
+#>  $ scale        : chr "log10"
+#>  $ method       : chr "None"
+#>  $ otsu_data    :'data.frame':   24 obs. of  6 variables:
+#>   ..$ slide_id        : chr [1:24] "slide1" "slide2" "slide3" "slide4" ...
+#>   ..$ marker          : chr [1:24] "marker1_vals" "marker1_vals" "marker1_vals" "marker1_vals" ...
+#>   ..$ table           : chr [1:24] "raw" "raw" "raw" "raw" ...
+#>   ..$ slide_threshold : num [1:24] 50.2 47.9 47.9 51 515.6 ...
+#>   ..$ marker_threshold: num [1:24] 49 49 49 49 498 ...
+#>   ..$ misclass_error  : num [1:24] 0.008 0.0133 0.0187 0.008 0.0187 ...
+#>  $ otsu_table   : chr "both"
+#>  $ umap_data    :'data.frame':   4800 obs. of  7 variables:
+#>   ..$ marker1_vals  : num [1:4800] 42 12 43 85 31 52 5 13 19 96 ...
+#>   ..$ marker2_vals  : num [1:4800] 559 312 192 996 513 604 205 826 621 327 ...
+#>   ..$ marker3_vals  : num [1:4800] 9040 8556 229 6391 9655 ...
+#>   ..$ metadata1_vals: chr [1:4800] "yes" "no" "no" "no" ...
+#>   ..$ table         : chr [1:4800] "raw" "raw" "raw" "raw" ...
+#>   ..$ U1            : num [1:4800] -10.21 -8.24 9.35 -8.15 -9.77 ...
+#>   ..$ U2            : num [1:4800] 9.11 6.78 12.24 -6.67 12.04 ...
+#>  $ umap_table   : chr "both"
+#>  $ var_data     :Classes 'data.table' and 'data.frame':  12 obs. of  4 variables:
+#>   ..$ proportions: num [1:12] 0 1 0 1 0.000437 ...
+#>   ..$ level      : chr [1:12] "slide" "residual" "slide" "residual" ...
+#>   ..$ marker     : chr [1:12] "marker1_vals" "marker1_vals" "marker2_vals" "marker2_vals" ...
+#>   ..$ table      : chr [1:12] "raw" "raw" "raw" "raw" ...
+#>   ..- attr(*, ".internal.selfref")=<externalptr> 
 #>  - attr(*, "class")= chr "mx_dataset"
 ```
 
@@ -284,7 +361,7 @@ stratified by slide and marker:
 plot_mx_misclass(mx_otsu)
 ```
 
-<img src="man/figures/README-mx_var-1.png" width="100%" />
+<img src="man/figures/README-mx_misc-1.png" width="100%" />
 
 We can further visualize the results of the UMAP dimension reduction as
 follows:
@@ -294,3 +371,13 @@ plot_mx_umap(mx_umap,metadata_col = "metadata1_vals")
 ```
 
 <img src="man/figures/README-mx_umap-1.png" width="100%" />
+
+And we can also visualize the results of the variance proportions (note
+that this is sample data, hence the proportions of variance at the slide
+level are \(\approx 0\)):
+
+``` r
+plot_mx_proportions(mx_var)
+```
+
+<img src="man/figures/README-mx_var-1.png" width="100%" />

@@ -52,7 +52,7 @@ mx_dataset = mx_dataset(data=mx_sample,
 The structure of the now built `mx_dataset` object:
 
 ```{r ex_str}
-str(mx_dataset)
+str(mx_dataset,collapse=TRUE)
 ```
 
 ## Normalization with `mx_normalize()`
@@ -93,7 +93,7 @@ head(mx_otsu$otsu_data)
 
 And the `mx_dataset` object now includes the following attributes:
 
-```{r otsu_str}
+```{r otsu_str,collapse=TRUE}
 str(mx_otsu)
 ```
 
@@ -116,8 +116,29 @@ head(mx_umap$umap_data)
 
 And the `mx_dataset` object now includes the following attributes:
 
-```{r umap_str}
+```{r umap_str,collapse=TRUE}
 str(mx_umap)
+```
+
+## Variance components analysis with `run_var_proportions()`
+
+We can also leverage `lmer()` from the `lme4` package to perform random effect modeling on the data to determine how much variance is present at the slide level, as follows:
+
+```{r var,warnings=FALSE,message=FALSE}
+mx_var = run_var_proportions(mx_umap,
+                             table="both",
+                             metadata_cols = "metadata1_vals")
+```
+
+This adds UMAP dimensions to our `mx_dataset` object in the following form:
+```{r var_data}
+head(mx_var$var_data)
+```
+
+And the `mx_dataset` object now includes the following attributes:
+
+```{r var_str,collapse=TRUE}
+str(mx_var)
 ```
 
 # Visualizations
@@ -132,7 +153,7 @@ plot_mx_density(mx_otsu)
 
 We can also visualize the results of the Otsu misclassification analysis stratified by slide and marker:
 
-```{r mx_var}
+```{r mx_misc}
 plot_mx_misclass(mx_otsu)
 ```
 
@@ -140,5 +161,11 @@ We can further visualize the results of the UMAP dimension reduction as follows:
 
 ```{r mx_umap}
 plot_mx_umap(mx_umap,metadata_col = "metadata1_vals")
+```
+
+And we can also visualize the results of the variance proportions (note that this is sample data, hence the proportions of variance at the slide level are $\approx 0$):
+
+```{r mx_var}
+plot_mx_proportions(mx_var)
 ```
 
