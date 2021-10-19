@@ -109,7 +109,7 @@ mx_umap = run_reduce_umap(mx_otsu,
                         metadata_col = "metadata1_vals")
 ```
 
-This adds UMAP dimensions to our `mx_dataset` object in the following form:
+This adds UMAP dimensions to our `mx_dataset` object in the following form (note the inclusion of `slide_id` as an identifier, which we'll use later):
 ```{r umap_data}
 head(mx_umap$umap_data)
 ```
@@ -161,6 +161,12 @@ We can further visualize the results of the UMAP dimension reduction as follows:
 
 ```{r mx_umap}
 plot_mx_umap(mx_umap,metadata_col = "metadata1_vals")
+```
+
+Note that since the sample data is simulated, we don't see separation of the groups like we would expect with biological samples that have some underlying correlation. What we can observe, however, is the separation of slides in the `raw` data and subsequent mixing of these slides in the `normalized` data:
+
+```{r mx_umap_slide}
+plot_mx_umap(mx_umap,metadata_col = "slide_id")
 ```
 
 And we can also visualize the results of the variance proportions (note that this is sample data, hence the proportions of variance at the slide level are $\approx 0$):
