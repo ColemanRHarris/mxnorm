@@ -16,6 +16,7 @@ RoxygenNote: 7.1.1
 Depends: 
     R (>= 3.5.0)
 Suggests: 
+    janitor (>= 2.1.0),
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports: 
