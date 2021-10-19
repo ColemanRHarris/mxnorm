@@ -169,7 +169,7 @@ Note that since the sample data is simulated, we don't see separation of the gro
 plot_mx_umap(mx_umap,metadata_col = "slide_id")
 ```
 
-And we can also visualize the results of the variance proportions (note that this is sample data, hence the proportions of variance at the slide level are $\approx 0$):
+And we can also visualize the results of the variance proportions after normalization:
 
 ```{r mx_var}
 plot_mx_proportions(mx_var)
