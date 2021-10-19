@@ -30,7 +30,7 @@ devtools::install_github("ColemanRHarris/mxnorm")
 ```
 # Analysis Example
 
-This is a basic example using the `mx_sample` dataset, which is simulated data to demonstrate the package's functionality.
+This is a basic example using the `mx_sample` dataset, which is simulated data to demonstrate the package's functionality with slide effects.
 
 ```{r sample}
 library(mxnorm)
