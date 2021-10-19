@@ -13,7 +13,7 @@ get_umap_data <- function(mx_data,
         dat = mx_data$data
     }
 
-    dat = dat[,c(marker_list,metadata_cols)]
+    dat = dat[,c(marker_list,metadata_cols,"slide_id")]
     dat$table = table
 
     dat
