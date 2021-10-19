@@ -47,5 +47,17 @@ run_otsu_misclass <- function(mx_data,
         print(plot_mx_misclass(mx_obj))
     }
 
+    ## set threshold param
+    if(!is.null(threshold_override)){
+        if(class(threshold_override) == "character"){
+            thold_val = threshold_override
+        } else{
+            thold_val = "user-defined"
+        }
+    } else{
+        thold_val = "otsu"
+    }
+    mx_obj$threshold = thold_val
+
     mx_obj
 }

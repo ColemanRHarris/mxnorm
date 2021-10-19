@@ -60,7 +60,7 @@ otsu_mx_dataset <- function(mx_data,
             data.table::rbindlist()
     }
 
-    mx_data$otsu_data = data.frame(otsu_data)
+    mx_data$otsu_data = as.data.frame(otsu_data)
 
     mx_data
 }
