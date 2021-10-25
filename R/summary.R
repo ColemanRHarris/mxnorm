@@ -15,5 +15,6 @@ summary <- function(x) UseMethod("summary")
 #' @examples summary(mxnorm::mx_sample)
 summary.mx_dataset <- function(x){
     length(x)
+    ## however we want to summarize
 }
 
