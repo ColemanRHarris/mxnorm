@@ -6,14 +6,14 @@ test_that("validate params works",{
                          metadata_cols=c("metadata1_vals"))
     ## validate parameters
     mx_obj = mx_normalize(mx_data=mx_obj,
-                           scale="log10",
+                           transform="log10",
                            method="ComBat")
 
     ## table exists in list
     expect_error(validate_otsu_misclass_params(mx_obj,table="test",NULL,NULL))
 
     ## validate mx_dataset (copy from other tests)
-    ## catches missing scale
+    ## catches missing transform
     expect_error(validate_otsu_misclass_params(mx_obj[-7],"normalized",NULL,NULL))
 
     ## catches missing method
@@ -70,7 +70,7 @@ test_that("create dataset works",{
                         metadata_cols=c("metadata1_vals"))
     ## validate parameters
     mx_obj = mx_normalize(mx_data=mx_obj,
-                          scale="log10",
+                          transform="log10",
                           method="ComBat")
 
     ## set correct threshold & validate
@@ -93,7 +93,7 @@ test_that("misclassification works",{
                         metadata_cols=c("metadata1_vals"))
     ## validate parameters
     mx_obj = mx_normalize(mx_data=mx_obj,
-                          scale="log10",
+                          transform="log10",
                           method="ComBat")
 
     ## set correct threshold & validate
@@ -125,7 +125,7 @@ test_that("plot out works",{
                         marker_cols=c("marker1_vals","marker2_vals","marker3_vals"),
                         metadata_cols=c("metadata1_vals"))
     mx_obj = mx_normalize(mx_data=mx_obj,
-                          scale="log10",
+                          transform="log10",
                           method="None")
     ## should print out
     mx_obj = run_otsu_misclass(mx_obj,

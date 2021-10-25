@@ -4,12 +4,12 @@
 \alias{validate_mx_normalize_params}
 \title{Internal function to validate mx_normalize args}
 \usage{
-validate_mx_normalize_params(mx_data, scale, method, method_override)
+validate_mx_normalize_params(mx_data, transform, method, method_override)
 }
 \arguments{
 \item{mx_data}{\code{mx_dataset} object to normalize}
 
-\item{scale}{scale transformation to perform on the input data. Options include: c("None", "log10", "mean_divide","log10_mean_divide")}
+\item{transform}{transformation to perform on the input data. Options include: c("None", "log10", "mean_divide","log10_mean_divide")}
 
 \item{method}{normalization method to perform on the input data. Options include: c("None", "ComBat","Registration")}
 

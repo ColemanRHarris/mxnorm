@@ -3,7 +3,7 @@
 #' Normalizes some given image input according to the method specified
 #'
 #' @param mx_data `mx_dataset` object to normalize
-#' @param scale scale transformation to perform on the input data. Options include: c("None", "log10", "mean_divide","log10_mean_divide")
+#' @param transform transformation to perform on the input data. Options include: c("None", "log10", "mean_divide","log10_mean_divide")
 #' @param method normalization method to perform on the input data. Options include: c("None", "ComBat","Registration")
 #' @param method_override optional user-defined function to perform own normalization method (default=NULL). If using a user-defined function, it must include a `mx_data` parameter.
 #' @param ... optional additional arguments for normalization functions
@@ -15,21 +15,21 @@
 #' mx_data = mx_dataset(mxnorm::mx_sample, "slide_id", "image_id",
 #'   c("marker1_vals","marker2_vals","marker3_vals"),
 #'   c("metadata1_vals"))
-#' mx_data = mx_normalize(mx_data, scale="log10",method="None")
+#' mx_data = mx_normalize(mx_data, transform="log10",method="None")
 mx_normalize <- function(mx_data,
-                         scale = "None",
+                         transform = "None",
                          method = "None",
                          method_override = NULL,
                          ...){
     ## validate parameters
     mx_obj = validate_mx_normalize_params(mx_data,
-                                          scale,
+                                          transform,
                                           method,
                                           method_override)
 
-    ## scale transformation
-    mx_obj = scale_mx_dataset(mx_data,
-                              scale)
+    ## transformation
+    mx_obj = transform_mx_dataset(mx_data,
+                              transform)
 
     ## check method override function
     if(!is.null(method_override)){

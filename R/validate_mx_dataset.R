@@ -17,7 +17,7 @@ validate_mx_dataset <- function(x){
 
     ## collected potential norm values
     norm_data = x$norm_data
-    scale = x$scale
+    transform = x$transform
     method = x$method
 
     ## collected potential otsu values
@@ -34,10 +34,10 @@ validate_mx_dataset <- function(x){
         ## check normalized data
         b = check_data_values(norm_values)
 
-        ## throw error if scale not present
-        if(is.null(scale)){
+        ## throw error if transform not present
+        if(is.null(transform)){
             stop(
-                "Scale attribute not present in mx_dataset object"
+                "Transform attribute not present in mx_dataset object"
             )
         }
 

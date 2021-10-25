@@ -6,7 +6,7 @@ test_that("validate params works",{
                         metadata_cols=c("metadata1_vals"))
     ## validate parameters
     mx_obj = mx_normalize(mx_data=mx_obj,
-                          scale="log10",
+                          transform="log10",
                           method="ComBat")
 
     ## confirm both works

@@ -2,7 +2,7 @@ test_that("plotting works", {
     mx_data = mx_dataset(mxnorm::mx_sample, "slide_id", "image_id",
       c("marker1_vals","marker2_vals","marker3_vals"),
       c("metadata1_vals"))
-    mx_data = mx_normalize(mx_data, scale="log10",method="None")
+    mx_data = mx_normalize(mx_data, transform="log10",method="None")
 
     ## expect error (no var prop)
     expect_error(plot_mx_proportions(mx_data))

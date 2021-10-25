@@ -6,7 +6,7 @@
 \usage{
 mx_normalize(
   mx_data,
-  scale = "None",
+  transform = "None",
   method = "None",
   method_override = NULL,
   ...
@@ -15,7 +15,7 @@ mx_normalize(
 \arguments{
 \item{mx_data}{\code{mx_dataset} object to normalize}
 
-\item{scale}{scale transformation to perform on the input data. Options include: c("None", "log10", "mean_divide","log10_mean_divide")}
+\item{transform}{transformation to perform on the input data. Options include: c("None", "log10", "mean_divide","log10_mean_divide")}
 
 \item{method}{normalization method to perform on the input data. Options include: c("None", "ComBat","Registration")}
 
@@ -33,5 +33,5 @@ Normalizes some given image input according to the method specified
 mx_data = mx_dataset(mxnorm::mx_sample, "slide_id", "image_id",
   c("marker1_vals","marker2_vals","marker3_vals"),
   c("metadata1_vals"))
-mx_data = mx_normalize(mx_data, scale="log10",method="None")
+mx_data = mx_normalize(mx_data, transform="log10",method="None")
 }

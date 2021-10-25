@@ -1,24 +1,24 @@
-#' Internal function to scale mx_dataset
+#' Internal function to transform mx_dataset
 #'
 #' @param mx_data `mx_dataset` object to normalize
-#' @param scale scale transformation to perform on the input data. Options include: c("None", "log10", "mean_divide","log10_mean_divide")
+#' @param transform transformation to perform on the input data. Options include: c("None", "log10", "mean_divide","log10_mean_divide")
 #'
 #' @importFrom rlang .data
 #' @importFrom magrittr %>%
 #' @importFrom dplyr all_of
 #'
-#' @return `mx_dataset` object with scaled data, added attributes: `norm_data` (data.frame) and `scale` (character)
-scale_mx_dataset <- function(mx_data,
-                             scale){
+#' @return `mx_dataset` object with transformed data, added attributes: `norm_data` (data.frame) and `transform` (character)
+transform_mx_dataset <- function(mx_data,
+                             transform){
     ## factors s.t. log10 transform is not undefined
     log10_factor = 1
     log10_mean_divide_factor = 0.5
 
     ## do nothing if None
-    if(scale == "None"){
+    if(transform == "None"){
         mx_data$norm_data = mx_data$data
     }
-    if(scale == "log10"){
+    if(transform == "log10"){
         x = mx_data$data
         cols = mx_data$marker_cols
 
@@ -26,7 +26,7 @@ scale_mx_dataset <- function(mx_data,
         x[,cols] = log10(x[,cols]+log10_factor)
         mx_data$norm_data = x
     }
-    if(scale == "mean_divide"){
+    if(transform == "mean_divide"){
         x = mx_data$data
         cols = mx_data$marker_cols
 
@@ -44,7 +44,7 @@ scale_mx_dataset <- function(mx_data,
 
         mx_data$norm_data = x
     }
-    if(scale == "log10_mean_divide"){
+    if(transform == "log10_mean_divide"){
         x = mx_data$data
         cols = mx_data$marker_cols
 
@@ -64,6 +64,6 @@ scale_mx_dataset <- function(mx_data,
         mx_data$norm_data = x
     }
 
-    mx_data$scale = scale
+    mx_data$transform = transform
     mx_data
 }

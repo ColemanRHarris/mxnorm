@@ -4,11 +4,11 @@
 #'
 #' @return `mx_dataset` object
 validate_mx_normalize_params <- function(mx_data,
-                                         scale,
+                                         transform,
                                          method,
                                          method_override){
     ## check args
-    scale = match.arg(scale, c("None", "log10", "mean_divide","log10_mean_divide"))
+    transform = match.arg(transform, c("None", "log10", "mean_divide","log10_mean_divide"))
     method = match.arg(method, c("None", "ComBat","Registration"))
     stopifnot(class(mx_data)=="mx_dataset")
 
