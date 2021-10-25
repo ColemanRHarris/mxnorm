@@ -60,7 +60,7 @@ str(mx_dataset)
 And now we can normalize this data using the `mx_normalize()` function:
 ```{r norm}
 mx_norm = mx_normalize(mx_data = mx_dataset,
-                       scale = "log10_mean_divide",
+                       transform = "log10_mean_divide",
                        method="None")
 ```
 
