@@ -4,6 +4,8 @@
 #' @param mod `lme4::lmer()` model run using `get_var_proportions()`
 #' @param m marker used in `lme4` random effects model
 #'
+#' @import lme4
+#'
 #' @return `data.frame`
 get_var_data <- function(mx_data,
                          table,
