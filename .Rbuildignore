@@ -3,4 +3,3 @@
 ^LICENSE\.md$
 R/.create_sample_data.R
 ^README\.Rmd$
-R/summary.R
