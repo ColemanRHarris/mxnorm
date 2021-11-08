@@ -27,6 +27,7 @@ plot_mx_proportions <- function(mx_data){
     level = NULL
 
     vdata = mx_data$var_data
+    #ggplot(vdata %>% filter(level=="slide"), aes_string(x="proportions",y="marker",color="table")) + geom_point()
     ggplot(vdata, aes_string(x="proportions",y="marker")) +
         geom_col(aes(fill=level)) +
         facet_wrap(~table)
