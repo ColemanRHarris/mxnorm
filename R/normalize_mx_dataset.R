@@ -20,10 +20,12 @@ normalize_mx_dataset <- function(mx_data,
     if(method == "Registration"){
         mx_data = normalize_mx_registration(mx_data, ...)
     }
-    if(!is.null(method_override)){
-        mx_data = method_override(mx_data, ...)
-    }
 
     mx_data$method = method
+    if(!is.null(method_override)){
+        mx_data = method_override(mx_data, ...)
+        mx_data$method = "user-defined"
+    }
+
     mx_data
 }
