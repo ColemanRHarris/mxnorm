@@ -33,4 +33,6 @@ Imports:
     tidyr,
     uwot,
     lme4,
-    stringr
+    stringr,
+    KernSmooth,
+    kSamples

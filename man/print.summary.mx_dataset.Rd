@@ -4,13 +4,12 @@
 \alias{print.summary.mx_dataset}
 \title{Extension of \code{print} S3 method to print \code{summary.mx_dataset} objects}
 \usage{
-\method{print}{summary.mx_dataset}(mx_summ)
+\method{print}{summary.mx_dataset}(x, ...)
 }
 \arguments{
-\item{mx_summ}{\code{summary.mx_dataset} object to summarize}
-}
-\value{
-TBD
+\item{x}{\code{summary.mx_dataset} object to summarize}
+
+\item{...}{option for additional params given S3 logic}
 }
 \description{
 Extension of \code{print} S3 method to print \code{summary.mx_dataset} objects

@@ -4,13 +4,15 @@
 \alias{summary.mx_dataset}
 \title{Extension of \code{summary} S3 method to summarize \code{mx_dataset} objects}
 \usage{
-\method{summary}{mx_dataset}(mx_data)
+\method{summary}{mx_dataset}(object, ...)
 }
 \arguments{
-\item{x}{\code{mx_dataset} object to summarize}
+\item{object}{\code{mx_dataset} object to summarize}
+
+\item{...}{option for additional params given S3 logic}
 }
 \value{
-TBD
+\code{summary.mx_dataset} object
 }
 \description{
 Extension of \code{summary} S3 method to summarize \code{mx_dataset} objects
