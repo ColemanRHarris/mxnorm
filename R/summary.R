@@ -43,6 +43,7 @@ summary.mx_dataset <- function(object, ...){
             rbind(get_ad_test_stats(mx_data$norm_data,mx_data) %>%
                       dplyr::mutate("table"="normalized") %>%
                       dplyr::relocate(table,marker))
+
         summ_ADs = all_ADs %>%
             dplyr::group_by(table) %>%
             dplyr::summarise(mean_test_statistic = mean(ad_test_statistic),
@@ -81,24 +82,38 @@ summary.mx_dataset <- function(object, ...){
 
     if(!is.null(mx_data$norm_data) & !is.null(mx_data$umap_data)){
         ## run UMAP stats
-        udat1 = get_umap_cluster_results("raw",mx_data)
-        udat2 = get_umap_cluster_results("normalized",mx_data)
+        if(mx_data$umap_table == "raw"){
+            udat1 = get_umap_cluster_results("raw",mx_data)
+            raw_slide_adj_rand =  fossil::adj.rand.index(udat1$cluster_slide,udat1$actual_slide)
+            raw_slide_kappa = psych::cohen.kappa(udat1[,c("cluster_slide","actual_slide")])$kappa
 
-        raw_slide_adj_rand =  fossil::adj.rand.index(udat1$cluster_slide,udat1$actual_slide)
-        raw_slide_kappa = psych::cohen.kappa(udat1[,c("cluster_slide","actual_slide")])$kappa
-        norm_slide_adj_rand = fossil::adj.rand.index(udat2$cluster_slide,udat2$actual_slide)
-        norm_slide_kappa = psych::cohen.kappa(udat2[,c("cluster_slide","actual_slide")])$kappa
+            umap_cluster_res = udat1 %>%
+                dplyr::select(c(mx_data$slide_id,table,U1,U2, actual_slide,cluster_slide))
+        } else if(mx_data$umap_table == "normalized"){
+            udat2 = get_umap_cluster_results("normalized",mx_data)
+            norm_slide_adj_rand = fossil::adj.rand.index(udat2$cluster_slide,udat2$actual_slide)
+            norm_slide_kappa = psych::cohen.kappa(udat2[,c("cluster_slide","actual_slide")])$kappa
 
-        umap_cluster_res = udat1 %>%
-            rbind(udat2) %>%
-            dplyr::select(c(mx_data$slide_id,U1,U2, actual_slide,cluster_slide))
+            umap_cluster_res = udat2 %>%
+                dplyr::select(c(mx_data$slide_id,table,U1,U2, actual_slide,cluster_slide))
+        } else{
+            udat1 = get_umap_cluster_results("raw",mx_data)
+            raw_slide_adj_rand =  fossil::adj.rand.index(udat1$cluster_slide,udat1$actual_slide)
+            raw_slide_kappa = psych::cohen.kappa(udat1[,c("cluster_slide","actual_slide")])$kappa
 
-        umap_cluster_summ = data.frame(matrix(c(norm_slide_adj_rand,norm_slide_kappa,
-                                                raw_slide_adj_rand,raw_slide_kappa),byrow=T,nrow=2,ncol=2))
-        colnames(umap_cluster_summ) = c("adj_rand_index","cohens_kappa")
-        umap_cluster_summ$table = c("normalized","raw")
-        umap_cluster_summ = umap_cluster_summ %>%
-            dplyr::relocate(table)
+            udat2 = get_umap_cluster_results("normalized",mx_data)
+            norm_slide_adj_rand = fossil::adj.rand.index(udat2$cluster_slide,udat2$actual_slide)
+            norm_slide_kappa = psych::cohen.kappa(udat2[,c("cluster_slide","actual_slide")])$kappa
+
+            umap_cluster_res = udat1 %>%
+                rbind(udat2) %>%
+                dplyr::select(c(mx_data$slide_id,table,U1,U2, actual_slide,cluster_slide))
+        }
+
+        umap_cluster_summ = umap_cluster_res %>%
+            dplyr::group_by(table) %>%
+            dplyr::summarise(adj_rand_index = fossil::adj.rand.index(cluster_slide,actual_slide),
+                             cohens_kappa = psych::cohen.kappa(cbind(cluster_slide,actual_slide))$kappa)
 
         summ_obj$umap_cluster_results = umap_cluster_res
         summ_obj$umap_cluster_summary =  as.data.frame(umap_cluster_summ)
