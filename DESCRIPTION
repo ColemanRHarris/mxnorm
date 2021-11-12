@@ -35,4 +35,6 @@ Imports:
     lme4,
     stringr,
     KernSmooth,
-    kSamples
+    kSamples,
+    psych,
+    fossil

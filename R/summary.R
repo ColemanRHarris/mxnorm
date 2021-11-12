@@ -49,7 +49,7 @@ summary.mx_dataset <- function(object, ...){
                       mean_std_test_statistic = mean(std_ad_test_statistic),
                       mean_p_value = mean(ad_p_value))
 
-        summ_obj$AD_all_tests = all_ADs
+        summ_obj$AD_test_all = all_ADs
         summ_obj$AD_test_summary = as.data.frame(summ_ADs)
     }
 
@@ -74,9 +74,44 @@ summary.mx_dataset <- function(object, ...){
             dplyr::summarise(mean_misclass=mean(misclass_error),
                       sd_misclass=stats::sd(misclass_error))
 
-        summ_obj$otsu_summary = otsu_summ
+        summ_obj$otsu_threshold_summary = otsu_summ
         summ_obj$otsu_marker_misclass = otsu_marker_misclass
         summ_obj$otsu_global_misclass = as.data.frame(otsu_global_misclass)
+    }
+
+    if(!is.null(mx_data$norm_data) & !is.null(mx_data$umap_data)){
+        ## run UMAP stats
+        udat1 = get_umap_cluster_results("raw",mx_data)
+        udat2 = get_umap_cluster_results("normalized",mx_data)
+
+        raw_slide_adj_rand =  fossil::adj.rand.index(udat1$cluster_slide,udat1$actual_slide)
+        raw_slide_kappa = psych::cohen.kappa(udat1[,c("cluster_slide","actual_slide")])$kappa
+        norm_slide_adj_rand = fossil::adj.rand.index(udat2$cluster_slide,udat2$actual_slide)
+        norm_slide_kappa = psych::cohen.kappa(udat2[,c("cluster_slide","actual_slide")])$kappa
+
+        umap_cluster_res = udat1 %>%
+            rbind(udat2) %>%
+            dplyr::select(c(mx_data$slide_id,U1,U2, actual_slide,cluster_slide))
+
+        umap_cluster_summ = data.frame(matrix(c(norm_slide_adj_rand,norm_slide_kappa,
+                                                raw_slide_adj_rand,raw_slide_kappa),byrow=T,nrow=2,ncol=2))
+        colnames(umap_cluster_summ) = c("adj_rand_index","cohens_kappa")
+        umap_cluster_summ$table = c("normalized","raw")
+        umap_cluster_summ = umap_cluster_summ %>%
+            dplyr::relocate(table)
+
+        summ_obj$umap_cluster_results = umap_cluster_res
+        summ_obj$umap_cluster_summary =  as.data.frame(umap_cluster_summ)
+    }
+
+    if(!is.null(mx_data$var_data)){
+        var_prop_summ = mx_data$var_data %>%
+            dplyr::filter(level=="slide") %>%
+            dplyr::group_by(table) %>%
+            dplyr::summarise(mean=mean(proportions),
+                             sd=sd(proportions))
+
+        summ_obj$var_prop_summary = as.data.frame(var_prop_summ)
     }
 
     summ_obj
@@ -108,7 +143,8 @@ print.summary.mx_dataset <- function(x, ...){
     cat(print_str)
     if(!is.null(mx_data$norm_data)){
         cat(stringr::str_glue("\n\n\nNormalization:\nData normalized with transformation=`{mx_data$transform}` and method=`{mx_data$method}`"))
-        cat("\n\nAnderson-Darling Tests:\n")
+        # (slide histograms are from common distribution)
+        cat("\n\nAnderson-Darling tests:\n")
         cat(utils::capture.output(print.data.frame(mx_summ$AD_test_summary %>% dplyr::mutate_if(is.numeric,round,digits=3),
                                                    right=TRUE,
                                                    row.names=FALSE)),
@@ -116,11 +152,29 @@ print.summary.mx_dataset <- function(x, ...){
     }
 
     if(!is.null(mx_data$otsu_data)){
+        # (slide-level agreement of Otsu thresholds)
         cat("\nOtsu misclassification:\n")
         cat(utils::capture.output(print.data.frame(mx_summ$otsu_global_misclass %>% dplyr::mutate_if(is.numeric,round,digits=3),
                                                    right = TRUE,
                                                    row.names = FALSE)),
             sep = "\n")
+    }
+
+    if(!is.null(mx_data$umap_data)){
+        # (measures of consistency for slide labels)
+        cat("\nUMAP clustering:\n")
+        cat(utils::capture.output(print.data.frame(mx_summ$umap_cluster_summary %>% dplyr::mutate_if(is.numeric,round,digits=3),
+                                                   right=TRUE,
+                                                   row.names=FALSE)),
+            sep="\n")
+    }
+    if(!is.null(mx_data$var_data)){
+        # (proportion of variance at slide-level)
+        cat("\nVariance proportions:\n")
+        cat(utils::capture.output(print.data.frame(mx_summ$var_prop_summary %>% dplyr::mutate_if(is.numeric,round,digits=3),
+                                                   right=TRUE,
+                                                   row.names=FALSE)),
+            sep="\n")
     }
 }
 
@@ -169,4 +223,27 @@ get_ad_test_stats <- function(data_table,
             m_ad
         })
     )
+}
+
+#' Internal function to generate UMAP clustering results
+#'
+#' @param table table in `mx_data` to provide clustering results
+#' @param mx_data `mx_dataset` object to use to generate clustering results results
+#'
+#' @return `data.frame` with UMAP clustering results
+get_umap_cluster_results <- function(table,
+                                     mx_data){
+    ## subset to table
+    udat = mx_data$umap_data[mx_data$umap_data$table==table,]
+
+    ## run kmeans
+    kslide = stats::kmeans(udat[,c("U1","U2")],length(unique(mx_data$data[,mx_data$slide_id])))
+
+    ## add clusters
+    udat$cluster_slide = kslide$cluster
+
+    ## add actual slide IDs as numerics
+    udat$actual_slide = match(udat[,mx_data$slide_id],unique(udat[,mx_data$slide_id]))
+
+    udat
 }
