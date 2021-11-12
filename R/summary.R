@@ -49,7 +49,7 @@ summary.mx_dataset <- function(object, ...){
                       mean_std_test_statistic = mean(std_ad_test_statistic),
                       mean_p_value = mean(ad_p_value))
 
-        summ_obj$all_AD_tests = all_ADs
+        summ_obj$AD_all_tests = all_ADs
         summ_obj$AD_test_summary = as.data.frame(summ_ADs)
     }
 
