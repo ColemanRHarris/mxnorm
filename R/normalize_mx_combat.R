@@ -5,7 +5,7 @@
 #'
 #' @return `mx_dataset` object with normalized data with updated attribute `norm_data` (data.frame) and new attribute `method` (character)
 normalize_mx_combat <- function(mx_data,
-                                remove_zeroes=TRUE,
+                                remove_zeroes=FALSE,
                                 tol=0.0001,
                                  ...){
     ndat = mx_data$norm_data
