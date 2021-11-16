@@ -25,11 +25,15 @@ validate_method_override <- function(method_override,
     }
 
     ## check that method_override runs on mx_sample, with incl. params, and passes validation
-    mx_obj = method_override(mxnorm::mx_sample,...)
-    mx_obj$method = "Validation"
+    mx_obj1 = mx_dataset(mxnorm::mx_sample, "slide_id", "image_id",
+      c("marker1_vals","marker2_vals","marker3_vals"),
+      c("metadata1_vals"))
+    mx_obj2 = method_override(mx_obj1,...)
+    mx_obj2$method = 'validation'
+    mx_obj2$transform = 'validation'
 
     ## run validation
-    mx_obj = validate_mx_dataset(mx_obj)
+    mx_obj2 = validate_mx_dataset(mx_obj2)
 
     TRUE
 }
