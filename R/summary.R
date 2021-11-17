@@ -177,7 +177,7 @@ print.summary.mx_dataset <- function(x, ...){
 
     if(!is.null(mx_data$umap_data)){
         # (measures of consistency for slide labels)
-        cat("\nUMAP clustering:\n")
+        cat("\nClustering consistency (UMAP):\n")
         cat(utils::capture.output(print.data.frame(mx_summ$umap_cluster_summary %>% dplyr::mutate_if(is.numeric,round,digits=3),
                                                    right=TRUE,
                                                    row.names=FALSE)),
@@ -185,7 +185,7 @@ print.summary.mx_dataset <- function(x, ...){
     }
     if(!is.null(mx_data$var_data)){
         # (proportion of variance at slide-level)
-        cat("\nVariance proportions:\n")
+        cat("\nVariance proportions (slide-level):\n")
         cat(utils::capture.output(print.data.frame(mx_summ$var_prop_summary %>% dplyr::mutate_if(is.numeric,round,digits=3),
                                                    right=TRUE,
                                                    row.names=FALSE)),
