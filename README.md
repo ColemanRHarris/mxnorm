@@ -52,23 +52,13 @@ mx_dataset = mx_dataset(data=mx_sample,
                         metadata_cols=c("metadata1_vals"))
 ```
 
-The structure of the now built `mx_dataset` object:
+WE can use the built-in `summary()` function to observe `mx_dataset`
+object:
 
 ``` r
-str(mx_dataset)
-#> List of 5
-#>  $ data         :'data.frame':   3000 obs. of  6 variables:
-#>   ..$ slide_id      : chr [1:3000] "slide1" "slide1" "slide1" "slide1" ...
-#>   ..$ image_id      : chr [1:3000] "image1" "image1" "image1" "image1" ...
-#>   ..$ marker1_vals  : num [1:3000] 15 11 12 11 12 11 16 12 11 10 ...
-#>   ..$ marker2_vals  : num [1:3000] 17 22 16 19 21 17 18 19 19 23 ...
-#>   ..$ marker3_vals  : num [1:3000] 28 31 22 33 24 19 36 32 22 25 ...
-#>   ..$ metadata1_vals: chr [1:3000] "yes" "no" "yes" "yes" ...
-#>  $ slide_id     : chr "slide_id"
-#>  $ image_id     : chr "image_id"
-#>  $ marker_cols  : chr [1:3] "marker1_vals" "marker2_vals" "marker3_vals"
-#>  $ metadata_cols: chr "metadata1_vals"
-#>  - attr(*, "class")= chr "mx_dataset"
+summary(mx_dataset)
+#> Call:
+#> `mx_dataset` object with 4 slide(s), 3 marker column(s), and 1 metadata column(s)
 ```
 
 ## Normalization with `mx_normalize()`
@@ -94,41 +84,32 @@ head(mx_norm$norm_data)
 #> 6   slide1   image1    0.1082691    0.1553918   0.07725425            yes
 ```
 
-And the `mx_dataset` object now includes the following attributes:
+And we can use `summary()` to capture the following attributes for the
+`mx_dataset` object:
 
 ``` r
-str(mx_norm)
-#> List of 8
-#>  $ data         :'data.frame':   3000 obs. of  6 variables:
-#>   ..$ slide_id      : chr [1:3000] "slide1" "slide1" "slide1" "slide1" ...
-#>   ..$ image_id      : chr [1:3000] "image1" "image1" "image1" "image1" ...
-#>   ..$ marker1_vals  : num [1:3000] 15 11 12 11 12 11 16 12 11 10 ...
-#>   ..$ marker2_vals  : num [1:3000] 17 22 16 19 21 17 18 19 19 23 ...
-#>   ..$ marker3_vals  : num [1:3000] 28 31 22 33 24 19 36 32 22 25 ...
-#>   ..$ metadata1_vals: chr [1:3000] "yes" "no" "yes" "yes" ...
-#>  $ slide_id     : chr "slide_id"
-#>  $ image_id     : chr "image_id"
-#>  $ marker_cols  : chr [1:3] "marker1_vals" "marker2_vals" "marker3_vals"
-#>  $ metadata_cols: chr "metadata1_vals"
-#>  $ norm_data    :'data.frame':   3000 obs. of  6 variables:
-#>   ..$ slide_id      : chr [1:3000] "slide1" "slide1" "slide1" "slide1" ...
-#>   ..$ image_id      : chr [1:3000] "image1" "image1" "image1" "image1" ...
-#>   ..$ marker1_vals  : num [1:3000] 0.199 0.108 0.133 0.108 0.133 ...
-#>   ..$ marker2_vals  : num [1:3000] 0.155 0.229 0.139 0.187 0.216 ...
-#>   ..$ marker3_vals  : num [1:3000] 0.183 0.213 0.115 0.232 0.139 ...
-#>   ..$ metadata1_vals: chr [1:3000] "yes" "no" "yes" "yes" ...
-#>  $ transform    : chr "log10_mean_divide"
-#>  $ method       : chr "None"
-#>  - attr(*, "class")= chr "mx_dataset"
+summary(mx_norm)
+#> Call:
+#> `mx_dataset` object with 4 slide(s), 3 marker column(s), and 1 metadata column(s)
+#> 
+#> Normalization:
+#> Data normalized with transformation=`log10_mean_divide` and method=`None`
+#> 
+#> Anderson-Darling tests:
+#>       table mean_test_statistic mean_std_test_statistic mean_p_value
+#>  normalized              34.565                  24.111            0
+#>         raw              32.490                  22.525            0
 ```
 
-## Otsu misclassification metrics with `run_otsu_misclass()`
+## Otsu agreement scores with `run_otsu_agreement()`
 
-Using the above normalized data, we can run misclassification metrics to
-determine how well our normalization method performs:
+Using the above normalized data, we can run an Otsu agreement score
+analysis to determine how well our normalization method performs (here,
+we look for lower agreement scores to distinguish better performing
+methods):
 
 ``` r
-mx_otsu = run_otsu_misclass(mx_norm,
+mx_otsu = run_otsu_agreement(mx_norm,
                         table="both",
                         threshold_override = NULL,
                         plot_out = FALSE)
@@ -139,50 +120,35 @@ the following form:
 
 ``` r
 head(mx_otsu$otsu_data)
-#>   slide_id       marker table slide_threshold marker_threshold misclass_error
-#> 1   slide1 marker1_vals   raw        12.01758         54.89844      0.4506667
-#> 2   slide2 marker1_vals   raw        20.01367         54.89844      0.4306667
-#> 3   slide3 marker1_vals   raw        87.05664         54.89844      0.2573333
-#> 4   slide4 marker1_vals   raw        44.00391         54.89844      0.3386667
-#> 5   slide1 marker2_vals   raw        19.00977         52.90039      0.5333333
-#> 6   slide2 marker2_vals   raw        19.99219         52.90039      0.5320000
+#>   slide_id       marker table slide_threshold marker_threshold agreement_score
+#> 1   slide1 marker1_vals   raw        12.01758         54.89844       0.4506667
+#> 2   slide2 marker1_vals   raw        20.01367         54.89844       0.4306667
+#> 3   slide3 marker1_vals   raw        87.05664         54.89844       0.2573333
+#> 4   slide4 marker1_vals   raw        44.00391         54.89844       0.3386667
+#> 5   slide1 marker2_vals   raw        19.00977         52.90039       0.5333333
+#> 6   slide2 marker2_vals   raw        19.99219         52.90039       0.5320000
 ```
 
-And the `mx_dataset` object now includes the following attributes:
+And we can use `summary()` to capture the following attributes for the
+`mx_dataset` object:
 
 ``` r
-str(mx_otsu)
-#> List of 11
-#>  $ data         :'data.frame':   3000 obs. of  6 variables:
-#>   ..$ slide_id      : chr [1:3000] "slide1" "slide1" "slide1" "slide1" ...
-#>   ..$ image_id      : chr [1:3000] "image1" "image1" "image1" "image1" ...
-#>   ..$ marker1_vals  : num [1:3000] 15 11 12 11 12 11 16 12 11 10 ...
-#>   ..$ marker2_vals  : num [1:3000] 17 22 16 19 21 17 18 19 19 23 ...
-#>   ..$ marker3_vals  : num [1:3000] 28 31 22 33 24 19 36 32 22 25 ...
-#>   ..$ metadata1_vals: chr [1:3000] "yes" "no" "yes" "yes" ...
-#>  $ slide_id     : chr "slide_id"
-#>  $ image_id     : chr "image_id"
-#>  $ marker_cols  : chr [1:3] "marker1_vals" "marker2_vals" "marker3_vals"
-#>  $ metadata_cols: chr "metadata1_vals"
-#>  $ norm_data    :'data.frame':   3000 obs. of  6 variables:
-#>   ..$ slide_id      : chr [1:3000] "slide1" "slide1" "slide1" "slide1" ...
-#>   ..$ image_id      : chr [1:3000] "image1" "image1" "image1" "image1" ...
-#>   ..$ marker1_vals  : num [1:3000] 0.199 0.108 0.133 0.108 0.133 ...
-#>   ..$ marker2_vals  : num [1:3000] 0.155 0.229 0.139 0.187 0.216 ...
-#>   ..$ marker3_vals  : num [1:3000] 0.183 0.213 0.115 0.232 0.139 ...
-#>   ..$ metadata1_vals: chr [1:3000] "yes" "no" "yes" "yes" ...
-#>  $ transform    : chr "log10_mean_divide"
-#>  $ method       : chr "None"
-#>  $ otsu_data    :'data.frame':   24 obs. of  6 variables:
-#>   ..$ slide_id        : chr [1:24] "slide1" "slide2" "slide3" "slide4" ...
-#>   ..$ marker          : chr [1:24] "marker1_vals" "marker1_vals" "marker1_vals" "marker1_vals" ...
-#>   ..$ table           : chr [1:24] "raw" "raw" "raw" "raw" ...
-#>   ..$ slide_threshold : num [1:24] 12 20 87.1 44 19 ...
-#>   ..$ marker_threshold: num [1:24] 54.9 54.9 54.9 54.9 52.9 ...
-#>   ..$ misclass_error  : num [1:24] 0.451 0.431 0.257 0.339 0.533 ...
-#>  $ otsu_table   : chr "both"
-#>  $ threshold    : chr "otsu"
-#>  - attr(*, "class")= chr "mx_dataset"
+summary(mx_otsu)
+#> Call:
+#> `mx_dataset` object with 4 slide(s), 3 marker column(s), and 1 metadata column(s)
+#> 
+#> Normalization:
+#> Data normalized with transformation=`log10_mean_divide` and method=`None`
+#> 
+#> Anderson-Darling tests:
+#>       table mean_test_statistic mean_std_test_statistic mean_p_value
+#>  normalized              34.565                  24.111            0
+#>         raw              32.490                  22.525            0
+#> 
+#> Otsu agreement scores:
+#>       table mean_agreement sd_agreement
+#>  normalized          0.054        0.071
+#>         raw          0.373        0.141
 ```
 
 ## UMAP dimension reduction with `run_reduce_umap()`
@@ -207,66 +173,46 @@ later):
 ``` r
 head(mx_umap$umap_data)
 #>      marker1_vals marker2_vals marker3_vals metadata1_vals slide_id table
-#> 2454           35           85           84             no   slide4   raw
-#> 2144          100           86           65            yes   slide3   raw
-#> 2989           35           69           80             no   slide4   raw
-#> 1484           21           21           36             no   slide2   raw
-#> 2312           42           83           86            yes   slide4   raw
-#> 1126           20           23           27             no   slide2   raw
-#>             U1         U2
-#> 2454  5.422979 -5.8289742
-#> 2144 11.553091  7.4341455
-#> 2989  5.380865 -7.3918471
-#> 1484 -4.619160 -0.3498382
-#> 2312  6.487919 -6.5277676
-#> 1126 -6.851274  1.6494604
+#> 2459           57           93           87             no   slide4   raw
+#> 122            15           20           32             no   slide1   raw
+#> 1839           88           97           66            yes   slide3   raw
+#> 825            21           15           40            yes   slide2   raw
+#> 1907           88           98           53            yes   slide3   raw
+#> 1733           91           93           62            yes   slide3   raw
+#>              U1         U2
+#> 2459  -9.967970 -4.5640162
+#> 122    6.922789 -4.0093535
+#> 1839 -11.611216  7.2588440
+#> 825    5.300562 -0.7469739
+#> 1907 -11.374983 10.2744428
+#> 1733 -11.920742  9.1107894
 ```
 
-And the `mx_dataset` object now includes the following attributes:
+And we can use `summary()` to capture the following attributes for the
+`mx_dataset` object:
 
 ``` r
-str(mx_umap)
-#> List of 13
-#>  $ data         :'data.frame':   3000 obs. of  6 variables:
-#>   ..$ slide_id      : chr [1:3000] "slide1" "slide1" "slide1" "slide1" ...
-#>   ..$ image_id      : chr [1:3000] "image1" "image1" "image1" "image1" ...
-#>   ..$ marker1_vals  : num [1:3000] 15 11 12 11 12 11 16 12 11 10 ...
-#>   ..$ marker2_vals  : num [1:3000] 17 22 16 19 21 17 18 19 19 23 ...
-#>   ..$ marker3_vals  : num [1:3000] 28 31 22 33 24 19 36 32 22 25 ...
-#>   ..$ metadata1_vals: chr [1:3000] "yes" "no" "yes" "yes" ...
-#>  $ slide_id     : chr "slide_id"
-#>  $ image_id     : chr "image_id"
-#>  $ marker_cols  : chr [1:3] "marker1_vals" "marker2_vals" "marker3_vals"
-#>  $ metadata_cols: chr "metadata1_vals"
-#>  $ norm_data    :'data.frame':   3000 obs. of  6 variables:
-#>   ..$ slide_id      : chr [1:3000] "slide1" "slide1" "slide1" "slide1" ...
-#>   ..$ image_id      : chr [1:3000] "image1" "image1" "image1" "image1" ...
-#>   ..$ marker1_vals  : num [1:3000] 0.199 0.108 0.133 0.108 0.133 ...
-#>   ..$ marker2_vals  : num [1:3000] 0.155 0.229 0.139 0.187 0.216 ...
-#>   ..$ marker3_vals  : num [1:3000] 0.183 0.213 0.115 0.232 0.139 ...
-#>   ..$ metadata1_vals: chr [1:3000] "yes" "no" "yes" "yes" ...
-#>  $ transform    : chr "log10_mean_divide"
-#>  $ method       : chr "None"
-#>  $ otsu_data    :'data.frame':   24 obs. of  6 variables:
-#>   ..$ slide_id        : chr [1:24] "slide1" "slide2" "slide3" "slide4" ...
-#>   ..$ marker          : chr [1:24] "marker1_vals" "marker1_vals" "marker1_vals" "marker1_vals" ...
-#>   ..$ table           : chr [1:24] "raw" "raw" "raw" "raw" ...
-#>   ..$ slide_threshold : num [1:24] 12 20 87.1 44 19 ...
-#>   ..$ marker_threshold: num [1:24] 54.9 54.9 54.9 54.9 52.9 ...
-#>   ..$ misclass_error  : num [1:24] 0.451 0.431 0.257 0.339 0.533 ...
-#>  $ otsu_table   : chr "both"
-#>  $ threshold    : chr "otsu"
-#>  $ umap_data    :'data.frame':   4800 obs. of  8 variables:
-#>   ..$ marker1_vals  : num [1:4800] 35 100 35 21 42 20 12 96 10 15 ...
-#>   ..$ marker2_vals  : num [1:4800] 85 86 69 21 83 23 20 98 22 21 ...
-#>   ..$ marker3_vals  : num [1:4800] 84 65 80 36 86 27 31 52 25 24 ...
-#>   ..$ metadata1_vals: chr [1:4800] "no" "yes" "no" "no" ...
-#>   ..$ slide_id      : chr [1:4800] "slide4" "slide3" "slide4" "slide2" ...
-#>   ..$ table         : chr [1:4800] "raw" "raw" "raw" "raw" ...
-#>   ..$ U1            : num [1:4800] 5.42 11.55 5.38 -4.62 6.49 ...
-#>   ..$ U2            : num [1:4800] -5.83 7.43 -7.39 -0.35 -6.53 ...
-#>  $ umap_table   : chr "both"
-#>  - attr(*, "class")= chr "mx_dataset"
+summary(mx_umap)
+#> Call:
+#> `mx_dataset` object with 4 slide(s), 3 marker column(s), and 1 metadata column(s)
+#> 
+#> Normalization:
+#> Data normalized with transformation=`log10_mean_divide` and method=`None`
+#> 
+#> Anderson-Darling tests:
+#>       table mean_test_statistic mean_std_test_statistic mean_p_value
+#>  normalized              34.565                  24.111            0
+#>         raw              32.490                  22.525            0
+#> 
+#> Otsu agreement scores:
+#>       table mean_agreement sd_agreement
+#>  normalized          0.054        0.071
+#>         raw          0.373        0.141
+#> 
+#> Clustering consistency (UMAP):
+#>       table adj_rand_index cohens_kappa
+#>  normalized          0.050       -0.075
+#>         raw          0.894        0.291
 ```
 
 ## Variance components analysis with `run_var_proportions()`
@@ -295,57 +241,36 @@ head(mx_var$var_data)
 #> 6:  0.12266070 residual marker3_vals   raw
 ```
 
-And the `mx_dataset` object now includes the following attributes:
+And we can use `summary()` to capture the following attributes for the
+`mx_dataset` object:
 
 ``` r
-str(mx_var)
-#> List of 14
-#>  $ data         :'data.frame':   3000 obs. of  6 variables:
-#>   ..$ slide_id      : chr [1:3000] "slide1" "slide1" "slide1" "slide1" ...
-#>   ..$ image_id      : chr [1:3000] "image1" "image1" "image1" "image1" ...
-#>   ..$ marker1_vals  : num [1:3000] 15 11 12 11 12 11 16 12 11 10 ...
-#>   ..$ marker2_vals  : num [1:3000] 17 22 16 19 21 17 18 19 19 23 ...
-#>   ..$ marker3_vals  : num [1:3000] 28 31 22 33 24 19 36 32 22 25 ...
-#>   ..$ metadata1_vals: chr [1:3000] "yes" "no" "yes" "yes" ...
-#>  $ slide_id     : chr "slide_id"
-#>  $ image_id     : chr "image_id"
-#>  $ marker_cols  : chr [1:3] "marker1_vals" "marker2_vals" "marker3_vals"
-#>  $ metadata_cols: chr "metadata1_vals"
-#>  $ norm_data    :'data.frame':   3000 obs. of  6 variables:
-#>   ..$ slide_id      : chr [1:3000] "slide1" "slide1" "slide1" "slide1" ...
-#>   ..$ image_id      : chr [1:3000] "image1" "image1" "image1" "image1" ...
-#>   ..$ marker1_vals  : num [1:3000] 0.199 0.108 0.133 0.108 0.133 ...
-#>   ..$ marker2_vals  : num [1:3000] 0.155 0.229 0.139 0.187 0.216 ...
-#>   ..$ marker3_vals  : num [1:3000] 0.183 0.213 0.115 0.232 0.139 ...
-#>   ..$ metadata1_vals: chr [1:3000] "yes" "no" "yes" "yes" ...
-#>  $ transform    : chr "log10_mean_divide"
-#>  $ method       : chr "None"
-#>  $ otsu_data    :'data.frame':   24 obs. of  6 variables:
-#>   ..$ slide_id        : chr [1:24] "slide1" "slide2" "slide3" "slide4" ...
-#>   ..$ marker          : chr [1:24] "marker1_vals" "marker1_vals" "marker1_vals" "marker1_vals" ...
-#>   ..$ table           : chr [1:24] "raw" "raw" "raw" "raw" ...
-#>   ..$ slide_threshold : num [1:24] 12 20 87.1 44 19 ...
-#>   ..$ marker_threshold: num [1:24] 54.9 54.9 54.9 54.9 52.9 ...
-#>   ..$ misclass_error  : num [1:24] 0.451 0.431 0.257 0.339 0.533 ...
-#>  $ otsu_table   : chr "both"
-#>  $ threshold    : chr "otsu"
-#>  $ umap_data    :'data.frame':   4800 obs. of  8 variables:
-#>   ..$ marker1_vals  : num [1:4800] 35 100 35 21 42 20 12 96 10 15 ...
-#>   ..$ marker2_vals  : num [1:4800] 85 86 69 21 83 23 20 98 22 21 ...
-#>   ..$ marker3_vals  : num [1:4800] 84 65 80 36 86 27 31 52 25 24 ...
-#>   ..$ metadata1_vals: chr [1:4800] "no" "yes" "no" "no" ...
-#>   ..$ slide_id      : chr [1:4800] "slide4" "slide3" "slide4" "slide2" ...
-#>   ..$ table         : chr [1:4800] "raw" "raw" "raw" "raw" ...
-#>   ..$ U1            : num [1:4800] 5.42 11.55 5.38 -4.62 6.49 ...
-#>   ..$ U2            : num [1:4800] -5.83 7.43 -7.39 -0.35 -6.53 ...
-#>  $ umap_table   : chr "both"
-#>  $ var_data     :Classes 'data.table' and 'data.frame':  12 obs. of  4 variables:
-#>   ..$ proportions: num [1:12] 0.9704 0.0296 0.9734 0.0266 0.8773 ...
-#>   ..$ level      : chr [1:12] "slide" "residual" "slide" "residual" ...
-#>   ..$ marker     : chr [1:12] "marker1_vals" "marker1_vals" "marker2_vals" "marker2_vals" ...
-#>   ..$ table      : chr [1:12] "raw" "raw" "raw" "raw" ...
-#>   ..- attr(*, ".internal.selfref")=<externalptr> 
-#>  - attr(*, "class")= chr "mx_dataset"
+summary(mx_var)
+#> Call:
+#> `mx_dataset` object with 4 slide(s), 3 marker column(s), and 1 metadata column(s)
+#> 
+#> Normalization:
+#> Data normalized with transformation=`log10_mean_divide` and method=`None`
+#> 
+#> Anderson-Darling tests:
+#>       table mean_test_statistic mean_std_test_statistic mean_p_value
+#>  normalized              34.565                  24.111            0
+#>         raw              32.490                  22.525            0
+#> 
+#> Otsu agreement scores:
+#>       table mean_agreement sd_agreement
+#>  normalized          0.054        0.071
+#>         raw          0.373        0.141
+#> 
+#> Clustering consistency (UMAP):
+#>       table adj_rand_index cohens_kappa
+#>  normalized          0.050       -0.044
+#>         raw          0.623       -0.167
+#> 
+#> Variance proportions (slide-level):
+#>       table  mean    sd
+#>  normalized 0.001 0.001
+#>         raw 0.940 0.055
 ```
 
 # Visualizations
@@ -365,7 +290,7 @@ We can also visualize the results of the Otsu misclassification analysis
 stratified by slide and marker:
 
 ``` r
-plot_mx_misclass(mx_otsu)
+plot_mx_agreement(mx_otsu)
 ```
 
 <img src="man/figures/README-mx_misc-1.png" width="100%" />

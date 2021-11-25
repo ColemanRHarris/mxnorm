@@ -49,10 +49,10 @@ mx_dataset = mx_dataset(data=mx_sample,
                         metadata_cols=c("metadata1_vals"))
 ```
 
-The structure of the now built `mx_dataset` object:
+WE can use the built-in `summary()` function to observe `mx_dataset` object:
 
 ```{r ex_str}
-str(mx_dataset)
+summary(mx_dataset)
 ```
 
 ## Normalization with `mx_normalize()`
@@ -70,17 +70,17 @@ The `mx_dataset` object has normalized data in the following form:
 head(mx_norm$norm_data)
 ```
 
-And the `mx_dataset` object now includes the following attributes:
+And we can use `summary()` to capture the following attributes for the `mx_dataset` object:
 
-```{r norm_str}
-str(mx_norm)
+```{r norm_str, warning=FALSE}
+summary(mx_norm)
 ```
 
-## Otsu misclassification metrics with `run_otsu_misclass()`
+## Otsu agreement scores with `run_otsu_agreement()`
 
-Using the above normalized data, we can run misclassification metrics to determine how well our normalization method performs:
+Using the above normalized data, we can run an Otsu agreement score analysis to determine how well our normalization method performs (here, we look for lower agreement scores to distinguish better performing methods):
 ```{r otsu}
-mx_otsu = run_otsu_misclass(mx_norm,
+mx_otsu = run_otsu_agreement(mx_norm,
                         table="both",
                         threshold_override = NULL,
                         plot_out = FALSE)
@@ -91,10 +91,10 @@ This adds an Otsu misclassification table to the `mx_dataset` object in the foll
 head(mx_otsu$otsu_data)
 ```
 
-And the `mx_dataset` object now includes the following attributes:
+And we can use `summary()` to capture the following attributes for the `mx_dataset` object:
 
 ```{r otsu_str}
-str(mx_otsu)
+summary(mx_otsu)
 ```
 
 ## UMAP dimension reduction with `run_reduce_umap()`
@@ -114,10 +114,10 @@ This adds UMAP dimensions to our `mx_dataset` object in the following form (note
 head(mx_umap$umap_data)
 ```
 
-And the `mx_dataset` object now includes the following attributes:
+And we can use `summary()` to capture the following attributes for the `mx_dataset` object:
 
 ```{r umap_str}
-str(mx_umap)
+summary(mx_umap)
 ```
 
 ## Variance components analysis with `run_var_proportions()`
@@ -135,10 +135,10 @@ This adds UMAP dimensions to our `mx_dataset` object in the following form:
 head(mx_var$var_data)
 ```
 
-And the `mx_dataset` object now includes the following attributes:
+And we can use `summary()` to capture the following attributes for the `mx_dataset` object:
 
 ```{r var_str}
-str(mx_var)
+summary(mx_var)
 ```
 
 # Visualizations
@@ -154,7 +154,7 @@ plot_mx_density(mx_otsu)
 We can also visualize the results of the Otsu misclassification analysis stratified by slide and marker:
 
 ```{r mx_misc}
-plot_mx_misclass(mx_otsu)
+plot_mx_agreement(mx_otsu)
 ```
 
 We can further visualize the results of the UMAP dimension reduction as follows:
