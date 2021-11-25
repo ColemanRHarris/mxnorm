@@ -5,12 +5,12 @@ test_that("plotting ok", {
     mx_data = mx_normalize(mx_data, transform="log10",method="None")
 
     ## no otsu data
-    expect_error(plot_mx_misclass(mx_data))
+    expect_error(plot_mx_agreement(mx_data))
 
     ## not mx_dataset
-    expect_error(plot_mx_misclass(rnorm(100)))
+    expect_error(plot_mx_agreement(rnorm(100)))
 
-    mx_data = run_otsu_misclass(mx_data, table="normalized")
-    mx_data$otsu_data$misclass_error[10] = NA
-    expect_error(plot_mx_misclass(mx_data))
+    mx_data = run_otsu_agreement(mx_data, table="normalized")
+    mx_data$otsu_data$agreement_score[10] = NA
+    expect_error(plot_mx_agreement(mx_data))
 })

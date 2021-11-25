@@ -15,7 +15,7 @@ get_otsu_tab(tdat, cols, slide, table, threshold, use_np_array)
 
 \item{table}{dataset in \code{mx_data} used to compute metrics. Options include: c("raw","normalized","both"), e.g. a y-axis parameter.}
 
-\item{threshold}{thresolding function as defined using \code{run_otsu_misclass()}}
+\item{threshold}{thresolding function as defined using \code{run_otsu_agreement()}}
 
 \item{use_np_array}{boolean indicating if np_arrays are necessary}
 }

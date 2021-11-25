@@ -1,9 +1,9 @@
-#' Internal function to validate parameters passed to `otsu_misclass`
+#' Internal function to validate parameters passed to `run_otsu_agreement`
 #'
-#' @inheritParams run_otsu_misclass
+#' @inheritParams run_otsu_agreement
 #'
 #' @return `mx_dataset` object
-validate_otsu_misclass_params <- function(mx_data,
+validate_otsu_agreement_params <- function(mx_data,
                                           table,
                                           threshold_override){
     ## check args
@@ -17,7 +17,7 @@ validate_otsu_misclass_params <- function(mx_data,
     if(table %in% c("normalized", "both")){
         if(is.null(mx_data$norm_data)){
             stop(
-                "The normalized data table does not exist in the mx_data object. Please use mx_normalize() to normalize data before running otsu_misclass().",
+                "The normalized data table does not exist in the mx_data object. Please use mx_normalize() to normalize data before running run_otsu_agreement().",
                 call. = FALSE
             )
         }

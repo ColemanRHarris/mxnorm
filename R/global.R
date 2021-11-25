@@ -11,4 +11,5 @@ utils::globalVariables(c("U1",
                          "slide_threshold",
                          "std_ad_test_statistic",
                          "level",
-                         "sd"))
+                         "sd",
+                         "agreement_score"))

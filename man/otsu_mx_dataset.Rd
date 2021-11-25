@@ -7,11 +7,11 @@
 otsu_mx_dataset(mx_data, table, threshold)
 }
 \arguments{
-\item{mx_data}{\code{mx_dataset} object used to compute Otsu misclassification metrics}
+\item{mx_data}{\code{mx_dataset} object used to compute Otsu agreement scores}
 
 \item{table}{dataset in \code{mx_data} used to compute metrics. Options include: c("raw","normalized","both"), e.g. a y-axis parameter.}
 
-\item{threshold}{thresolding function as defined using \code{run_otsu_misclass()}}
+\item{threshold}{thresolding function as defined using \code{run_otsu_agreement()}}
 }
 \value{
 \code{mx_dataset} object with \code{otsu_data} attribute added and misclassification results

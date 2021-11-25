@@ -1,9 +1,9 @@
 #' Internal function to select correct thresholding algorithm
 #'
-#' @inheritParams run_otsu_misclass
+#' @inheritParams run_otsu_agreement
 #'
 #' @return function to use as thresholding algorithm
-get_misclass_thold <- function(threshold_override,
+get_agreement_thold <- function(threshold_override,
                                ...){
     ## import skf
     skf = reticulate::import("skimage.filters")

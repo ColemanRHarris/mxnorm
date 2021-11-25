@@ -10,56 +10,56 @@ test_that("validate params works",{
                            method="ComBat")
 
     ## table exists in list
-    expect_error(validate_otsu_misclass_params(mx_obj,table="test",NULL,NULL))
+    expect_error(validate_otsu_agreement_params(mx_obj,table="test",NULL,NULL))
 
     ## validate mx_dataset (copy from other tests)
     ## catches missing transform
-    expect_error(validate_otsu_misclass_params(mx_obj[-7],"normalized",NULL,NULL))
+    expect_error(validate_otsu_agreement_params(mx_obj[-7],"normalized",NULL,NULL))
 
     ## catches missing method
-    expect_error(validate_otsu_misclass_params(mx_obj[-8],"normalized",NULL,NULL))
+    expect_error(validate_otsu_agreement_params(mx_obj[-8],"normalized",NULL,NULL))
 
     ## catches Inf
     mx_obj$norm_data[1,5] = Inf
-    expect_error(validate_otsu_misclass_params(mx_obj,"normalized",NULL,NULL))
+    expect_error(validate_otsu_agreement_params(mx_obj,"normalized",NULL,NULL))
 
     ## catches non-numerics
     mx_obj$norm_data[1,5] = "Inf"
-    expect_error(validate_otsu_misclass_params(mx_obj,"normalized",NULL,NULL))
+    expect_error(validate_otsu_agreement_params(mx_obj,"normalized",NULL,NULL))
 
     ## catches NAs
     mx_obj$norm_data[1,5] = NA
-    expect_error(validate_otsu_misclass_params(mx_obj,"normalized",NULL,NULL))
+    expect_error(validate_otsu_agreement_params(mx_obj,"normalized",NULL,NULL))
 
     ## catches incorrect dims
     mx_obj$norm_data <- data.frame(matrix(rnorm(9),3,3))
-    expect_error(validate_otsu_misclass_params(mx_obj,"normalized",NULL,NULL))
+    expect_error(validate_otsu_agreement_params(mx_obj,"normalized",NULL,NULL))
 
     ## normalized data exists when "normalized" or "both
-    expect_error(validate_otsu_misclass_params(mx_obj[-6],"normalized",NULL,NULL))
-    expect_error(validate_otsu_misclass_params(mx_obj[-6],"both",NULL,NULL))
+    expect_error(validate_otsu_agreement_params(mx_obj[-6],"normalized",NULL,NULL))
+    expect_error(validate_otsu_agreement_params(mx_obj[-6],"both",NULL,NULL))
 
     ## threshold override is valid: in list if char, or isn't function
-    expect_error(validate_otsu_misclass_params(mx_obj,"raw",NULL,"test"))
-    expect_error(validate_otsu_misclass_params(mx_obj,"raw",NULL,list(1:10)))
+    expect_error(validate_otsu_agreement_params(mx_obj,"raw",NULL,"test"))
+    expect_error(validate_otsu_agreement_params(mx_obj,"raw",NULL,list(1:10)))
 })
 
 test_that("threshold works",{
     ## get otsu if null
-    expect_equal(grepl("otsu",get_misclass_thold(NULL)),TRUE)
+    expect_equal(grepl("otsu",get_agreement_thold(NULL)),TRUE)
 
     ## test other skf
-    expect_equal(all(grepl("python",class(get_misclass_thold("li")))),TRUE)
+    expect_equal(all(grepl("python",class(get_agreement_thold("li")))),TRUE)
 
     ## thold override doesn't have thold data
-    expect_error(get_misclass_thold(function(x){mean(x)}))
+    expect_error(get_agreement_thold(function(x){mean(x)}))
 
     ## thold override needs params
-    expect_error(get_misclass_thold(function(thold_data,x){mean(thold_data)}))
+    expect_error(get_agreement_thold(function(thold_data,x){mean(thold_data)}))
 
     ## thold override has Inf, NAs
-    expect_error(get_misclass_thold(function(thold_data){Inf}))
-    expect_error(get_misclass_thold(function(thold_data){NA}))
+    expect_error(get_agreement_thold(function(thold_data){Inf}))
+    expect_error(get_agreement_thold(function(thold_data){NA}))
 })
 
 test_that("create dataset works",{
@@ -74,7 +74,7 @@ test_that("create dataset works",{
                           method="ComBat")
 
     ## set correct threshold & validate
-    threshold = get_misclass_thold(NULL)
+    threshold = get_agreement_thold(NULL)
 
     ## create otsu dataset
     mx_obj = otsu_mx_dataset(mx_obj,
@@ -85,7 +85,7 @@ test_that("create dataset works",{
     expect_equal(unique(mx_obj$otsu_data$table),c("raw","normalized"))
 })
 
-test_that("misclassification works",{
+test_that("agreement works",{
     mx_obj = mx_dataset(data=mxnorm::mx_sample,
                         slide_id="slide_id",
                         image_id="image_id",
@@ -97,21 +97,21 @@ test_that("misclassification works",{
                           method="ComBat")
 
     ## set correct threshold & validate
-    threshold = get_misclass_thold(NULL)
+    threshold = get_agreement_thold(NULL)
 
     ## create otsu dataset
     mx_obj = otsu_mx_dataset(mx_obj,
                              table="both",
                              threshold)
 
-    ## misclass
-    mx_obj1 = otsu_mx_misclassification(mx_obj,
+    ## agreement
+    mx_obj1 = otsu_mx_agreement(mx_obj,
                                        table="normalized")
-    mx_obj2 = otsu_mx_misclassification(mx_obj,
+    mx_obj2 = otsu_mx_agreement(mx_obj,
                                         table="both")
 
     ## check that error loads
-    expect_equal(is.null(mx_obj1$otsu_data$misclass_error),FALSE)
+    expect_equal(is.null(mx_obj1$otsu_data$agreement_score),FALSE)
 
     ## check that both works
     expect_equal(unique(mx_obj2$otsu_data$table),c("raw","normalized"))
@@ -128,7 +128,7 @@ test_that("plot out works",{
                           transform="log10",
                           method="None")
     ## should print out
-    mx_obj = run_otsu_misclass(mx_obj,
+    mx_obj = run_otsu_agreement(mx_obj,
                                 table="both",
                                 threshold_override = NULL,
                                 plot_out = TRUE)
