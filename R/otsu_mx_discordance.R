@@ -1,9 +1,9 @@
-#' Internal function to run agreement score analysis on otsu table
+#' Internal function to run discordance score analysis on otsu table
 #'
-#' @inheritParams run_otsu_agreement
+#' @inheritParams run_otsu_discordance
 #'
-#' @return `mx_dataset` object with agreement results
-otsu_mx_agreement <- function(mx_data,
+#' @return `mx_dataset` object with discordance results
+otsu_mx_discordance <- function(mx_data,
                                       table){
     ## setup local params
     cols = mx_data$marker_cols
@@ -70,7 +70,7 @@ otsu_mx_agreement <- function(mx_data,
                               slide_id)
     }
 
-    otsu_data$agreement_score = mdat
+    otsu_data$discordance_score = mdat
 
     ## fix slide id naming
     if(!("slide_id" %in% colnames(otsu_data))){

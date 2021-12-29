@@ -58,7 +58,7 @@ validate_mx_dataset <- function(x){
     }
 
     if(!is.null(otsu_data)){
-        otsu_values = otsu_data[,c("slide_threshold","marker_threshold","agreement_score")]
+        otsu_values = otsu_data[,c("slide_threshold","marker_threshold","discordance_score")]
         b = check_data_values(otsu_values)
     }
 

@@ -1,6 +1,6 @@
 #' Visualize marker density before/after normalization by marker and slide
 #'
-#' @param mx_data `mx_dataset` object that been used with `run_otsu_agreement()` to compute Otsu agreement scores (necessary for the density rug plot). Note that the table attribute must be set when running `run_otsu_agreement()`.
+#' @param mx_data `mx_dataset` object that been used with `run_otsu_discordance()` to compute Otsu discordance scores (necessary for the density rug plot). Note that the table attribute must be set when running `run_otsu_discordance()`.
 #'
 #' @return `ggplot2` object with density plot
 #' @export
@@ -13,13 +13,13 @@
 #'   c("marker1_vals","marker2_vals","marker3_vals"),
 #'   c("metadata1_vals"))
 #' mx_data = mx_normalize(mx_data, transform="log10",method="None")
-#' mx_data = run_otsu_agreement(mx_data, table="normalized")
+#' mx_data = run_otsu_discordance(mx_data, table="normalized")
 #' plot_mx_density(mx_data)
 plot_mx_density <- function(mx_data){
     ## validate step
     mx_data = validate_mx_dataset(mx_data)
     if(is.null(mx_data$otsu_data)){
-        stop("You must run the run_otsu_agreement() analysis before generating this plot.",
+        stop("You must run the run_otsu_discordance() analysis before generating this plot.",
              call.=FALSE)
     }
 

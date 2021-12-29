@@ -1,7 +1,7 @@
 #' Internal function to generate table for otsu misclassification analysis
 #'
-#' @inheritParams run_otsu_agreement
-#' @param threshold thresolding function as defined using `run_otsu_agreement()`
+#' @inheritParams run_otsu_discordance
+#' @param threshold thresolding function as defined using `run_otsu_discordance()`
 #'
 #' @importFrom magrittr %>%
 #'

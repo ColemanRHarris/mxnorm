@@ -12,4 +12,4 @@ utils::globalVariables(c("U1",
                          "std_ad_test_statistic",
                          "level",
                          "sd",
-                         "agreement_score"))
+                         "discordance_score"))

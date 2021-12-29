@@ -64,20 +64,20 @@ summary.mx_dataset <- function(object, ...){
                       by=c("marker","table")) %>%
             dplyr::relocate(marker_threshold,.after="table")
 
-        ## otsu agreement by marker (in object)
-        otsu_marker_agreement = mx_data$otsu_data %>%
+        ## otsu discordance by marker (in object)
+        otsu_marker_discordance = mx_data$otsu_data %>%
             dplyr::group_by(marker,table) %>%
-            dplyr::summarise(mean=mean(agreement_score))
+            dplyr::summarise(mean=mean(discordance_score))
 
-        ## otsu agreement all markers (output)
-        otsu_global_agreement = mx_data$otsu_data %>%
+        ## otsu discordance all markers (output)
+        otsu_global_discordance = mx_data$otsu_data %>%
             dplyr::group_by(table) %>%
-            dplyr::summarise(mean_agreement=mean(agreement_score),
-                      sd_agreement=stats::sd(agreement_score))
+            dplyr::summarise(mean_discordance=mean(discordance_score),
+                      sd_discordance=stats::sd(discordance_score))
 
         summ_obj$otsu_threshold_summary = otsu_summ
-        summ_obj$otsu_marker_agreement = otsu_marker_agreement
-        summ_obj$otsu_global_agreement = as.data.frame(otsu_global_agreement)
+        summ_obj$otsu_marker_discordance = otsu_marker_discordance
+        summ_obj$otsu_global_discordance = as.data.frame(otsu_global_discordance)
     }
 
     if(!is.null(mx_data$norm_data) & !is.null(mx_data$umap_data)){
@@ -167,9 +167,9 @@ print.summary.mx_dataset <- function(x, ...){
     }
 
     if(!is.null(mx_data$otsu_data)){
-        # (slide-level agreement of Otsu thresholds)
-        cat("\nOtsu agreement scores:\n")
-        cat(utils::capture.output(print.data.frame(mx_summ$otsu_global_agreement %>% dplyr::mutate_if(is.numeric,round,digits=3),
+        # (slide-level discordance of Otsu thresholds)
+        cat("\nOtsu discordance scores:\n")
+        cat(utils::capture.output(print.data.frame(mx_summ$otsu_global_discordance %>% dplyr::mutate_if(is.numeric,round,digits=3),
                                                    right = TRUE,
                                                    row.names = FALSE)),
             sep = "\n")
