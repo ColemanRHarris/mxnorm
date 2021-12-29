@@ -76,11 +76,11 @@ And we can use `summary()` to capture the following attributes for the `mx_datas
 summary(mx_norm)
 ```
 
-## Otsu agreement scores with `run_otsu_agreement()`
+## Otsu discordance scores with `run_otsu_discordance()`
 
-Using the above normalized data, we can run an Otsu agreement score analysis to determine how well our normalization method performs (here, we look for lower agreement scores to distinguish better performing methods):
+Using the above normalized data, we can run an Otsu discordance score analysis to determine how well our normalization method performs (here, we look for lower discordance scores to distinguish better performing methods):
 ```{r otsu}
-mx_otsu = run_otsu_agreement(mx_norm,
+mx_otsu = run_otsu_discordance(mx_norm,
                         table="both",
                         threshold_override = NULL,
                         plot_out = FALSE)
@@ -154,7 +154,7 @@ plot_mx_density(mx_otsu)
 We can also visualize the results of the Otsu misclassification analysis stratified by slide and marker:
 
 ```{r mx_misc}
-plot_mx_agreement(mx_otsu)
+plot_mx_discordance(mx_otsu)
 ```
 
 We can further visualize the results of the UMAP dimension reduction as follows:

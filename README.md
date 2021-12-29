@@ -101,15 +101,15 @@ summary(mx_norm)
 #>         raw              32.490                  22.525            0
 ```
 
-## Otsu agreement scores with `run_otsu_agreement()`
+## Otsu discordance scores with `run_otsu_discordance()`
 
-Using the above normalized data, we can run an Otsu agreement score
+Using the above normalized data, we can run an Otsu discordance score
 analysis to determine how well our normalization method performs (here,
-we look for lower agreement scores to distinguish better performing
+we look for lower discordance scores to distinguish better performing
 methods):
 
 ``` r
-mx_otsu = run_otsu_agreement(mx_norm,
+mx_otsu = run_otsu_discordance(mx_norm,
                         table="both",
                         threshold_override = NULL,
                         plot_out = FALSE)
@@ -120,13 +120,20 @@ the following form:
 
 ``` r
 head(mx_otsu$otsu_data)
-#>   slide_id       marker table slide_threshold marker_threshold agreement_score
-#> 1   slide1 marker1_vals   raw        12.01758         54.89844       0.4506667
-#> 2   slide2 marker1_vals   raw        20.01367         54.89844       0.4306667
-#> 3   slide3 marker1_vals   raw        87.05664         54.89844       0.2573333
-#> 4   slide4 marker1_vals   raw        44.00391         54.89844       0.3386667
-#> 5   slide1 marker2_vals   raw        19.00977         52.90039       0.5333333
-#> 6   slide2 marker2_vals   raw        19.99219         52.90039       0.5320000
+#>   slide_id       marker table slide_threshold marker_threshold
+#> 1   slide1 marker1_vals   raw        12.01758         54.89844
+#> 2   slide2 marker1_vals   raw        20.01367         54.89844
+#> 3   slide3 marker1_vals   raw        87.05664         54.89844
+#> 4   slide4 marker1_vals   raw        44.00391         54.89844
+#> 5   slide1 marker2_vals   raw        19.00977         52.90039
+#> 6   slide2 marker2_vals   raw        19.99219         52.90039
+#>   discordance_score
+#> 1         0.4506667
+#> 2         0.4306667
+#> 3         0.2573333
+#> 4         0.3386667
+#> 5         0.5333333
+#> 6         0.5320000
 ```
 
 And we can use `summary()` to capture the following attributes for the
@@ -145,10 +152,10 @@ summary(mx_otsu)
 #>  normalized              34.565                  24.111            0
 #>         raw              32.490                  22.525            0
 #> 
-#> Otsu agreement scores:
-#>       table mean_agreement sd_agreement
-#>  normalized          0.054        0.071
-#>         raw          0.373        0.141
+#> Otsu discordance scores:
+#>       table mean_discordance sd_discordance
+#>  normalized            0.054          0.071
+#>         raw            0.373          0.141
 ```
 
 ## UMAP dimension reduction with `run_reduce_umap()`
@@ -173,19 +180,19 @@ later):
 ``` r
 head(mx_umap$umap_data)
 #>      marker1_vals marker2_vals marker3_vals metadata1_vals slide_id table
-#> 2459           57           93           87             no   slide4   raw
-#> 122            15           20           32             no   slide1   raw
-#> 1839           88           97           66            yes   slide3   raw
-#> 825            21           15           40            yes   slide2   raw
-#> 1907           88           98           53            yes   slide3   raw
-#> 1733           91           93           62            yes   slide3   raw
+#> 1867           88           98           41            yes   slide3   raw
+#> 2661           47           88           90            yes   slide4   raw
+#> 473            11           19           29            yes   slide1   raw
+#> 1455           18           21           37             no   slide2   raw
+#> 2164           95           92           39             no   slide3   raw
+#> 513            14           26           22            yes   slide1   raw
 #>              U1         U2
-#> 2459  -9.967970 -4.5640162
-#> 122    6.922789 -4.0093535
-#> 1839 -11.611216  7.2588440
-#> 825    5.300562 -0.7469739
-#> 1907 -11.374983 10.2744428
-#> 1733 -11.920742  9.1107894
+#> 1867  -9.328209 -12.005757
+#> 2661  -7.143563   7.838385
+#> 473   11.345825   6.596110
+#> 1455   4.665821   1.418042
+#> 2164 -10.477660 -12.198362
+#> 513   12.369611   3.899017
 ```
 
 And we can use `summary()` to capture the following attributes for the
@@ -204,15 +211,15 @@ summary(mx_umap)
 #>  normalized              34.565                  24.111            0
 #>         raw              32.490                  22.525            0
 #> 
-#> Otsu agreement scores:
-#>       table mean_agreement sd_agreement
-#>  normalized          0.054        0.071
-#>         raw          0.373        0.141
+#> Otsu discordance scores:
+#>       table mean_discordance sd_discordance
+#>  normalized            0.054          0.071
+#>         raw            0.373          0.141
 #> 
 #> Clustering consistency (UMAP):
 #>       table adj_rand_index cohens_kappa
-#>  normalized          0.050       -0.075
-#>         raw          0.894        0.291
+#>  normalized          0.053       -0.116
+#>         raw          0.847       -0.301
 ```
 
 ## Variance components analysis with `run_var_proportions()`
@@ -257,15 +264,15 @@ summary(mx_var)
 #>  normalized              34.565                  24.111            0
 #>         raw              32.490                  22.525            0
 #> 
-#> Otsu agreement scores:
-#>       table mean_agreement sd_agreement
-#>  normalized          0.054        0.071
-#>         raw          0.373        0.141
+#> Otsu discordance scores:
+#>       table mean_discordance sd_discordance
+#>  normalized            0.054          0.071
+#>         raw            0.373          0.141
 #> 
 #> Clustering consistency (UMAP):
 #>       table adj_rand_index cohens_kappa
-#>  normalized          0.050       -0.044
-#>         raw          0.623       -0.167
+#>  normalized          0.053       -0.023
+#>         raw          0.847       -0.299
 #> 
 #> Variance proportions (slide-level):
 #>       table  mean    sd
@@ -290,7 +297,7 @@ We can also visualize the results of the Otsu misclassification analysis
 stratified by slide and marker:
 
 ``` r
-plot_mx_agreement(mx_otsu)
+plot_mx_discordance(mx_otsu)
 ```
 
 <img src="man/figures/README-mx_misc-1.png" width="100%" />
