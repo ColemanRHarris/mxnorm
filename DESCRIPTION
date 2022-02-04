@@ -16,8 +16,11 @@ RoxygenNote: 7.1.1
 Depends: 
     R (>= 3.5.0)
 Suggests: 
+    knitr,
     janitor (>= 2.1.0),
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    rmarkdown,
+    markdown
 Config/testthat/edition: 3
 Imports: 
     magrittr,
@@ -38,3 +41,4 @@ Imports:
     kSamples,
     psych,
     fossil
+VignetteBuilder: knitr
