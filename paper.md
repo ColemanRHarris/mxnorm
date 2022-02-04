@@ -43,23 +43,26 @@ In addition to the lack of standardized pipelines and methods, we previously add
 
 ![Figure 1: Basic structure of the `mxnorm` package and associated functions](mxnorm_structure.png){width=100%}
 
-As shown in **Figure 1**, there are three main types of functions implemented in the `mxnorm` package -- infrastructure, analysis, and visualization. The first infrastructure function, `mx_dataset()`, specifies & creates the S3 object used throughout the analysis, while the `mx_normalize()` function provides a routine to normalize the multiplexed imaging data. Each of the three analysis functions provides methods to run specific analyses that test for slide-to-slide variation and preservation of biological signal for the normalized and unnormalized data, while the four visualization functions provide methods to generate `ggplot2` plots to visualize the results. We also extend the `summary()` generic function to apply to the `mx_dataset` S3 object to provide further statistics & summaries. All of the normalization and analysis methods are detailed further in our package [vignette](https://google.com) and in the methods paper [@harris2022quantifying].
+As shown in **Figure 1**, there are three main types of functions implemented in the `mxnorm` package -- infrastructure, analysis, and visualization. The first infrastructure function, `mx_dataset()`, specifies & creates the S3 object used throughout the analysis, while the `mx_normalize()` function provides a routine to normalize the multiplexed imaging data. Each of the three analysis functions provides methods to run specific analyses that test for slide-to-slide variation and preservation of biological signal for the normalized and unnormalized data, while the four visualization functions provide methods to generate `ggplot2` plots to visualize the results. We also extend the `summary()` generic function to the `mx_dataset` S3 object to provide further statistics & summaries. All of the statistical methodology behind these normalization and analysis methods are detailed further in our package [vignette](https://google.com) and in the methods paper [@harris2022quantifying].
 
 # A minimal example
 
-The following code is a simplified example of a normalization method applied to the sample dataset included in the `mxnorm` package, `mx_sample`. Here we specify the creation of the S3 object, normalize using the `mean_divide` method, and run a set of analyses to compare our normalized data with the unnormalized data.
+The following code is a simplified example of a normalization analysis applied to the sample dataset included in the `mxnorm` package, `mx_sample`. Here we specify the creation of the S3 object, normalize using the `mean_divide` method, run a set of analyses to compare our normalized data with the unnormalized data, and finally generate summary statistics and plots to understand the results.
 
 ```{r}
 ## load package
 library(mxnorm)
 
 ## create S3 object & normalize
-mx_data = mx_dataset(mx_sample, "slide_id", "image_id", c("marker1_vals","marker2_vals","marker3_vals"), c("metadata1_vals"))
+mx_data = mx_dataset(mx_sample, "slide_id", "image_id", 
+                     c("marker1_vals","marker2_vals","marker3_vals"),
+                     c("metadata1_vals"))
 mx_data = mx_normalize(mx_data, "mean_divide", "None")
 
 ## run analyses
 mx_data = run_otsu_discordance(mx_data, "both")
-mx_data = run_reduce_umap(mx_data, "both", c("marker1_vals","marker2_vals","marker3_vals"))
+mx_data = run_reduce_umap(mx_data, "both", 
+                         c("marker1_vals","marker2_vals","marker3_vals"))
 mx_data = run_var_proportions(mx_data, "both")
 
 ## results and plots
@@ -73,8 +76,5 @@ p4 = plot_mx_proportions(mx_data)
 # Acknowledgements
 
 The corresponding author would like to thank his co-authors for their ideas, suggestions, and contributions to the development of `mxnorm`, and the numerous collaborators who helped make this possible.
-
-# Notes
-- https://joss.readthedocs.io/en/latest/submitting.html#what-should-my-paper-contain
 
 # References
