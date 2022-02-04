@@ -49,7 +49,7 @@ As shown in **Figure 1**, there are three main types of functions implemented in
 
 The following code is a simplified example of a normalization method applied to the sample dataset included in the `mxnorm` package, `mx_sample`. Here we specify the creation of the S3 object, normalize using the `mean_divide` method, and run a set of analyses to compare our normalized data with the unnormalized data.
 
-```
+```{r}
 ## load package
 library(mxnorm)
 
