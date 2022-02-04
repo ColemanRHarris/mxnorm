@@ -8,18 +8,21 @@ validate_method_override <- function(method_override,
                                      ...){
     ## check that all params in method_override are passed
     argg = c(names(list(...)))
-    margs = names(formals(method_override))
-    if(!("mx_data" %in% margs)){
+    margs = formals(method_override)
+    if(!("mx_data" %in% names(margs))){
         stop(
             "The method_override function must specify a parameter 'mx_data' to use for thresholding."
         )
     }
 
-    margs = margs[-which(margs=="mx_data")]
+    margs = margs[-which(names(margs)=="mx_data")]
+    if(any(margs != "")){
+      margs = margs[-which(margs != "")]
+    }
 
-    if(length(margs) > 0 & !all(margs %in% argg)){
+    if(length(margs) > 0 & !all(names(margs) %in% argg)){
         stop(
-            "The method_override function requires variables not passed",
+            "The method_override function requires variables not specified",
             call. = FALSE
              )
     }

@@ -7,16 +7,19 @@ validate_threshold_override <- function(threshold_override,
                                         ...){
     ## check that all params in threshold_override are passed
     argg = c(names(list(...)))
-    targs = names(formals(threshold_override))
-    if(!("thold_data" %in% targs)){
+    targs = formals(threshold_override)
+    if(!("thold_data" %in% names(targs))){
         stop(
             "The threshold_override function must specify a parameter 'thold_data' to use for thresholding."
         )
     }
 
-    targs = targs[-which(targs=="thold_data")]
+    targs = targs[-which(names(targs)=="thold_data")]
+    if(any(targs != "")){
+        targs = targs[-which(targs != "")]
+    }
 
-    if(length(targs) > 0 & !all(targs %in% argg)){
+    if(length(targs) > 0 & !all(names(targs) %in% argg)){
         stop(
             "threshold_override parameters do not match the variables passed to the function",
             call. = FALSE
