@@ -205,13 +205,140 @@ After we set up the object using `mx_dataset()` and running normalization for `m
 #### Visualization functions (`plot_`)
 Each of the visualization functions is tied to the analysis function it's related to, as denoted above in the figure. For flexibility, each of the `plot_` functions returns a `ggplot2` object -- these can be further customized according to user needs. Note that to plot the density curves for each marker, we must run the discordance analysis via `run_otsu_discordance()` to generate the Otsu thresholds for the rug plot in these density plots. Also note that the `plot_mx_umap()` function allows for additional metadata to organize the plots if they have been supplied in the `run_reduce_umap()` function.
 
-## Use cases 
+## Detailed example of `mxnorm` flexibility
+Much like in the [example](#basic-example) introduced above, we can again use the `mx_sample` dataset to showcase the flexibility of the `mxnorm` options for normalization and analysis. First, let's load the dataset into the S3 object:
 
-### Detailed example using sample/simulated data
-- Show off modeling options here -- goal is to demonstrate user's ability to make `mxnorm` flexible.
+```{r flex_example}
+mx_flex = mx_dataset(data=mx_sample,
+                        slide_id="slide_id",
+                        image_id="image_id",
+                        marker_cols=c("marker1_vals","marker2_vals","marker3_vals"),
+                        metadata_cols=c("metadata1_vals"))
+```
 
-### Analysis example using Julia's data
-- Show off robustness to real data here -- goal is to demonstrate using real-world data in `mxnorm`.
+### User-defined normalization
+Now consider that above we used the `mean_divide` normalization, which performed quite well, but now we want to specify a user-defined normalization method. Let's introduce the following normalization function to instead normalize using a percentile of the data, rather than the mean. Let's define this function, making sure we take in an `mx_dataset` object called `mx_data` as a parameter, with an additional specification of the quantile as the median by default:
+
+```{r udf}
+library(dplyr,quietly = TRUE)
+quantile_divide <- function(mx_data, ptile=0.5){
+    ## data to normalize
+    ndat = mx_data$data
+    
+    ## marker columns
+    cols = mx_data$marker_cols
+    
+    ## slide id
+    slide = mx_data$slide_id
+    
+    ## get column length slide medians
+    y = ndat %>%
+        dplyr::group_by(.data[[slide]]) %>%
+        dplyr::mutate(dplyr::across(all_of(cols),quantile,ptile))
+    
+    ## divide to normalize
+    ndat[,cols] = ndat[,cols]/y[,cols]
+    
+    ## rescale
+    ndat = ndat %>%
+        dplyr::mutate(dplyr::across(all_of(cols),function(a){a + -min(a)}))
+
+    ## set normalized data
+    mx_data$norm_data = ndat
+
+    ## return object
+    mx_data
+}
+```
+
+Let's run two comparisons of normalization, one using this `quantile_divide` function to normalize with the median, and one normalizing with the 75th percentile. Note that when we specify the `method_override` for the median normalization, there's no need to change the default `ptile` parameter for the `quantile_divide` function, but when specifying the 75th percentile normalization, we must pass the extra parameter to the `mx_normalize` function to ensure that we are performing the normalization of interest.
+
+```{r q_div}
+mx_flex_q50 = mx_normalize(mx_flex,method_override = quantile_divide)
+mx_flex_q75 = mx_normalize(mx_flex,method_override = quantile_divide,ptile=0.75)
+```
+
+And these present quite different results, suggesting we should perform further analyses to better understand which normalization method performs better.
+```{r q_div_res}
+summary(mx_flex_q50)
+summary(mx_flex_q75)
+```
+
+### Using different thresholding algorithms
+Although we use the Otsu threshold in our work, perhaps another threshold like the Isodata algorithm or a user-defined threshold would perform better given your work. Here, we can override the Otsu threshold with a host of thresholding options, including those in the Python module `filters` in the [scikit-image](https://scikit-image.org/docs/stable/api/skimage.filters.html) package. 
+
+Here, let's imagine that for our median normalization (`mx_flex_q50`), we want to implement the Isodata algorithm to calculate thresholds, but in the 75th percentile normalization (`mx_flex_q75`), we are curious about changes to the lower tail of our data, and want to write a user-defined "threshold" that returns the 10th percentile. Let's first explore the analysis and results when using the Isodata algorithm on the slide-median normalization method.
+
+```{r q50_iso}
+mx_flex_q50 = run_otsu_discordance(mx_flex_q50,table = "both",threshold_override = "isodata")
+summary(mx_flex_q50)
+```
+
+Here we see that the Isodata algorithm works quite well at identifying the "peaks" in our data, and provides valuable insight into the notion that our median normalization is actually working.
+
+```{r q50_iso_plots}
+plot_mx_density(mx_flex_q50)
+plot_mx_discordance(mx_flex_q50)
+```
+
+Now let's define the "thresholding" function to return the 10th percentile for our `mx_flex_q75` analysis, ensuring that we include a `thold_data` parameter:
+
+```{r q10_thold}
+q10_threshold = function(thold_data,ptile=0.10){
+    quantile(thold_data, ptile)
+}
+```
+
+And now let's run the discordance analysis, with the goal of understanding the change in distance between 10th percentiles in the normalized and unnormalized data.
+
+```{r q75_q10}
+mx_flex_q75 = run_otsu_discordance(mx_flex_q75,table = "both",threshold_override = q10_threshold)
+summary(mx_flex_q75)
+```
+
+Although here we are asking a distinct question, e.g. the change in slide-to-slide thresholds for the lower tail of the normalized and unnormalized data, we do see improvements in this metric for the 75th percentile normalization method.
+
+```{r q75_q10__plots}
+plot_mx_density(mx_flex_q75)
+plot_mx_discordance(mx_flex_q75)
+```
+
+### User-defined random effects modeling
+Taking the `mx_flex_q50` object from above, suppose we are interested in understanding the slide-to-slide variation via a random effects model that is not merely the marker intensity values captured by a slide-level random intercept, e.g. `marker ~ (1 | slide_id)`. Given the columns available in our dataset,
+
+```{r mx_sample_cols}
+head(mx_sample,0)
+```
+
+Let us re-imagine the random effects model as follows, `marker ~ metadata1_vals + (1 | image_id) + (1 | slide_id)`. Note that in this simulated scenario these additional covariates are likely unhelpful in terms of creating a robust statistical model, but this provides a good foundation for performing this modeling on real data. Now we can specify the RHS of this model for use in the `mxnorm` functions like so:
+
+```{r reff_mod}
+new_RHS = "metadata1_vals + (1 | image_id) + (1 | slide_id)"
+```
+
+And now using the `run_var_proportions()`, we can specify the `formula_override` with this new formula, and set the `save_models` to `TRUE` so we can inspect these models later.
+
+```{r var_prop_flex}
+mx_flex_q50 = run_var_proportions(mx_flex_q50,
+                                  table="both",
+                                  formula_override = new_RHS,
+                                  save_models=TRUE)
+```
+
+First let's look at one of the models we've saved, this one for the `marker1_vals`, which provides some context to what is relevant in the unnormalized models (`slide_id` in particular), and what is not relevant (e.g., `image_id`):
+
+```{r m1_vals}
+summary(mx_flex_q50$var_models[[1]])
+```
+
+These insights carry through to the `mxnorm` summaries of the data as well:
+```{r q50_varprops_summ}
+summary(mx_flex_q50)
+plot_mx_proportions(mx_flex_q50)
+```
+
+## Real world example
+Placeholder to demonstrate applicability of `mxnorm` to Julia's data (could also write another vignette). 
 
 ## Methodology background
 

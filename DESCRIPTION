@@ -7,7 +7,9 @@ Authors@R:
            role = c("aut", "cre"),
            email = "coleman.r.harris@vanderbilt.edu",
            comment = c(ORCID = "0000-0002-6325-0694"))
-Description: Implements normalization methods from published work to normalize multiplexed images, including metrics and visualizations to quantify technical variation in this data type.
+Description: Implements methods to normalize multiplexed imaging data, including
+    statistical metrics and visualizations to quantify technical variation in 
+    this data type.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
