@@ -21,7 +21,7 @@ affiliations:
  - name: Corresponding author ([email](mailto:coleman.r.harris@vanderbilt.edu))
    index: 3
  - name: These authors contributed equally to this work.
-   index: *
+   index: "*"
 date: 4 February 2022
 bibliography: mxnorm_pcitations.bib
 link-citations: true
