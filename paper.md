@@ -9,10 +9,10 @@ authors:
   - name: Coleman Harris
     orcid: 0000-0002-6325-0694
     affiliation: "1, 3"
-  - name: Simon Vandekar
-    affiliation: 1
   - name: Julia Wrobel
-    affiliation: 2
+    affiliation: "2, *"
+  - name: Simon Vandekar
+    affiliation: "1, *"
 affiliations:
  - name: Department of Biostatistics, Vanderbilt University Medical Center, Nashville, TN, USA
    index: 1
@@ -20,6 +20,8 @@ affiliations:
    index: 2
  - name: Corresponding author ([email](mailto:coleman.r.harris@vanderbilt.edu))
    index: 3
+ - name: These authors contributed equally to this work.
+   index: *
 date: 4 February 2022
 bibliography: mxnorm_pcitations.bib
 link-citations: true
