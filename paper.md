@@ -19,7 +19,7 @@ affiliations:
  - name: Department of Biostatistics & Informatics, Colorado School of Public Health, Aurora, CO, USA
    index: 2
  - name: Corresponding author ([email](mailto:coleman.r.harris@vanderbilt.edu))
-   index: 3
+   index: "^"
  - name: These authors contributed equally to this work.
    index: "*"
 date: 4 February 2022
