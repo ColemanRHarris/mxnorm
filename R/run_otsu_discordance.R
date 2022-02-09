@@ -1,4 +1,7 @@
 #' Calculate Otsu discordance scores using specified threshold for an `mx_dataset` object.
+#' The Otsu discordance analysis quantifies slide-to-slide agreement by summarizing
+#' the distance between slide-level Otsu thresholds and the global Otsu threshold
+#' for a given marker in a single metric.
 #'
 #' @param mx_data `mx_dataset` object used to compute Otsu discordance scores
 #' @param table  dataset in `mx_data` used to compute metrics. Options include: c("raw","normalized","both"), e.g. a y-axis parameter.

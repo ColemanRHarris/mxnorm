@@ -28,16 +28,29 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette describes the `mxnorm` R package, and provides example analyses & detailed methodological background for using normalization methods in multiplexed imaging data. The package largely provides two key services: (1) a foundation for storing multiplexed imaging data in R using S3, and (2) a collection of normalization methods and analysis metrics to implement and compare normalization in multiplexed imaging data. Background for these methods and the multiplexed imaging field can be found in the author's previously published work [@harris2022quantifying; JOSS CITATION].
+This vignette describes the `mxnorm` R package, and provides example analyses & detailed methodological background for using normalization methods in multiplexed imaging data. The package largely provides two key services: (1) a collection of normalization methods and analysis metrics to implement and compare normalization in multiplexed imaging data, and (2) a foundation for storing multiplexed imaging data in R using S3. Background for these methods and the multiplexed imaging field can be found in the author's previously published work [@harris2022quantifying].
 
 ## Basic example
 
 ```{r setup}
 library(mxnorm)
+library(dplyr,quietly = TRUE)
 ```
 
+### Loading in data
+In general, we expect multiplexed imaging data in a `data.frame` format that includes columns for slide & image identifiers, separate columns for marker intensity values, and some set of metadata columns like tissue identifiers, phenotypic traits, medical conditions, etc. Alongside the `mxnorm` package itself, we introduce the `mx_sample` dataset that demonstrates the expected structure of multiplexed imaging data, and provides simulated marker intensity values that demonstrate strong slide effects. This structure is as follows:
+
+```{r}
+head(mx_sample, 3)
+```
+This dataset consists of 3 markers across 4 slides (with 750 "cells" on each slide) and 1 metadata column, and specifically was created to demonstrate the effect of normalization methods in multiplexed imaging data. To ensure a streamlined framework for the analysis of this type of data, we have created an S3 object `mx_dataset` to store the data and continue building upon as we normalize the data and analyze our results. 
+
 ### Creating the S3 object with `mx_dataset()`
-The `mx_sample` dataset is a simple, simulated dataset we created to demonstrate the effect of normalization of slide-to-slide variation in multiplexed imaging data, and consists of 3 markers across 4 slides (with 750 "cells" on each slide) and 1 metadata column. Let's load the `mx_sample` dataset into the S3 object we'll use for our analyses -- an `mx_dataset` object:
+Let's load the `mx_sample` dataset into the S3 object we'll use for our analyses, the `mx_dataset` object. Here we specify:
+- `data`: the input dataset in a `data.frame` format
+- `slide_id` and `image_id`: the identifiers of interest in our dataset
+- `marker_cols`: the set of marker columns in our input data that we want to include
+- `metadata_cols`: metadata columns in our input data that we want to include
 
 ```{r example}
 mx_data = mx_dataset(data=mx_sample,
@@ -49,11 +62,20 @@ mx_data = mx_dataset(data=mx_sample,
 
 ### Normalization with `mx_normalize()`
 
-Now that we've created the object, we can use the `mx_normalize()` function to normalize the imaging data:
+Now that we've created the object, we can use the `mx_normalize()` function to normalize the imaging data. Here we specify:
+
+- `mx_data`: the `mx_dataset` object with the data we want to normalize
+- `transform`: the transformation method we want to perform, which in this case is `mean_divide`.
+- `method:` the normalization method we want to implement, which in this case is `None`.
+- `method_override`: an optional parameter to provide a user-defined normalization method (see the details [below](#user-defined-normalization) for an example)
+
+Note that there are multiple normalization approaches implemented into the `mxnorm` package (including user-defined normalization), which are discussed below in the [Package overview](#package-overview) and [Methodology background](#methodology-background) sections.
+
 ```{r norm}
 mx_data = mx_normalize(mx_data = mx_data,
                        transform = "mean_divide",
-                       method="None")
+                       method="None",
+                       method_override=NULL)
 ```
 
 The `mx_dataset` object now has normalized data in the following form, with additional `transform` and `method` attributes:
@@ -63,7 +85,15 @@ head(mx_data$norm_data,3)
 ```
 
 ### Otsu discordance scores with `run_otsu_discordance()`
-Now that we've normalized the multiplexed imaging data, we can start to analyze the results and understand the performance of our normalization. Using the above normalized data, we can run an Otsu discordance score analysis to determine how well our normalization method performs (here, we look for lower discordance scores to distinguish better performing methods):
+Now that we've normalized the multiplexed imaging data, we can start to analyze the results and understand the performance of our normalization. Using the above normalized data, we can run an Otsu discordance score analysis to determine how well our normalization method performs. Broadly, this method calculates the distance of slide-level Otsu thresholds from the "global" Otsu threshold for a given marker channel to quantify the slide-to-slide alignment of values via a summary metric. In this analysis, we look for lower discordance scores to distinguish better performing normalization methods, which indicates better agreement between slides for a given marker.
+
+To run this analysis we specify:
+
+- `mx_data`: the `mx_dataset` object with the data we want to analyze
+- `table`: the set of data we want to analyze using Otsu discordance, either `raw`, `normalized`, or `both`
+- `threshold_override`: an optional parameter to provide a user-defined thresholding method (see the details [below](#using-different-thresholding-algorithms) for example)
+- `plot_out`: an optional parameter to output plots when running Otsu discordance
+
 ```{r otsu}
 mx_data = run_otsu_discordance(mx_data,
                         table="both",
@@ -76,34 +106,43 @@ This adds an Otsu misclassification table to the `mx_dataset` object, with an ad
 head(mx_data$otsu_data, 3)
 ```
 
-Since we have completed this analysis, we can also begin to visualize some of the results. First, the densities of each marker before and after normalization, along with the associated thresholds:
+We see in the above table that for each slide and marker pair, we generate a `discordance_score` that summarizes the distance between the `slide_threshold` and `marker_threshold`. Since we have completed this analysis, we can also begin to visualize some of the results. First, we plot the densities of each marker before and after normalization, along with the associated Otsu thresholds visible as a ticks in the rug plot for each density curve: 
 ```{r mx_dens}
 plot_mx_density(mx_data)
 ```
 
-And we can also visualize the results of the threshold discordance analysis stratified by slide and marker, with slide means indicated by the white diamonds:
+In the above plot we observe that not only are the density curves for each marker in the analysis far better aligned after normalization, we also see that the Otsu thresholds have moved far closer than in the `raw` data. In general, also note that all plots generated using `mxnorm` are `ggplot2` plots and can be adjusted and adapted as needed given the `ggplot2` framework. We can also visualize the results of the threshold discordance analysis stratified by slide and marker, with slide means indicated by the white diamonds:
 ```{r mx_misc}
 plot_mx_discordance(mx_data)
 ```
 
+Note that for each slide and marker pair in the dataset (denoted as colored points in the above plot), we see a reduction in threshold discordance in the `normalized` data compared to the `raw` data. Further, we also see dramatic improvements in the mean threshold discordance denoted by the white diamonds for the `normalized` data.
+
 ### UMAP dimension reduction with `run_reduce_umap()`
 
-We can also use the UMAP algorithm to reduce the dimensions of our markers in the dataset as follows, using the `metadata_col` parameter for later (e.g., this metadata is similar to tissue type, medical condition, subject group, etc. in practice):
+We can also use the UMAP algorithm to reduce the dimensions of our markers in the dataset as follows, using the `metadata_col` parameter for later (e.g., this metadata is similar to tissue type, medical condition, subject group, etc. in practice). The UMAP algorithm is a random algorithm, so we use `set.seed()` below to ensure results are reproducible -- further information on this algorithm can be found in the [Methodology background](#umap-embedding). Here we specify:
+
+- `mx_data`: the `mx_dataset` object with the data we want to analyze
+- `table`: the set of data we want to analyze using UMAP dimension reduction, either `raw`, `normalized`, or `both`
+- `marker_list`: the markers in the `mx_dataset` object we want to use for dimension reduction
+- `downsample_pct`: UMAP embedding can be computationally expensive for big datasets, so we present a downsample percentage to reduce the input data size
+- `metadata_col`: any metadata in `mx_dataset` to store for plotting later (see below for plotting using `metadata1_vals`)
 
 ```{r umap}
+set.seed(1234)
 mx_data = run_reduce_umap(mx_data,
                         table="both",
                         marker_list = c("marker1_vals","marker2_vals","marker3_vals"),
                         downsample_pct = 0.5,
-                        metadata_col = "metadata1_vals")
+                        metadata_cols = c("metadata1_vals"))
 ```
 
-This adds UMAP dimensions to our `mx_dataset` object in the following form (note the inclusion of `slide_id` as an identifier, which we'll use later) and the `umap_table` attribute to denote which tables in our object we ran the analysis on:
+This adds UMAP dimensions to our `mx_dataset` object in the following form (note the inclusion of `slide_id` as an identifier, which we'll use later) and the `umap_table` attribute to denote which tables in our object we ran the analysis on. We can observe this data, and note the inclusion of UMAP coordinates:
 ```{r umap_data}
 head(mx_data$umap_data, 3)
 ```
 
-We can further visualize the results of the UMAP dimension reduction as follows:
+We can further visualize the results of the UMAP dimension reduction as follows using the metadata column we specified above:
 
 ```{r mx_umap}
 plot_mx_umap(mx_data,
@@ -119,23 +158,42 @@ plot_mx_umap(mx_data,
 
 ### Variance components analysis with `run_var_proportions()`
 
-We can also leverage `lmer()` from the `lme4` package to perform random effects modeling on the data to determine how much variance is present at the slide level, as follows:
+We can also leverage `lmer()` from the `lme4` package to perform random effects modeling on the data to determine how much variance is present at the slide level. The default model specified is as follows for each marker in the `mx_dataset` object (e.g. a random intercept model where the intercept is `slide_id` for each marker), with any specifications of `metadata_cols` in the `run_var_proportions()` call adding fixed effects $\text{metadata_cols}$:
+
+$$\text{marker} \sim \text{metadata_cols} + (1 | \text{slide_id})$$
+In general, for an effective normalization algorithm we seek a method that reduces the proportion of variance at the `slide` level after normalization. Here we specify the following to run this analysis:
+
+- `mx_data`: the `mx_dataset` object with the data we want to analyze
+- `table`: the set of data we want to analyze using random effects, either `raw`, `normalized`, or `both`
+- `metadata_cols`: any metadata in `mx_dataset` to add as fixed effects covariates
+- `formula_override`: an optional parameter to provide a user-defined random effects formula (see the details [below](#user-defined-random-effects-modeling) for example)
+- `save_models`: an optional parameter to save the `lme4` models in the `mx_dataset` object
 
 ```{r var,warning=FALSE,message=FALSE}
 mx_data = run_var_proportions(mx_data,
                              table="both",
-                             metadata_cols = "metadata1_vals")
+                             metadata_cols = c("metadata1_vals"),
+                             formula_override = NULL,
+                             save_models = FALSE
+                             )
 ```
 
-This adds variance proportions to our `mx_dataset` object in the following form:
+Note that because the default model looks specifically at slide-level random effects, there are often errors of the form:
+```
+boundary (singular) fit: see ?isSingular
+```
+
+This can be remediated with proper specification of a robust random effects model using the `formula_override` option. After running the analysis, we see the addition of variance proportions to our `mx_dataset` object in the following form:
 ```{r var_data}
-head(mx_data$var_data, 3)
+head(mx_data$var_data, 4)
 ```
 
-We can further visualize these proportions before and after normalization as follows:
+These values summarize the proportion of variance explained by the random effect for `slide`, and any `residual` variance in the model. To understand how normalization impacts these values, we can further visualize these proportions as follows:
 ```{r mx_var}
 plot_mx_proportions(mx_data)
 ```
+
+Here we see that most of the variance in these models is due to slide-level effects in the `raw` data, but after normalization, nearly all of the variance in these random effects models due to slide-level effects is removed. This points to a normalization method that is performing well and removing the slide-to-slide variation in this type of data.
 
 ### Basic example overview
 We can use now also use the generic `summary()` function that the `mxnorm` package extends to `mx_dataset` objects to capture some values about this S3 object, including Anderson-Darling test statistics, thresholding summaries, consistency scores for the UMAP clustering results, and summaries of the variance proportions analysis. More information about some of these statistics can be found in the [Methodology background](#methodology-background).
@@ -166,21 +224,11 @@ plot_mx_proportions(mx_data)
 
 ## Package overview
 
-### Loading in data
-In general, we expect multiplexed imaging data in a `data.frame` format that includes columns for slide & image identifiers, separate columns for marker intensity values, and some set of metadata columns like tissue identifiers, phenotypic traits, medical conditions, etc. Alongside the `mxnorm` package itself, we introduce the `mx_sample` dataset that both demonstrates the expected structure of multiplexed imaging data, and provides simulated marker intensity values that demonstrate strong slide effects. This structure is as follows:
-
-```{r}
-head(mx_sample)
-```
-To ensure a streamlined framework for the analysis of this type of data, we have created an S3 object `mx_dataset` to store the data and continue building upon as we normalize the data and analyze our results. 
-
-### Available functions
-
-```{r,out.width="100%",fig.cap="Basic structure of the `mxnorm` package and associated functions [JOSS CITATION]",echo=FALSE}
+```{r,out.width="100%",fig.cap="Basic structure of the `mxnorm` package and associated functions",echo=FALSE}
 knitr::include_graphics("mxnorm_structure.png")
 ```
 
-#### Infrastructure functions (`mx_`)
+### Infrastructure functions (`mx_`)
 As noted above, the foundation of the `mxnorm` analyses is the `mx_dataset` S3 object. Here we introduce two important functions for handling multiplexed imaging data. First, to create the `mx_dataset` S3 object, we must call the `mx_dataset()` function, and to run any normalization we must run `mx_normalize()`. These are both required before any further analyses can be run. 
 
 The constructor for the S3 object, `mx_dataset()` requires the following parameters to create & store the object:
@@ -193,16 +241,16 @@ The constructor for the S3 object, `mx_dataset()` requires the following paramet
 
 After we create this S3 object, we can then run the normalization, analysis, and visualize our results using the other exposed functions in `mxnorm`. First, we must run the normalization of the data itself via the `mx_normalize()` method. Here, we leverage the S3 structure of the `mx_dataset` object to build upon and add attributes to keep our analysis in one consistent object. As described in our paper [@harris2022quantifying], we implement two discrete components of normalization of the multiplexed imaging data -- transformation method and normalization method. 
 
-Here, transformations change the "scale" of the data, of which the following are options for the `transform` parameter: `c("None", "log10", "mean_divide","log10_mean_divide")`. Normalization methods are algorithms designed to normalize the data itself via some further set of assumptions, of which the following are options for the `method` parameter: `c("None", "ComBat","Registration")`. Further information about these methods and their implementations are discussed below in the [Methodology background](#methodology-background) section. Note also the `method_override` parameter in the `mx_normalize()` function, that allows users to supply user-defined function to perform their own normalization methods, which is show below in the [Use cases](#use-cases) section. 
+Here, transformations change the "scale" of the data, of which the following are options for the `transform` parameter: `c("None", "log10", "mean_divide","log10_mean_divide")`. Here the `log10` transformation can be represented mathematically as $\log_{10}(y + 1)$ for some intensity values $y$, the `mean_divide` method as $\frac{y}{\mu}$ for a slide mean of a given marker defined as $\mu$, and the `log10_mean_divide` method as $\log_{10}\left(\frac{y}{\mu} + \frac{1}{2}\right)$. Normalization methods are algorithms designed to normalize the data itself via some further set of assumptions, of which the following are options for the `method` parameter: `c("None", "ComBat","Registration")`. Further information about these methods and their implementations are discussed below in the [Methodology background](#methodology-background) section. Note also the `method_override` parameter in the `mx_normalize()` function, that allows users to supply user-defined function to perform their own normalization methods, which is show below in the [Use cases](#use-cases) section. 
 
-#### Analysis functions (`run_`)
+### Analysis functions (`run_`)
 After we set up the object using `mx_dataset()` and running normalization for `mx_normalize()`, we can now begin to analyze the results of our normalization. Here we briefly describe these analyses and their results -- note that each of these functions takes in the `mx_dataset` object of interest and a `table` parameter, that determines if the analysis is performed on the raw data, normalized data, or both.
 
 - `run_otsu_discordance()`: An analysis method that uses a thresholding algorithm like Otsu's to generate a metric for the distance between slide-level thresholds, detailed further below in the [Methodology background](#methodology-background). Here we also include a `threshold_override` parameter to allow for either user-defined thresholding methods or univariate filters from the Python `skimage` module `filters` to flexibly calculate these metrics according to a researcher's own interest. In general, a lower threshold discordance score demonstrates better agreement across slides in the data and suggests removal of technical variation.
 - `run_reduce_umap()`: An implementation of the UMAP dimensionality reduction algorithm [@mcinnes2018umap] to distinguish differences between metadata in a reduced dimension space. Here we include the ability to supply a subset of markers within the `mx_dataset` object for using the UMAP algorithm via the `marker_list` parameter, the ability to downsample data for computational efficiency via the `downsample_pct` parameter, and an option to include further metadata when plotting the results via the `metadata_cols` parameter. 
 - `run_var_proportions()`: An abstraction of random effects modeling via the `lme4` package to determine the proportions of variance at the slide level in the dataset. Here we also include the option to add covariates to the random effects model via the `metadata_cols` parameter, supply a user-defined modeling formula via the `formula_override` parameter, and an option to save the `lme4` models in the `mx_dataset` object via the `save_models` parameter. 
 
-#### Visualization functions (`plot_`)
+### Visualization functions (`plot_`)
 Each of the visualization functions is tied to the analysis function it's related to, as denoted above in the figure. For flexibility, each of the `plot_` functions returns a `ggplot2` object -- these can be further customized according to user needs. Note that to plot the density curves for each marker, we must run the discordance analysis via `run_otsu_discordance()` to generate the Otsu thresholds for the rug plot in these density plots. Also note that the `plot_mx_umap()` function allows for additional metadata to organize the plots if they have been supplied in the `run_reduce_umap()` function.
 
 ## Detailed example of `mxnorm` flexibility
@@ -220,7 +268,6 @@ mx_flex = mx_dataset(data=mx_sample,
 Now consider that above we used the `mean_divide` normalization, which performed quite well, but now we want to specify a user-defined normalization method. Let's introduce the following normalization function to instead normalize using a percentile of the data, rather than the mean. Let's define this function, making sure we take in an `mx_dataset` object called `mx_data` as a parameter, with an additional specification of the quantile as the median by default:
 
 ```{r udf}
-library(dplyr,quietly = TRUE)
 quantile_divide <- function(mx_data, ptile=0.5){
     ## data to normalize
     ndat = mx_data$data
@@ -265,7 +312,7 @@ summary(mx_flex_q75)
 ```
 
 ### Using different thresholding algorithms
-Although we use the Otsu threshold in our work, perhaps another threshold like the Isodata algorithm or a user-defined threshold would perform better given your work. Here, we can override the Otsu threshold with a host of thresholding options, including those in the Python module `filters` in the [scikit-image](https://scikit-image.org/docs/stable/api/skimage.filters.html) package. 
+The threshold discordance analysis seeks to quantifies slide-to-slide agreement by summarizing the distance between slide-level Otsu thresholds and the global Otsu threshold for a given marker in a single metric. In general, it provides a concise summary of slide-to-slide variation for different markers in a multiplexed imaging dataset. Although we use the Otsu threshold by default in our work, perhaps another threshold like the Isodata algorithm or a user-defined threshold would perform better given your work. Here, we can override the Otsu threshold with a host of thresholding options, including some of those in the Python module `filters` in the [scikit-image](https://scikit-image.org/docs/stable/api/skimage.filters.html) package. 
 
 Here, let's imagine that for our median normalization (`mx_flex_q50`), we want to implement the Isodata algorithm to calculate thresholds, but in the 75th percentile normalization (`mx_flex_q75`), we are curious about changes to the lower tail of our data, and want to write a user-defined "threshold" that returns the 10th percentile. Let's first explore the analysis and results when using the Isodata algorithm on the slide-median normalization method.
 
@@ -336,9 +383,6 @@ These insights carry through to the `mxnorm` summaries of the data as well:
 summary(mx_flex_q50)
 plot_mx_proportions(mx_flex_q50)
 ```
-
-## Real world example
-Placeholder to demonstrate applicability of `mxnorm` to Julia's data (could also write another vignette). 
 
 ## Methodology background
 
