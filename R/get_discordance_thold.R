@@ -5,9 +5,6 @@
 #' @return function to use as thresholding algorithm
 get_discordance_thold <- function(threshold_override,
                                ...){
-    ## import skf
-    skf = reticulate::import("skimage.filters")
-
     ## return Otsu if null
     if(is.null(threshold_override)){
         return(skf["threshold_otsu"])
@@ -23,4 +20,13 @@ get_discordance_thold <- function(threshold_override,
     }
 
     threshold_override
+}
+
+
+# python 'skf' module I want to use in my package
+skf <- NULL
+
+.onLoad <- function(libname, pkgname) {
+    # delay load module (will only be loaded when accessed via $)
+    skf <<- reticulate::import("skimage.filters", delay_load = TRUE)
 }

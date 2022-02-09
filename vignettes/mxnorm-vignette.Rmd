@@ -32,10 +32,19 @@ This vignette describes the `mxnorm` R package, and provides example analyses & 
 
 ## Basic example
 
+This vignette using the following packages:
+
 ```{r setup}
 library(mxnorm)
 library(dplyr,quietly = TRUE)
 ```
+
+We also use the Python module `scikit-image.filters` later on in this vignette -- to ensure that this is installed, please run the following:
+```{r skimage}
+library(reticulate)
+py_install("skimage")
+```
+
 
 ### Loading in data
 In general, we expect multiplexed imaging data in a `data.frame` format that includes columns for slide & image identifiers, separate columns for marker intensity values, and some set of metadata columns like tissue identifiers, phenotypic traits, medical conditions, etc. Alongside the `mxnorm` package itself, we introduce the `mx_sample` dataset that demonstrates the expected structure of multiplexed imaging data, and provides simulated marker intensity values that demonstrate strong slide effects. This structure is as follows:
