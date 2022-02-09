@@ -4,7 +4,13 @@
 \alias{normalize_mx_dataset}
 \title{Internal function to normalize mx_dataset}
 \usage{
-normalize_mx_dataset(mx_data, method, method_override = NULL, ...)
+normalize_mx_dataset(
+  mx_data,
+  method,
+  method_override = NULL,
+  method_override_name = NULL,
+  ...
+)
 }
 \arguments{
 \item{mx_data}{\code{mx_dataset} object to normalize}
@@ -12,6 +18,8 @@ normalize_mx_dataset(mx_data, method, method_override = NULL, ...)
 \item{method}{normalization transformation to perform on the input data. Options include: c("None", "ComBat","Registration")}
 
 \item{method_override}{optional user-defined function to perform own normalization method (default=NULL). This function must be in the same form as internal functions \code{normalize_mx_combat()} and \code{normalize_mx_registration()}, e.g. that they change the \code{norm_data} (data.frame) attribute of the input \code{mx_dataset} object.}
+
+\item{method_override_name}{optional name for method_override (default=NULL).}
 
 \item{...}{optional additional arguments for normalization functions}
 }

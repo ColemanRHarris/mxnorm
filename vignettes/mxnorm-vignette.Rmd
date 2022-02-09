@@ -68,6 +68,7 @@ Now that we've created the object, we can use the `mx_normalize()` function to n
 - `transform`: the transformation method we want to perform, which in this case is `mean_divide`.
 - `method:` the normalization method we want to implement, which in this case is `None`.
 - `method_override`: an optional parameter to provide a user-defined normalization method (see the details [below](#user-defined-normalization) for an example)
+- `method_override_name`: an optional parameter to re-name the `method` attribute when specifying user-defined normalization
 
 Note that there are multiple normalization approaches implemented into the `mxnorm` package (including user-defined normalization), which are discussed below in the [Package overview](#package-overview) and [Methodology background](#methodology-background) sections.
 
@@ -75,7 +76,8 @@ Note that there are multiple normalization approaches implemented into the `mxno
 mx_data = mx_normalize(mx_data = mx_data,
                        transform = "mean_divide",
                        method="None",
-                       method_override=NULL)
+                       method_override=NULL,
+                       method_override_name=NULL)
 ```
 
 The `mx_dataset` object now has normalized data in the following form, with additional `transform` and `method` attributes:
@@ -298,11 +300,11 @@ quantile_divide <- function(mx_data, ptile=0.5){
 }
 ```
 
-Let's run two comparisons of normalization, one using this `quantile_divide` function to normalize with the median, and one normalizing with the 75th percentile. Note that when we specify the `method_override` for the median normalization, there's no need to change the default `ptile` parameter for the `quantile_divide` function, but when specifying the 75th percentile normalization, we must pass the extra parameter to the `mx_normalize` function to ensure that we are performing the normalization of interest.
+Let's run two comparisons of normalization, one using this `quantile_divide` function to normalize with the median, and one normalizing with the 75th percentile. Note that when we specify the `method_override` for the median normalization, there's no need to change the default `ptile` parameter for the `quantile_divide` function, but when specifying the 75th percentile normalization, we must pass the extra parameter to the `mx_normalize` function to ensure that we are performing the normalization of interest. Also note that we are passing the `method_override_name` to change the attribute of the normalization method of the `mx_dataset` object.
 
 ```{r q_div}
-mx_flex_q50 = mx_normalize(mx_flex,method_override = quantile_divide)
-mx_flex_q75 = mx_normalize(mx_flex,method_override = quantile_divide,ptile=0.75)
+mx_flex_q50 = mx_normalize(mx_flex,method_override = quantile_divide, method_override_name = "median_divide")
+mx_flex_q75 = mx_normalize(mx_flex,method_override = quantile_divide,ptile=0.75, method_override_name = "75th_percentile")
 ```
 
 And these present quite different results, suggesting we should perform further analyses to better understand which normalization method performs better.

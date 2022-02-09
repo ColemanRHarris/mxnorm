@@ -6,7 +6,8 @@
 validate_mx_normalize_params <- function(mx_data,
                                          transform,
                                          method,
-                                         method_override){
+                                         method_override=NULL,
+                                         method_override_name=NULL){
     ## check args
     transform = match.arg(transform, c("None", "log10", "mean_divide","log10_mean_divide"))
     method = match.arg(method, c("None", "ComBat","Registration"))
@@ -24,6 +25,20 @@ validate_mx_normalize_params <- function(mx_data,
             stop(
                 "method_override must be a function",
                 call. = FALSE
+            )
+        }
+        if(class(method_override_name)!="character"){
+            stop(
+                "method_override_name must be a character",
+                call.=FALSE
+            )
+        }
+    }
+    if(!is.null(method_override_name)){
+        if(is.null(method_override)){
+            stop(
+                "method_override_name can only be used when method_override is not NULL",
+                call.=FALSE
             )
         }
     }

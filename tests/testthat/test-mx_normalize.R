@@ -108,3 +108,25 @@ test_that("normalization works",{
     expect_error(validate_mx_dataset(mx_obj))
 })
 
+test_that("method override name works",{
+    mx_obj = mx_dataset(data=mx_sample,
+                        slide_id="slide_id",
+                        image_id="image_id",
+                        marker_cols=c("marker1_vals","marker2_vals","marker3_vals"),
+                        metadata_cols=c("metadata1_vals"))
+    mx_obj = mx_normalize(mx_obj,
+                          transform="None",
+                          method="None",
+                          method_override = function(mx_data){mx_data},
+                          method_override_name = "abc123")
+
+    ## basic method_override_name passes
+    expect_equal(mx_obj$method,"abc123")
+
+    ## method_override_name not string
+    expect_error(mx_normalize(mx_obj,
+                              transform="None",
+                              method="None",
+                              method_override = function(mx_data){mx_data},
+                              method_override_name = 123))
+})
