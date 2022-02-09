@@ -40,9 +40,9 @@ library(dplyr,quietly = TRUE)
 ```
 
 We also use the Python module `scikit-image.filters` later on in this vignette -- to ensure that this is installed, please run the following:
-```{r skimage}
+```{r skimage, eval=FALSE}
 library(reticulate)
-py_install("skimage")
+py_install("scikit-image")
 ```
 
 
