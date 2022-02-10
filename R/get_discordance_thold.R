@@ -29,5 +29,5 @@ skf <- NULL
 .onLoad <- function(libname, pkgname) {
     # delay load module (will only be loaded when accessed via $)
     reticulate::configure_environment(pkgname)
-    skf <<- reticulate::import("skimage.filters", delay_load = TRUE)
+    skf <<- reticulate::import("scikit-image.filter", delay_load = TRUE)
 }
