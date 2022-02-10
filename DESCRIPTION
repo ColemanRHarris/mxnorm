@@ -24,6 +24,12 @@ Suggests:
     rmarkdown,
     markdown
 Config/testthat/edition: 3
+Config/reticulate:
+  list(
+    packages = list(
+      list(package = "scikit-image")
+    )
+  )
 Imports: 
     magrittr,
     dplyr,
