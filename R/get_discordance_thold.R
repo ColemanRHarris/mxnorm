@@ -5,6 +5,7 @@
 #' @return function to use as thresholding algorithm
 get_discordance_thold <- function(threshold_override,
                                ...){
+    #skf <- reticulate::import("skimage.filters")
     ## return Otsu if null
     if(is.null(threshold_override)){
         return(skf["threshold_otsu"])
@@ -28,6 +29,5 @@ skf <- NULL
 
 .onLoad <- function(libname, pkgname) {
     # delay load module (will only be loaded when accessed via $)
-    reticulate::configure_environment(pkgname)
-    skf <<- reticulate::import("scikit-image.filter", delay_load = TRUE)
+    skf <<- reticulate::import("skimage.filters", delay_load = TRUE)
 }
