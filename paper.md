@@ -5,6 +5,7 @@ tags:
   - multiplexed imaging
   - normalization
   - statistics
+  - biostatistics
 authors:
   - name: Coleman Harris
     orcid: 0000-0002-6325-0694
