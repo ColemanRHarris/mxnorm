@@ -2,10 +2,7 @@
 % Please edit documentation in R/run_otsu_discordance.R
 \name{run_otsu_discordance}
 \alias{run_otsu_discordance}
-\title{Calculate Otsu discordance scores using specified threshold for an \code{mx_dataset} object.
-The Otsu discordance analysis quantifies slide-to-slide agreement by summarizing
-the distance between slide-level Otsu thresholds and the global Otsu threshold
-for a given marker in a single metric.}
+\title{Calculate Otsu discordance scores using specified threshold for an \code{mx_dataset} object.}
 \usage{
 run_otsu_discordance(
   mx_data,
@@ -30,7 +27,6 @@ run_otsu_discordance(
 \code{mx_dataset} object with analysis results of Otsu discordance in \code{otsu_data} table
 }
 \description{
-Calculate Otsu discordance scores using specified threshold for an \code{mx_dataset} object.
 The Otsu discordance analysis quantifies slide-to-slide agreement by summarizing
 the distance between slide-level Otsu thresholds and the global Otsu threshold
 for a given marker in a single metric.

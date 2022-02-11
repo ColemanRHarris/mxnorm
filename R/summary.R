@@ -168,7 +168,7 @@ print.summary.mx_dataset <- function(x, ...){
 
     if(!is.null(mx_data$otsu_data)){
         # (slide-level discordance of Otsu thresholds)
-        cat("\nOtsu discordance scores:\n")
+        cat("\nThreshold discordance scores:\n")
         cat(utils::capture.output(print.data.frame(mx_summ$otsu_global_discordance %>% dplyr::mutate_if(is.numeric,round,digits=3),
                                                    right = TRUE,
                                                    row.names = FALSE)),
