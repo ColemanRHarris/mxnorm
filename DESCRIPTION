@@ -7,7 +7,9 @@ Authors@R:
            role = c("aut", "cre"),
            email = "coleman.r.harris@vanderbilt.edu",
            comment = c(ORCID = "0000-0002-6325-0694"))
-Description: Implements normalization methods from published work to normalize multiplexed images, including metrics and visualizations to quantify technical variation in this data type.
+Description: Implements methods to normalize multiplexed imaging data, including
+    statistical metrics and visualizations to quantify technical variation in 
+    this data type.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -16,9 +18,18 @@ RoxygenNote: 7.1.1
 Depends: 
     R (>= 3.5.0)
 Suggests: 
+    knitr,
     janitor (>= 2.1.0),
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    rmarkdown,
+    markdown
 Config/testthat/edition: 3
+Config/reticulate:
+  list(
+    packages = list(
+      list(package = "scikit-image")
+    )
+  )
 Imports: 
     magrittr,
     dplyr,
@@ -38,3 +49,4 @@ Imports:
     kSamples,
     psych,
     fossil
+VignetteBuilder: knitr

@@ -9,6 +9,7 @@ mx_normalize(
   transform = "None",
   method = "None",
   method_override = NULL,
+  method_override_name = NULL,
   ...
 )
 }
@@ -20,6 +21,8 @@ mx_normalize(
 \item{method}{normalization method to perform on the input data. Options include: c("None", "ComBat","Registration")}
 
 \item{method_override}{optional user-defined function to perform own normalization method (default=NULL). If using a user-defined function, it must include a \code{mx_data} parameter.}
+
+\item{method_override_name}{optional name for method_override (default=NULL).}
 
 \item{...}{optional additional arguments for normalization functions}
 }

@@ -4,7 +4,13 @@
 \alias{validate_mx_normalize_params}
 \title{Internal function to validate mx_normalize args}
 \usage{
-validate_mx_normalize_params(mx_data, transform, method, method_override)
+validate_mx_normalize_params(
+  mx_data,
+  transform,
+  method,
+  method_override = NULL,
+  method_override_name = NULL
+)
 }
 \arguments{
 \item{mx_data}{\code{mx_dataset} object to normalize}
@@ -14,6 +20,8 @@ validate_mx_normalize_params(mx_data, transform, method, method_override)
 \item{method}{normalization method to perform on the input data. Options include: c("None", "ComBat","Registration")}
 
 \item{method_override}{optional user-defined function to perform own normalization method (default=NULL). If using a user-defined function, it must include a \code{mx_data} parameter.}
+
+\item{method_override_name}{optional name for method_override (default=NULL).}
 }
 \value{
 \code{mx_dataset} object

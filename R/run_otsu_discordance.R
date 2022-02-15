@@ -1,5 +1,9 @@
 #' Calculate Otsu discordance scores using specified threshold for an `mx_dataset` object.
 #'
+#' The Otsu discordance analysis quantifies slide-to-slide agreement by summarizing
+#' the distance between slide-level Otsu thresholds and the global Otsu threshold
+#' for a given marker in a single metric.
+#'
 #' @param mx_data `mx_dataset` object used to compute Otsu discordance scores
 #' @param table  dataset in `mx_data` used to compute metrics. Options include: c("raw","normalized","both"), e.g. a y-axis parameter.
 #' @param threshold_override optional user-defined function or alternate thresholding algorithm adaptable from Python skimage module `filters` (Note: not all algorithms in `filters` adapted). Options include supplying a function or any of the following: c("isodata", "li", "mean", "otsu", "triangle","yen"). More detail available here:https://scikit-image.org/docs/dev/api/skimage.filters.html. If using a user-defined function, it must include a `thold_data` parameter.

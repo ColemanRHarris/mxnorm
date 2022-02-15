@@ -27,7 +27,9 @@ run_otsu_discordance(
 \code{mx_dataset} object with analysis results of Otsu discordance in \code{otsu_data} table
 }
 \description{
-Calculate Otsu discordance scores using specified threshold for an \code{mx_dataset} object.
+The Otsu discordance analysis quantifies slide-to-slide agreement by summarizing
+the distance between slide-level Otsu thresholds and the global Otsu threshold
+for a given marker in a single metric.
 }
 \examples{
 mx_data = mx_dataset(mxnorm::mx_sample, "slide_id", "image_id",
