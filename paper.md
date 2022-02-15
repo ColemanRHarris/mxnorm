@@ -9,10 +9,10 @@ authors:
   - name: Coleman Harris
     orcid: 0000-0002-6325-0694
     affiliation: "1*"
-  - name: Simon Vandekar
-    affiliation: "1^"
   - name: Julia Wrobel
     affiliation: "2^"
+  - name: Simon Vandekar
+    affiliation: "1^"
 affiliations:
  - name: Department of Biostatistics, Vanderbilt University Medical Center, Nashville, TN, USA
    index: 1
@@ -35,7 +35,7 @@ Multiplexed imaging is an emerging single-cell assay that can be used to underst
 
 # Statement of need
 
-Multiplexed imaging measures intensities of dozens of antibody and protein markers at the single-cell level while preserving cell spatial coordinates. This allows for single-cell analyses performed on biological samples like tissues and tumors, much like single-cell RNA sequencing, with the added benefit of *in situ* coordinates to better capture spatial interactions between individual cells [@mckinley2022miriam; @chen2021differential]. Current research using platforms like MxIF and MIBI demonstrate this growing field that seeks to better understand cell-cell populations in cancer, pre-cancer, and various biological research contexts [@ptacek2020multiplexed; @gerdes2013highly].
+Multiplexed imaging measures intensities of dozens of antibody and protein markers at the single-cell level while preserving cell spatial coordinates. This allows single-cell analyses to be performed on biological samples like tissues and tumors, much like single-cell RNA sequencing, with the added benefit of *in situ* coordinates to better capture spatial interactions between individual cells [@mckinley2022miriam; @chen2021differential]. Current research using platforms like MxIF and MIBI demonstrate this growing field that seeks to better understand cell-cell populations in cancer, pre-cancer, and various biological research contexts [@ptacek2020multiplexed; @gerdes2013highly].
 
 In contrast to the field of sequencing & micro-array data and the established software, analysis, and methods therein, multiplexed imaging lacks established analysis standards, pipelines, and methods. Recent developments in multiplexed imaging seek to address the broad lack of standardized tools -- the MCMICRO pipeline seeks to provide a set of open-source, reproducible analyses to transform whole-slide images into single-cell data [@schapiro2021mcmicro]. Researchers in the field have also developed a ground truth dataset to evaluate differences in batch effects and normalization methods [@graf2022flino], while other open issues in the field that may produce open-source solutions include tissue segmentation, end-to-end image processing, and removal of image artifacts. With this diversity of open issues in multiplexed imaging, our work focuses specifically on normalization methods and evaluating these results in multiplexed imaging data. Namely, standard normalization software in the sequencing field includes open-source packages in R and Python like `sva`, `limma`, and `Scanorama` [@leek2012sva; @smyth2005limma; @hie2019efficient], but an analogue for evaluating and developing normalization methods does not exist for multiplexed imaging data. 
 
@@ -77,6 +77,6 @@ p4 = plot_mx_proportions(mx_data)
 
 # Acknowledgements
 
-We would like to extend sincere thanks to Samantha Bowell for her feedback on the `mxnorm` package. We would also like to thank Eliot McKinley, Joseph Roland, Qi Liu, Martha Shrubsole, Ken Lau, and Robert Coffey for their help in making this work possible. This work is supported by NIH grants U2CCA233291, R01MH123563. 
+We would like to extend sincere thanks to Samantha Bowell for her feedback on the `mxnorm` package. We would also like to thank Eliot McKinley, Joseph Roland, Qi Liu, Martha Shrubsole, Ken Lau, and Robert Coffey for their help in making this work possible. This work was supported by NIH grants U2CCA233291 and R01MH123563. 
 
 # References
