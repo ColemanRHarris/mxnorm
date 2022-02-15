@@ -25,10 +25,10 @@ get_discordance_thold <- function(threshold_override,
 }
 
 
-# # python 'skf' module I want to use in my package
-# skf <- NULL
-#
-# .onLoad <- function(libname, pkgname) {
-#     # delay load module (will only be loaded when accessed via $)
-#     skf <<- reticulate::import("skimage.filters", delay_load = TRUE)
-# }
+# global reference to scipy (will be initialized in .onLoad)
+skf <- NULL
+
+.onLoad <- function(libname, pkgname) {
+    # use superassignment to update global reference to scipy
+    skf <<- reticulate::import("skimage.filters", delay_load = TRUE)
+}
