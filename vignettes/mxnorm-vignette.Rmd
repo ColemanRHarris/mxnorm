@@ -39,7 +39,15 @@ library(mxnorm)
 library(dplyr,quietly = TRUE)
 ```
 
-We also use the Python module `scikit-image.filters` later on in this vignette -- the `mxnorm` package has been configured to avoid any conflicts with installing this module. If you are prompted to install `Miniconda`, please do so. Please also see the `reticulate` [package documentation](https://rstudio.github.io/reticulate/articles/python_packages.html) for more information if you run into issues.
+We also use the Python module `scikit-image.filters` later on in this vignette -- the `mxnorm` package has been configured to try and avoid any conflicts with installing this module.
+
+```{r setup_skimage}
+if(!reticulate::py_available("scikit-image")){
+  reticulate::py_install("scikit-image")
+}
+```
+
+If you are prompted to install `Miniconda`, please do so. Please also see the `reticulate` [package documentation](https://rstudio.github.io/reticulate/articles/python_packages.html) for more information if you run into issues.
 
 ### Loading in data
 In general, we expect multiplexed imaging data in a `data.frame` format that includes columns for slide & image identifiers, separate columns for marker intensity values, and some set of metadata columns like tissue identifiers, phenotypic traits, medical conditions, etc. Alongside the `mxnorm` package itself, we introduce the `mx_sample` dataset that demonstrates the expected structure of multiplexed imaging data, and provides simulated marker intensity values that demonstrate strong slide effects. This structure is as follows:

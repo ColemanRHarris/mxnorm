@@ -13,7 +13,8 @@
 #'   c("marker1_vals","marker2_vals","marker3_vals"),
 #'   c("metadata1_vals"))
 #' mx_data = mx_normalize(mx_data, transform="log10",method="None")
-#' mx_data = run_otsu_discordance(mx_data, table="normalized")
+#' ## using `threshold_override` here in case users haven't installed `scikit-image`
+#' mx_data = run_otsu_discordance(mx_data, table="normalized", threshold_override = function(thold_data){quantile(thold_data, 0.5)})
 #' plot_mx_discordance(mx_data)
 plot_mx_discordance <- function(mx_data){
     ## validate step
