@@ -6,22 +6,18 @@ tags:
   - normalization
   - statistics
 authors:
-  - name: Coleman Harris
+  - name: Coleman Harris^[Corresponding author ([email](mailto:coleman.r.harris@vanderbilt.edu))]
     orcid: 0000-0002-6325-0694
-    affiliation: "1*"
-  - name: Julia Wrobel
-    affiliation: "2^"
-  - name: Simon Vandekar
-    affiliation: "1^"
+    affiliation: 1
+  - name: Julia Wrobel^[These authors contributed equally to this work.]
+    affiliation: 2
+  - name: Simon Vandekar^[These authors contributed equally to this work.]
+    affiliation: 1
 affiliations:
  - name: Department of Biostatistics, Vanderbilt University Medical Center, Nashville, TN, USA
    index: 1
  - name: Department of Biostatistics & Informatics, Colorado School of Public Health, Aurora, CO, USA
    index: 2
- - name: Corresponding author ([email](mailto:coleman.r.harris@vanderbilt.edu))
-   index: "*"
- - name: These authors contributed equally to this work.
-   index: "^"
 date: 4 February 2022
 bibliography: mxnorm_pcitations.bib
 link-citations: true
