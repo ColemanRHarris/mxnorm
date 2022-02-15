@@ -37,13 +37,15 @@ This vignette using the following packages:
 ```{r setup}
 library(mxnorm)
 library(dplyr,quietly = TRUE)
+library(reticulate)
+knitr::knit_engines$set(python = reticulate::eng_python)
 ```
 
 We also use the Python module `scikit-image.filters` later on in this vignette -- the `mxnorm` package has been configured to try and avoid any conflicts with installing this module.
 
-```{r setup_skimage}
-if(!reticulate::py_available("scikit-image")){
-  reticulate::py_install("scikit-image")
+```{r}
+if(!py_module_available("skimage")){
+  py_install("scikit-image")
 }
 ```
 

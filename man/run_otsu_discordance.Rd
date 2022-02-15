@@ -37,7 +37,8 @@ mx_data = mx_dataset(mxnorm::mx_sample, "slide_id", "image_id",
   c("metadata1_vals"))
 mx_data = mx_normalize(mx_data, transform="log10",method="None")
 ## using `threshold_override` here in case users haven't installed `scikit-image`
-mx_data = run_otsu_discordance(mx_data, table="normalized", threshold_override = function(thold_data){quantile(thold_data, 0.5)})
+mx_data = run_otsu_discordance(mx_data, table="normalized",
+threshold_override = function(thold_data){quantile(thold_data, 0.5)})
 }
 \references{
 Otsu, N. (1979). A threshold selection method from gray-level histograms. IEEE transactions on systems, man, and cybernetics, 9(1), 62-66.
