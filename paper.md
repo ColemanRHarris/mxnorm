@@ -6,7 +6,7 @@ tags:
   - normalization
   - statistics
 authors:
-  - name: Coleman Harris^[Corresponding author ([email](mailto:coleman.r.harris@vanderbilt.edu))]
+  - name: Coleman Harris^[Corresponding author]
     orcid: 0000-0002-6325-0694
     affiliation: 1
   - name: Julia Wrobel^[These authors contributed equally to this work.]
