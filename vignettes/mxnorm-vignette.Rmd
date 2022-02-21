@@ -356,12 +356,18 @@ summary(mx_flex_q75)
 ```
 
 ### Using different thresholding algorithms
-The threshold discordance analysis seeks to quantifies slide-to-slide agreement by summarizing the distance between slide-level Otsu thresholds and the global Otsu threshold for a given marker in a single metric. In general, it provides a concise summary of slide-to-slide variation for different markers in a multiplexed imaging dataset. Although we use the Otsu threshold by default in our work, perhaps another threshold like the Isodata algorithm or a user-defined threshold would perform better given your work. Here, we can override the Otsu threshold with a host of thresholding options, including some of those in the Python module `filters` in the [scikit-image](https://scikit-image.org/docs/stable/api/skimage.filters.html) package. 
+The threshold discordance analysis seeks to quantifies slide-to-slide agreement by summarizing the distance between slide-level Otsu thresholds and the global Otsu threshold for a given marker in a single metric. In general, it provides a concise summary of slide-to-slide variation for different markers in a multiplexed imaging dataset. Although we use the Otsu threshold by default in our work, perhaps another threshold like the Isodata algorithm or a user-defined threshold would perform better given your work. Here, we can override the Otsu threshold with a host of thresholding options, including some of those in the Python module `filters` in the [scikit-image](https://scikit-image.org/docs/stable/api/skimage.filters.html) package. Note that again we set a boolean in case the machine building the vignette does not have the Python module `scikit-image` installed, and use the median as the threshold instead.
 
 Here, let's imagine that for our median normalization (`mx_flex_q50`), we want to implement the Isodata algorithm to calculate thresholds, but in the 75th percentile normalization (`mx_flex_q75`), we are curious about changes to the lower tail of our data, and want to write a user-defined "threshold" that returns the 10th percentile. Let's first explore the analysis and results when using the Isodata algorithm on the slide-median normalization method.
 
 ```{r q50_iso}
-mx_flex_q50 = run_otsu_discordance(mx_flex_q50,table = "both",threshold_override = "isodata")
+if(skimage_available){
+  thold_override = "isodata"
+} else{
+  thold_override = function(thold_data){quantile(thold_data, 0.5)}
+}
+
+mx_flex_q50 = run_otsu_discordance(mx_flex_q50,table = "both",threshold_override = thold_override)
 summary(mx_flex_q50)
 ```
 
