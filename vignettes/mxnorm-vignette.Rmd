@@ -130,7 +130,7 @@ if(skimage_available){
 
 mx_data = run_otsu_discordance(mx_data,
                         table="both",
-                        threshold_override = NULL,
+                        threshold_override = thold_override,
                         plot_out = FALSE)
 ```
 
