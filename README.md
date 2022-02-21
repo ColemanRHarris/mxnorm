@@ -4,6 +4,7 @@
 # mxnorm: An R package to normalize multiplexed imaging data.
 
 <!-- badges: start -->
+[![status](https://joss.theoj.org/papers/c18a1df622016c6ea8ed9e67dda73d07/status.svg)](https://joss.theoj.org/papers/c18a1df622016c6ea8ed9e67dda73d07)
 
 <!-- badges: end -->
 
