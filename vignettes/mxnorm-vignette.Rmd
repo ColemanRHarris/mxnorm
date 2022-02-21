@@ -34,18 +34,24 @@ This vignette describes the `mxnorm` R package, and provides example analyses & 
 
 This vignette using the following packages:
 
-```{r setup}
+```{r setup, warning=FALSE,message=FALSE}
 library(mxnorm)
-library(dplyr,quietly = TRUE)
+library(dplyr)
 library(reticulate)
-knitr::knit_engines$set(python = reticulate::eng_python)
 ```
 
 We also use the Python module `scikit-image.filters` later on in this vignette -- the `mxnorm` package has been configured to try and avoid any conflicts with installing this module.
 
 ```{r}
-if(!py_module_available("skimage")){
-  py_install("scikit-image")
+if(reticulate::py_module_available("skimage")){
+  knitr::knit_engines$set(python = reticulate::eng_python)
+  skimage_available = TRUE
+} else{
+  ## set boolean for CRAN builds
+  skimage_available = FALSE
+  
+  ## install if running locally
+  #py_install("scikit-image")
 }
 ```
 
@@ -104,7 +110,7 @@ head(mx_data$norm_data,3)
 ```
 
 ### Otsu discordance scores with `run_otsu_discordance()`
-Now that we've normalized the multiplexed imaging data, we can start to analyze the results and understand the performance of our normalization. Using the above normalized data, we can run an Otsu discordance score analysis to determine how well our normalization method performs. 
+Now that we've normalized the multiplexed imaging data, we can start to analyze the results and understand the performance of our normalization. Using the above normalized data, we can run an Otsu discordance score analysis to determine how well our normalization method performs. Note that below we set a boolean in case the machine building the vignette does not have the Python module `scikit-image` installed, and use the median as the threshold instead.
 
 Broadly, this method calculates the distance of slide-level Otsu thresholds from the "global" Otsu threshold for a given marker channel to quantify the slide-to-slide alignment of values via a summary metric. In this analysis, we look for lower discordance scores to distinguish better performing normalization methods, which indicates better agreement between slides for a given marker.
 
@@ -116,6 +122,12 @@ To run this analysis we specify:
 - `plot_out`: an optional parameter to output plots when running Otsu discordance
 
 ```{r otsu}
+if(skimage_available){
+  thold_override = NULL
+} else{
+  thold_override = function(thold_data){quantile(thold_data, 0.5)}
+}
+
 mx_data = run_otsu_discordance(mx_data,
                         table="both",
                         threshold_override = NULL,
