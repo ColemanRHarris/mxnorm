@@ -17,7 +17,9 @@ run_otsu_discordance(
 
 \item{table}{dataset in \code{mx_data} used to compute metrics. Options include: c("raw","normalized","both"), e.g. a y-axis parameter.}
 
-\item{threshold_override}{optional user-defined function or alternate thresholding algorithm adaptable from Python skimage module \code{filters} (Note: not all algorithms in \code{filters} adapted). Options include supplying a function or any of the following: c("isodata", "li", "mean", "otsu", "triangle","yen"). More detail available here:https://scikit-image.org/docs/dev/api/skimage.filters.html. If using a user-defined function, it must include a \code{thold_data} parameter.}
+\item{threshold_override}{optional user-defined function or alternate thresholding algorithm adaptable from Python skimage module \code{filters} (Note: not all algorithms in \code{filters} adapted). Options include supplying a function or any of the following: c("isodata", "li", "mean", "otsu", "triangle","yen").
+More detail available here: https://scikit-image.org/docs/dev/api/skimage.filters.html.
+If using a user-defined function, it must include a \code{thold_data} parameter.}
 
 \item{plot_out}{boolean to generate Otsu discordance plots (default=FALSE)}
 

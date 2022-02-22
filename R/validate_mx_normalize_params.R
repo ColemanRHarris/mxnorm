@@ -3,6 +3,7 @@
 #' @inheritParams mx_normalize
 #'
 #' @return `mx_dataset` object
+#' @noRd
 validate_mx_normalize_params <- function(mx_data,
                                          transform,
                                          method,

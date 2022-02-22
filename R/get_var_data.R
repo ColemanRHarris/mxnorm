@@ -7,6 +7,7 @@
 #' @import lme4
 #'
 #' @return `data.frame`
+#' @noRd
 get_var_data <- function(mx_data,
                          table,
                          mod,

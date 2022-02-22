@@ -5,6 +5,7 @@
 #' @importFrom magrittr %>%
 #'
 #' @return `data.frame` in long format
+#' @noRd
 get_long_data <- function(mx_data){
     ## mx_data should always have raw data
     rdata = mx_data$data

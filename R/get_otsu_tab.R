@@ -10,6 +10,7 @@
 #' @importFrom magrittr %>%
 #'
 #' @return list of calculated Otsu thresholds
+#' @noRd
 get_otsu_tab <- function(tdat,
                          cols,
                          slide,

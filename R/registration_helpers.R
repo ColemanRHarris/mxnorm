@@ -12,6 +12,7 @@
 #' @param w_nbasis an integer variable specifying the number of basis functions for the linear transformation. See `fda::create.bspline.basis()` argument `nbasis` for more details.(default=2)
 #'
 #' @return Registration adjusted values
+#' @noRd
 run_registration = function(marker,
                             slide_var,
                             ndat,
@@ -82,6 +83,7 @@ run_registration = function(marker,
 #' @param x,w,... Internal objects created/used in `run_registration`
 #'
 #' @return Weighted mean of fda object
+#' @noRd
 weighted.mean.fd = function (x, w, ...)
 {
     if (!inherits(x, "fd"))

@@ -200,6 +200,7 @@ print.summary.mx_dataset <- function(x, ...){
 #' @param n_bins number of bins for density calculation (default=100). Large values of `n_bins` will slow computation considerably.
 #'
 #' @return `data.table` with AD test results
+#' @noRd
 get_ad_test_stats <- function(data_table,
                               mx_data,
                               n_bins=100){
@@ -246,6 +247,7 @@ get_ad_test_stats <- function(data_table,
 #' @param mx_data `mx_dataset` object to use to generate clustering results results
 #'
 #' @return `data.frame` with UMAP clustering results
+#' @noRd
 get_umap_cluster_results <- function(table,
                                      mx_data){
     ## subset to table

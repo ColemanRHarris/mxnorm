@@ -3,6 +3,7 @@
 #' @inheritParams mx_dataset
 #'
 #' @return mx_dataset object with attributes `data` (data.frame), `slide_id` (character), `image_id` (character), `marker_cols` (vector), `metadata_cols` (default: NULL, otherwise vector).
+#' @noRd
 new_mx_dataset <- function(data = data.frame(),
                            slide_id = character(),
                            image_id = character(),

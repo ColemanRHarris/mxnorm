@@ -3,6 +3,7 @@
 #' @inheritParams run_otsu_discordance
 #'
 #' @return `mx_dataset` object
+#' @noRd
 validate_otsu_discordance_params <- function(mx_data,
                                           table,
                                           threshold_override){

@@ -5,6 +5,7 @@
 #' @param thr2 second threshold used to compare values
 #'
 #' @return decimal value of misclassification error
+#' @noRd
 check_threshold = function(vec,thr1,thr2){
     tab = caret::confusionMatrix(factor(vec>thr1,levels = c(TRUE,FALSE)),factor(vec>thr2,levels = c(TRUE,FALSE)),)$table
 
@@ -23,6 +24,7 @@ check_threshold = function(vec,thr1,thr2){
 #' @importFrom magrittr %>%
 #'
 #' @return `data.frame` with Otsu misclassification metrics
+#' @noRd
 otsu_mx_error = function(tdat,table,otsu_data,slides,cols,slide_id){
     lapply(cols,function(x){
         lapply(slides,function(s){

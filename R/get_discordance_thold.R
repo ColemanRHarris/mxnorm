@@ -3,6 +3,7 @@
 #' @inheritParams run_otsu_discordance
 #'
 #' @return function to use as thresholding algorithm
+#' @noRd
 get_discordance_thold <- function(threshold_override,
                                ...){
     ## return Otsu if null

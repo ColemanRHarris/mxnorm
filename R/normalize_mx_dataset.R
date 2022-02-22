@@ -7,6 +7,7 @@
 #' @param ... optional additional arguments for normalization functions
 #'
 #' @return `mx_dataset` object with normalized data with updated attribute `norm_data` (data.frame) and new attribute `method` (character)
+#' @noRd
 normalize_mx_dataset <- function(mx_data,
                                  method,
                                  method_override=NULL,

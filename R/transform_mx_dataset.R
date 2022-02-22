@@ -8,6 +8,7 @@
 #' @importFrom dplyr all_of
 #'
 #' @return `mx_dataset` object with transformed data, added attributes: `norm_data` (data.frame) and `transform` (character)
+#' @noRd
 transform_mx_dataset <- function(mx_data,
                              transform){
     ## factors s.t. log10 transform is not undefined

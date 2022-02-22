@@ -6,6 +6,7 @@
 #' @importFrom magrittr %>%
 #'
 #' @return `mx_dataset` object with `otsu_data` attribute added and misclassification results
+#' @noRd
 otsu_mx_dataset <- function(mx_data,
                             table,
                             threshold){

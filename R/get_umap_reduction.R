@@ -5,6 +5,7 @@
 #' @param downsample_pct double, optional percentage (0, 1] of sample rows to include when running UMAP algorithm. (default=1)
 #'
 #' @return data.frame
+#' @noRd
 get_umap_reduction <- function(udata,
                                marker_list,
                                downsample_pct){
