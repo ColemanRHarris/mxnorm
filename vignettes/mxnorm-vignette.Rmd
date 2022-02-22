@@ -12,12 +12,11 @@ output:
 bibliography: mxnorm_vcitations.bib
 link-citations: yes
 vignette: >
-  %\VignetteIndexEntry{The mxnorm package for removing slide-to-slide variation in multiplexed imaging data}
-  %\VignetteEngine{knitr::knitr}
+  %\VignetteIndexEntry{mxnorm-vignette1}
+  %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
 
----
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
