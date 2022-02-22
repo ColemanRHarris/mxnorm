@@ -1,6 +1,6 @@
 Package: mxnorm
 Title: Apply Normalization Methods to Multiplexed Images
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: 
     person(given = "Coleman",
            family = "Harris",
