@@ -16,6 +16,10 @@ knitr::opts_chunk$set(
 # mxnorm: An R package to normalize multiplexed imaging data.
 
 <!-- badges: start -->
+[![](https://www.r-pkg.org/badges/version/mxnorm)](https://cran.r-project.org/package=mxnorm)
+[![](http://cranlogs.r-pkg.org/badges/grand-total/mxnorm?color=green)](https://cran.r-project.org/package=mxnorm)
+[![status](https://joss.theoj.org/papers/c18a1df622016c6ea8ed9e67dda73d07/status.svg)](https://joss.theoj.org/papers/c18a1df622016c6ea8ed9e67dda73d07)
+
 <!-- badges: end -->
 
 A package designed to handle multiplexed imaging data in R, implementing normalization methods and quality metrics detailed in our paper [here](https://doi.org/10.1101/2021.07.16.452359).

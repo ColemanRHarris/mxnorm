@@ -4,6 +4,9 @@
 # mxnorm: An R package to normalize multiplexed imaging data.
 
 <!-- badges: start -->
+
+[![](https://www.r-pkg.org/badges/version/mxnorm)](https://cran.r-project.org/package=mxnorm)
+[![](http://cranlogs.r-pkg.org/badges/grand-total/mxnorm?color=green)](https://cran.r-project.org/package=mxnorm)
 [![status](https://joss.theoj.org/papers/c18a1df622016c6ea8ed9e67dda73d07/status.svg)](https://joss.theoj.org/papers/c18a1df622016c6ea8ed9e67dda73d07)
 
 <!-- badges: end -->
@@ -153,7 +156,7 @@ summary(mx_otsu)
 #>  normalized              34.565                  24.111            0
 #>         raw              32.490                  22.525            0
 #> 
-#> Otsu discordance scores:
+#> Threshold discordance scores:
 #>       table mean_discordance sd_discordance
 #>  normalized            0.054          0.071
 #>         raw            0.373          0.141
@@ -181,19 +184,19 @@ later):
 ``` r
 head(mx_umap$umap_data)
 #>      marker1_vals marker2_vals marker3_vals metadata1_vals slide_id table
-#> 1867           88           98           41            yes   slide3   raw
-#> 2661           47           88           90            yes   slide4   raw
-#> 473            11           19           29            yes   slide1   raw
-#> 1455           18           21           37             no   slide2   raw
-#> 2164           95           92           39             no   slide3   raw
-#> 513            14           26           22            yes   slide1   raw
+#> 2586           43           85           97            yes   slide4   raw
+#> 2616           39           72           63             no   slide4   raw
+#> 1504           93           97           63            yes   slide3   raw
+#> 1509           93           95           25             no   slide3   raw
+#> 2032           91           93           51            yes   slide3   raw
+#> 870            18           26           32            yes   slide2   raw
 #>              U1         U2
-#> 1867  -9.328209 -12.005757
-#> 2661  -7.143563   7.838385
-#> 473   11.345825   6.596110
-#> 1455   4.665821   1.418042
-#> 2164 -10.477660 -12.198362
-#> 513   12.369611   3.899017
+#> 2586  -7.537530   9.394702
+#> 2616  -6.266718   5.396670
+#> 1504 -10.915295  -8.767233
+#> 1509  -5.559124 -12.020211
+#> 2032  -9.367096 -10.209445
+#> 870    3.689826  -2.340548
 ```
 
 And we can use `summary()` to capture the following attributes for the
@@ -212,15 +215,15 @@ summary(mx_umap)
 #>  normalized              34.565                  24.111            0
 #>         raw              32.490                  22.525            0
 #> 
-#> Otsu discordance scores:
+#> Threshold discordance scores:
 #>       table mean_discordance sd_discordance
 #>  normalized            0.054          0.071
 #>         raw            0.373          0.141
 #> 
 #> Clustering consistency (UMAP):
 #>       table adj_rand_index cohens_kappa
-#>  normalized          0.053       -0.116
-#>         raw          0.847       -0.301
+#>  normalized          0.058        0.063
+#>         raw          0.627       -0.151
 ```
 
 ## Variance components analysis with `run_var_proportions()`
@@ -265,15 +268,15 @@ summary(mx_var)
 #>  normalized              34.565                  24.111            0
 #>         raw              32.490                  22.525            0
 #> 
-#> Otsu discordance scores:
+#> Threshold discordance scores:
 #>       table mean_discordance sd_discordance
 #>  normalized            0.054          0.071
 #>         raw            0.373          0.141
 #> 
 #> Clustering consistency (UMAP):
 #>       table adj_rand_index cohens_kappa
-#>  normalized          0.053       -0.023
-#>         raw          0.847       -0.299
+#>  normalized          0.058       -0.115
+#>         raw          0.874       -0.263
 #> 
 #> Variance proportions (slide-level):
 #>       table  mean    sd
