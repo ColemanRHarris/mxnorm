@@ -3,16 +3,17 @@
 #' @inheritParams run_otsu_discordance
 #'
 #' @return function to use as thresholding algorithm
+#' @noRd
 get_discordance_thold <- function(threshold_override,
                                ...){
-    skf <- reticulate::import("skimage.filters")
-
     ## return Otsu if null
     if(is.null(threshold_override)){
+        skf <- reticulate::import("skimage.filters")
         return(skf["threshold_otsu"])
     }
     ## return other skf module if character
     if(class(threshold_override) == "character"){
+        skf <- reticulate::import("skimage.filters")
         return(skf[paste0("threshold_",threshold_override)])
     }
     ## validate function if user-defined
@@ -25,10 +26,10 @@ get_discordance_thold <- function(threshold_override,
 }
 
 
-# # python 'skf' module I want to use in my package
-# skf <- NULL
-#
-# .onLoad <- function(libname, pkgname) {
-#     # delay load module (will only be loaded when accessed via $)
-#     skf <<- reticulate::import("skimage.filters", delay_load = TRUE)
-# }
+# global reference to scipy (will be initialized in .onLoad)
+skf <- NULL
+
+.onLoad <- function(libname, pkgname) {
+    # use superassignment to update global reference to scipy
+    skf <<- reticulate::import("skimage.filters", delay_load = TRUE)
+}

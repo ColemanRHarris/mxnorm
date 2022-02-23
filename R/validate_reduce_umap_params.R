@@ -3,6 +3,7 @@
 #' @inheritParams run_reduce_umap
 #'
 #' @return `mx_datast` object
+#' @noRd
 validate_reduce_umap_params <- function(mx_data,
                                         table,
                                         marker_list,

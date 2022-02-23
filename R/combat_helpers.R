@@ -12,6 +12,7 @@
 #' @importFrom magrittr %>%
 #'
 #' @return ComBat adjusted values
+#' @noRd
 run_combat = function(marker,
                       slide_var,
                       ndat,
@@ -135,6 +136,7 @@ run_combat = function(marker,
 #' @importFrom magrittr %>%
 #'
 #' @return Updated gamma values
+#' @noRd
 update_gamma = function(batch_chan,
                         gamma_c,
                         tau_c,
@@ -165,6 +167,7 @@ update_gamma = function(batch_chan,
 #' @importFrom magrittr %>%
 #'
 #' @return Updated delta values
+#' @noRd
 update_delta = function(batch_chan,
                         beta_c,
                         omega_c,
@@ -195,6 +198,7 @@ update_delta = function(batch_chan,
 #' @importFrom magrittr %>%
 #'
 #' @return MAE between previous and updated gamma values
+#' @noRd
 gamma_conv = function(batch_chan,
                       gamma_stars,
                       slide_var){
@@ -210,6 +214,7 @@ gamma_conv = function(batch_chan,
 #' @importFrom magrittr %>%
 #'
 #' @return MAE between previous and updated delta values
+#' @noRd
 delta_conv = function(batch_chan,
                       delta_stars,
                       slide_var){

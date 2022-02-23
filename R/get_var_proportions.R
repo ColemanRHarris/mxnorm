@@ -5,6 +5,7 @@
 #' @param ... additional parameters to set for `lme4::lmer()` model.
 #'
 #' @return `lme4` model
+#' @noRd
 get_var_proportions <- function(mx_data,
                                 metadata_cols,
                                 table,

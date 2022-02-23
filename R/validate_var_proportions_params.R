@@ -3,6 +3,7 @@
 #' @inheritParams run_var_proportions
 #'
 #' @return `mx_datast` object
+#' @noRd
 validate_var_proportions_params <- function(mx_data,
                                 table,
                                 metadata_cols,

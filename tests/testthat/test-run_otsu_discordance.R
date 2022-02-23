@@ -1,3 +1,10 @@
+# helper function to skip tests if we don't have the 'foo' module
+skip_if_no_skf <- function() {
+    have_skf <- reticulate::py_module_available("skimage.filters")
+    if (!have_skf)
+        skip("skimage.filters not available for testing")
+}
+
 test_that("validate params works",{
     mx_obj = mx_dataset(data=mxnorm::mx_sample,
                          slide_id="slide_id",
@@ -45,12 +52,6 @@ test_that("validate params works",{
 })
 
 test_that("threshold works",{
-    ## get otsu if null
-    expect_equal(grepl("otsu",get_discordance_thold(NULL)),TRUE)
-
-    ## test other skf
-    expect_equal(all(grepl("python",class(get_discordance_thold("li")))),TRUE)
-
     ## thold override doesn't have thold data
     expect_error(get_discordance_thold(function(x){mean(x)}))
 
@@ -60,6 +61,13 @@ test_that("threshold works",{
     ## thold override has Inf, NAs
     expect_error(get_discordance_thold(function(thold_data){Inf}))
     expect_error(get_discordance_thold(function(thold_data){NA}))
+
+    skip_if_no_skf()
+    ## test other skf
+    expect_equal(all(grepl("python",class(get_discordance_thold("li")))),TRUE)
+
+    ## get otsu if null
+    expect_equal(grepl("otsu",get_discordance_thold(NULL)),TRUE)
 })
 
 test_that("create dataset works",{
@@ -74,6 +82,7 @@ test_that("create dataset works",{
                           method="ComBat")
 
     ## set correct threshold & validate
+    skip_if_no_skf()
     threshold = get_discordance_thold(NULL)
 
     ## create otsu dataset
@@ -96,6 +105,7 @@ test_that("discordance works",{
                           transform="log10",
                           method="ComBat")
 
+    skip_if_no_skf()
     ## set correct threshold & validate
     threshold = get_discordance_thold(NULL)
 
@@ -127,6 +137,9 @@ test_that("plot out works",{
     mx_obj = mx_normalize(mx_data=mx_obj,
                           transform="log10",
                           method="None")
+
+    skip_if_no_skf()
+
     ## should print out
     mx_obj = run_otsu_discordance(mx_obj,
                                 table="both",

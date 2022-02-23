@@ -3,6 +3,7 @@
 #' @inheritParams run_otsu_discordance
 #'
 #' @return `mx_dataset` object with discordance results
+#' @noRd
 otsu_mx_discordance <- function(mx_data,
                                       table){
     ## setup local params

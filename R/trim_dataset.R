@@ -3,6 +3,7 @@
 #' @inheritParams mx_dataset
 #'
 #' @return subset of data input to `mx_dataset()` (data.frame)
+#' @noRd
 trim_dataset <- function(data,
                           slide_id,
                           image_id,

@@ -3,6 +3,7 @@
 #' @inheritParams run_reduce_umap
 #'
 #' @return data.frame for umap analysis
+#' @noRd
 get_umap_data <- function(mx_data,
                           table,
                           marker_list,

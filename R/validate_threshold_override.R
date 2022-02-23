@@ -3,6 +3,7 @@
 #' @inheritParams run_otsu_discordance
 #'
 #' @return threshold_override function if it passes
+#' @noRd
 validate_threshold_override <- function(threshold_override,
                                         ...){
     ## check that all params in threshold_override are passed

@@ -6,7 +6,9 @@
 #'
 #' @param mx_data `mx_dataset` object used to compute Otsu discordance scores
 #' @param table  dataset in `mx_data` used to compute metrics. Options include: c("raw","normalized","both"), e.g. a y-axis parameter.
-#' @param threshold_override optional user-defined function or alternate thresholding algorithm adaptable from Python skimage module `filters` (Note: not all algorithms in `filters` adapted). Options include supplying a function or any of the following: c("isodata", "li", "mean", "otsu", "triangle","yen"). More detail available here:https://scikit-image.org/docs/dev/api/skimage.filters.html. If using a user-defined function, it must include a `thold_data` parameter.
+#' @param threshold_override optional user-defined function or alternate thresholding algorithm adaptable from Python skimage module `filters` (Note: not all algorithms in `filters` adapted). Options include supplying a function or any of the following: c("isodata", "li", "mean", "otsu", "triangle","yen").
+#' More detail available here: https://scikit-image.org/docs/dev/api/skimage.filters.html.
+#' If using a user-defined function, it must include a `thold_data` parameter.
 #' @param plot_out boolean to generate Otsu discordance plots (default=FALSE)
 #' @param ... optional additional arguments for Otsu discordance functions
 #'
@@ -21,7 +23,9 @@
 #'   c("marker1_vals","marker2_vals","marker3_vals"),
 #'   c("metadata1_vals"))
 #' mx_data = mx_normalize(mx_data, transform="log10",method="None")
-#' mx_data = run_otsu_discordance(mx_data, table="normalized")
+#' ## using `threshold_override` here in case users haven't installed `scikit-image`
+#' mx_data = run_otsu_discordance(mx_data, table="normalized",
+#' threshold_override = function(thold_data){quantile(thold_data, 0.5)})
 run_otsu_discordance <- function(mx_data,
                           table,
                           threshold_override = NULL,

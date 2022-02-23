@@ -4,6 +4,7 @@
 #' @param ... optional additional arguments for `method_override` method
 #'
 #' @return boolean indicating a pass
+#' @noRd
 validate_method_override <- function(method_override,
                                      ...){
     ## check that all params in method_override are passed

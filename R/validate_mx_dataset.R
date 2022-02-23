@@ -3,6 +3,7 @@
 #' @param x mx_dataset object to validate
 #'
 #' @return if valid, mx_dataset object from input
+#' @noRd
 validate_mx_dataset <- function(x){
     ## collect default values
     data = x$data
@@ -65,11 +66,12 @@ validate_mx_dataset <- function(x){
     x
 }
 
-#' Internal function to check data values in validation step
+#' Internal function to check data values in validation step of `mx_dataset`
 #'
 #' @param data_values data.frame values to check if valid
 #'
 #' @return boolean TRUE if passes
+#' @noRd
 check_data_values <- function(data_values){
     ## check for infinite values
     if(any(data_values == Inf | data_values == -Inf)){
