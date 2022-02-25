@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: end -->
 
-A package designed to handle multiplexed imaging data in R, implementing normalization methods and quality metrics detailed in our paper [here](https://doi.org/10.1101/2021.07.16.452359).
+A package designed to handle multiplexed imaging data in R, implementing normalization methods and quality metrics detailed in our paper [here](https://doi.org/10.1101/2021.07.16.452359). Further information about the package, usage, the vignettes, and more can be found on [CRAN](https://cran.r-project.org/package=mxnorm).
 
 # Installation
 
@@ -53,7 +53,7 @@ mx_dataset = mx_dataset(data=mx_sample,
                         metadata_cols=c("metadata1_vals"))
 ```
 
-WE can use the built-in `summary()` function to observe `mx_dataset` object:
+We can use the built-in `summary()` function to observe `mx_dataset` object:
 
 ```{r ex_str}
 summary(mx_dataset)
@@ -68,13 +68,7 @@ mx_norm = mx_normalize(mx_data = mx_dataset,
                        method="None")
 ```
 
-The `mx_dataset` object has normalized data in the following form:
-
-```{r norm_data}
-head(mx_norm$norm_data)
-```
-
-And we can use `summary()` to capture the following attributes for the `mx_dataset` object:
+And we again use `summary()` to capture the following attributes for the `mx_dataset` object:
 
 ```{r norm_str, warning=FALSE}
 summary(mx_norm)
@@ -83,69 +77,13 @@ summary(mx_norm)
 ## Otsu discordance scores with `run_otsu_discordance()`
 
 Using the above normalized data, we can run an Otsu discordance score analysis to determine how well our normalization method performs (here, we look for lower discordance scores to distinguish better performing methods):
+
 ```{r otsu}
 mx_otsu = run_otsu_discordance(mx_norm,
                         table="both",
                         threshold_override = NULL,
                         plot_out = FALSE)
 ```
-
-This adds an Otsu misclassification table to the `mx_dataset` object in the following form:
-```{r otsu_data}
-head(mx_otsu$otsu_data)
-```
-
-And we can use `summary()` to capture the following attributes for the `mx_dataset` object:
-
-```{r otsu_str}
-summary(mx_otsu)
-```
-
-## UMAP dimension reduction with `run_reduce_umap()`
-
-We can also use the UMAP algorithm to reduce the dimensions of our markers in the dataset as follows, using the `metadata_col` parameter for later (e.g., similar to a tissue type in practice with multiplexed data):
-
-```{r umap}
-mx_umap = run_reduce_umap(mx_otsu,
-                        table="both",
-                        marker_list = c("marker1_vals","marker2_vals","marker3_vals"),
-                        downsample_pct = 0.8,
-                        metadata_col = "metadata1_vals")
-```
-
-This adds UMAP dimensions to our `mx_dataset` object in the following form (note the inclusion of `slide_id` as an identifier, which we'll use later):
-```{r umap_data}
-head(mx_umap$umap_data)
-```
-
-And we can use `summary()` to capture the following attributes for the `mx_dataset` object:
-
-```{r umap_str}
-summary(mx_umap)
-```
-
-## Variance components analysis with `run_var_proportions()`
-
-We can also leverage `lmer()` from the `lme4` package to perform random effect modeling on the data to determine how much variance is present at the slide level, as follows:
-
-```{r var,warnings=FALSE,message=FALSE}
-mx_var = run_var_proportions(mx_umap,
-                             table="both",
-                             metadata_cols = "metadata1_vals")
-```
-
-This adds UMAP dimensions to our `mx_dataset` object in the following form:
-```{r var_data}
-head(mx_var$var_data)
-```
-
-And we can use `summary()` to capture the following attributes for the `mx_dataset` object:
-
-```{r var_str}
-summary(mx_var)
-```
-
-# Visualizations
 
 We can also begin to visualize these results using some of `mxnorm`'s plotting features built using `ggplot2`. 
 
@@ -161,6 +99,18 @@ We can also visualize the results of the Otsu misclassification analysis stratif
 plot_mx_discordance(mx_otsu)
 ```
 
+## UMAP dimension reduction with `run_reduce_umap()`
+
+We can also use the UMAP algorithm to reduce the dimensions of our markers in the dataset as follows, using the `metadata_col` parameter for later (e.g., similar to a tissue type in practice with multiplexed data):
+
+```{r umap}
+mx_umap = run_reduce_umap(mx_otsu,
+                        table="both",
+                        marker_list = c("marker1_vals","marker2_vals","marker3_vals"),
+                        downsample_pct = 0.8,
+                        metadata_col = "metadata1_vals")
+```
+
 We can further visualize the results of the UMAP dimension reduction as follows:
 
 ```{r mx_umap}
@@ -173,9 +123,24 @@ Note that since the sample data is simulated, we don't see separation of the gro
 plot_mx_umap(mx_umap,metadata_col = "slide_id")
 ```
 
+## Variance components analysis with `run_var_proportions()`
+
+We can also leverage `lmer()` from the `lme4` package to perform random effect modeling on the data to determine how much variance is present at the slide level, as follows:
+
+```{r var,warnings=FALSE,message=FALSE}
+mx_var = run_var_proportions(mx_umap,
+                             table="both",
+                             metadata_cols = "metadata1_vals")
+```
+
+And we can use `summary()` to capture the following attributes for the `mx_dataset` object:
+
+```{r var_str}
+summary(mx_var)
+```
+
 And we can also visualize the results of the variance proportions after normalization:
 
 ```{r mx_var}
 plot_mx_proportions(mx_var)
 ```
-

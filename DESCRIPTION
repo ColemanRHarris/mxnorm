@@ -48,5 +48,6 @@ Imports:
     KernSmooth,
     kSamples,
     psych,
-    fossil
+    fossil,
+    glue
 VignetteBuilder: knitr
