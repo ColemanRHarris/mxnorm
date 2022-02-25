@@ -26,12 +26,18 @@ A package designed to handle multiplexed imaging data in R, implementing normali
 
 # Installation
 
+To install from `CRAN`, use:
+``` r
+install.packages("mxnorm")
+```
+
 You can install the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("ColemanRHarris/mxnorm")
 ```
+
 # Analysis Example
 
 This is a basic example using the `mx_sample` dataset, which is simulated data to demonstrate the package's functionality with slide effects.

@@ -19,6 +19,12 @@ about the package, usage, the vignettes, and more can be found on
 
 # Installation
 
+To install from `CRAN`, use:
+
+``` r
+install.packages("mxnorm")
+```
+
 You can install the development version from
 [GitHub](https://github.com/) with:
 
@@ -199,8 +205,8 @@ summary(mx_var)
 #> 
 #> Clustering consistency (UMAP):
 #>       table adj_rand_index cohens_kappa
-#>  normalized          0.063       -0.055
-#>         raw          0.629       -0.174
+#>  normalized          0.052       -0.102
+#>         raw          0.574        0.206
 #> 
 #> Variance proportions (slide-level):
 #>       table  mean    sd
