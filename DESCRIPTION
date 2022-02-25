@@ -49,5 +49,6 @@ Imports:
     kSamples,
     psych,
     fossil,
-    glue
+    glue,
+    methods
 VignetteBuilder: knitr
