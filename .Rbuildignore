@@ -6,3 +6,4 @@ R/.create_sample_data.R
 R/.create_metrics.R
 ^Meta$
 ^doc/
+^doc$
