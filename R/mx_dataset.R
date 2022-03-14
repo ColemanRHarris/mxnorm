@@ -22,6 +22,7 @@ mx_dataset = function(data,
                       metadata_cols = NULL){
 
     ## trim `data` to remove any columns not given by parameters
+    data = data.frame(data)
     data = trim_dataset(data,slide_id,image_id,marker_cols,metadata_cols)
 
     ## use `data` as base of S3 object
