@@ -7,3 +7,4 @@ R/.create_metrics.R
 ^Meta$
 ^doc/
 ^doc$
+^\.github$
