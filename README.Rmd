@@ -40,6 +40,10 @@ You can install the development version from [GitHub](https://github.com/) with:
 devtools::install_github("ColemanRHarris/mxnorm")
 ```
 
+# Community Guidelines
+
+Please report any issues, bugs, or problems with the software here: https://github.com/ColemanRHarris/mxnorm/issues. For any contributions, feel free to fork the package repository on GitHub or submit pull requests. Any other contribution questions and requests for support can be directed to the package maintainer Coleman Harris (coleman.r.harris@vanderbilt.edu).
+
 # Analysis Example
 
 This is a basic example using the `mx_sample` dataset, which is simulated data to demonstrate the package's functionality with slide effects.

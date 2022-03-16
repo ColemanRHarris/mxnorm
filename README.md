@@ -36,6 +36,15 @@ You can install the development version from
 devtools::install_github("ColemanRHarris/mxnorm")
 ```
 
+# Community Guidelines
+
+Please report any issues, bugs, or problems with the software here:
+<https://github.com/ColemanRHarris/mxnorm/issues>. For any
+contributions, feel free to fork the package repository on GitHub or
+submit pull requests. Any other contribution questions and requests for
+support can be directed to the package maintainer Coleman Harris
+(<coleman.r.harris@vanderbilt.edu>).
+
 # Analysis Example
 
 This is a basic example using the `mx_sample` dataset, which is
@@ -208,8 +217,8 @@ summary(mx_var)
 #> 
 #> Clustering consistency (UMAP):
 #>       table adj_rand_index cohens_kappa
-#>  normalized          0.052        0.031
-#>         raw          0.868       -0.334
+#>  normalized           0.05        0.104
+#>         raw           0.90       -0.011
 #> 
 #> Variance proportions (slide-level):
 #>       table  mean    sd
