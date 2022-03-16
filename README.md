@@ -36,6 +36,38 @@ You can install the development version from
 devtools::install_github("ColemanRHarris/mxnorm")
 ```
 
+## Dependencies
+
+This package imports `lme4` (and its dependency `nloptr`) which use
+`CMake` to build the packages. To install `CMake`, please see
+[here](https://cmake.org/install/) or select from the following:
+
+    - yum install cmake          (Fedora/CentOS; inside a terminal)
+    - apt install cmake          (Debian/Ubuntu; inside a terminal).
+    - pacman -S cmake            (Arch Linux; inside a terminal).
+    - brew install cmake         (MacOS; inside a terminal with Homebrew)
+    - port install cmake         (MacOS; inside a terminal with MacPorts)
+
+This package also uses the `reticulate` package to interface with the
+`scikit-learn` Python package. Depending on the user’s environment,
+sometimes Python/`conda`/`Miniconda` is not detected, producing an
+option like the following:
+
+    No non-system installation of Python could be found.
+    Would you like to download and install Miniconda?
+    Miniconda is an open source environment management system for Python.
+    See https://docs.conda.io/en/latest/miniconda.html for more details.
+    
+    Would you like to install Miniconda? [Y/n]: 
+
+In this case, installing Miniconda within the R environment will ensure
+that both Python and the `scikit-image` package are properly installed.
+However, if you want to use a separate Python installation, please
+respond `N` to this prompt and use `reticulate::py_config()` to setup
+your Python environment. Please also ensure that `scikit-image` is
+installed in your desired Python environment via `pip install
+scikit-image`.
+
 # Community Guidelines
 
 Please report any issues, bugs, or problems with the software here:
@@ -217,8 +249,8 @@ summary(mx_var)
 #> 
 #> Clustering consistency (UMAP):
 #>       table adj_rand_index cohens_kappa
-#>  normalized           0.05        0.104
-#>         raw           0.90       -0.011
+#>  normalized          0.055        0.013
+#>         raw          0.561        0.108
 #> 
 #> Variance proportions (slide-level):
 #>       table  mean    sd
