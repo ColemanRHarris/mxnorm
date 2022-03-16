@@ -22,7 +22,8 @@ Suggests:
     janitor (>= 2.1.0),
     testthat (>= 3.0.0),
     rmarkdown,
-    markdown
+    markdown,
+    covr
 Config/testthat/edition: 3
 Config/reticulate:
   list(

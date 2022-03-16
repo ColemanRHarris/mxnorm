@@ -10,6 +10,8 @@
 [![status](https://joss.theoj.org/papers/c18a1df622016c6ea8ed9e67dda73d07/status.svg)](https://joss.theoj.org/papers/c18a1df622016c6ea8ed9e67dda73d07)
 
 [![R-CMD-check](https://github.com/ColemanRHarris/mxnorm/workflows/R-CMD-check/badge.svg)](https://github.com/ColemanRHarris/mxnorm/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/ColemanRHarris/mxnorm/branch/main/graph/badge.svg)](https://codecov.io/gh/ColemanRHarris/mxnorm?branch=main)
 <!-- badges: end -->
 
 A package designed to handle multiplexed imaging data in R, implementing
@@ -206,8 +208,8 @@ summary(mx_var)
 #> 
 #> Clustering consistency (UMAP):
 #>       table adj_rand_index cohens_kappa
-#>  normalized          0.052        0.090
-#>         raw          0.633        0.522
+#>  normalized          0.052        0.031
+#>         raw          0.868       -0.334
 #> 
 #> Variance proportions (slide-level):
 #>       table  mean    sd
