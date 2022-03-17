@@ -49,7 +49,7 @@ This package imports `lme4` (and its dependency `nloptr`) which use
     - port install cmake         (MacOS; inside a terminal with MacPorts)
 
 This package also uses the `reticulate` package to interface with the
-`scikit-learn` Python package. Depending on the user’s environment,
+`scikit-image` Python package. Depending on the user’s environment,
 sometimes Python/`conda`/`Miniconda` is not detected, producing an
 option like the following:
 
