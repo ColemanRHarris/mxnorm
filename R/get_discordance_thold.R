@@ -12,12 +12,12 @@ get_discordance_thold <- function(threshold_override,
         return(skf["threshold_otsu"])
     }
     ## return other skf module if character
-    if(class(threshold_override) == "character"){
+    if(methods::is(threshold_override,"character")){
         skf <- reticulate::import("skimage.filters")
         return(skf[paste0("threshold_",threshold_override)])
     }
     ## validate function if user-defined
-    if(class(threshold_override) == "function"){
+    if(methods::is(threshold_override,"function")){
         threshold_override = validate_threshold_override(threshold_override,
                                         ...)
     }

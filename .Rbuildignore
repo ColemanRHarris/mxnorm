@@ -5,3 +5,7 @@ R/.create_sample_data.R
 ^README\.Rmd$
 R/.create_metrics.R
 ^Meta$
+^doc/
+^doc$
+^\.github$
+^codecov\.yml$

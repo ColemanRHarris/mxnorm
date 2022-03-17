@@ -57,7 +57,7 @@ run_otsu_discordance <- function(mx_data,
 
     ## set threshold param
     if(!is.null(threshold_override)){
-        if(class(threshold_override) == "character"){
+        if(methods::is(threshold_override,"character")){
             thold_val = threshold_override
         } else{
             thold_val = "user-defined"

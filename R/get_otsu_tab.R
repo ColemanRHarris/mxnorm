@@ -22,21 +22,21 @@ get_otsu_tab <- function(tdat,
         lapply(X=cols,function(x){
             tdat %>%
                 dplyr::group_by_at(slide) %>%
-                dplyr::summarise(marker=x,
-                                 table=table,
-                                 slide_threshold=threshold(reticulate::np_array(get(x))),
+                dplyr::summarise(table=table,
+                                 slide_threshold=threshold(reticulate::np_array(.data[[x]])),
                                  .groups = 'drop') %>%
-                dplyr::mutate(marker_threshold=(tdat %>% dplyr::summarise(m=threshold(reticulate::np_array(get(x)))))$m)
+                dplyr::mutate(marker_threshold=(tdat %>% dplyr::summarise(m=threshold(reticulate::np_array(.data[[x]]))))$m) %>%
+                dplyr::mutate(marker=x) %>% dplyr::relocate(marker,.after=slide)
         })
     } else{ ##otherwise just use the data
         lapply(X=cols,function(x){
             tdat %>%
                 dplyr::group_by_at(slide) %>%
-                dplyr::summarise(marker=x,
-                                 table=table,
-                                 slide_threshold=threshold(get(x)),
+                dplyr::summarise(table=table,
+                                 slide_threshold=threshold(.data[[x]]),
                                  .groups = 'drop') %>%
-                dplyr::mutate(marker_threshold=(tdat %>% dplyr::summarise(m=threshold(get(x))))$m)
+                dplyr::mutate(marker_threshold=(tdat %>% dplyr::summarise(m=threshold(.data[[x]])))$m) %>%
+                dplyr::mutate(marker=x) %>% dplyr::relocate(marker,.after=slide)
         })
 
     }
