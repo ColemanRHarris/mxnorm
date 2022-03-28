@@ -39,7 +39,7 @@ We recently proposed and evaluated several normalization methods for multiplexed
 
 # Functionality
 
-![Figure 1: Basic structure of the `mxnorm` package and associated functions](mxnorm_structure.png){width=100%}
+![Basic structure of the `mxnorm` package and associated functions](mxnorm_structure.png){width=100%}
 
 As shown in **Figure 1**, there are three main types of functions implemented in the `mxnorm` package -- infrastructure, analysis, and visualization. The first infrastructure function, `mx_dataset()`, specifies and creates the S3 object used throughout the analysis, while the `mx_normalize()` function provides a routine to normalize the multiplexed imaging data, which specifically allows for normalization algorithms defined by the user. Each of the three analysis functions provides methods to run specific analyses that test for slide-to-slide variation and preservation of biological signal for the normalized and unnormalized data, while the four visualization functions provide methods to generate `ggplot2` plots to assess the results. We also extend the `summary()` generic function to the `mx_dataset` S3 object to provide further statistics and summaries. 
 
