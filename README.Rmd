@@ -18,10 +18,10 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![](https://www.r-pkg.org/badges/version/mxnorm)](https://cran.r-project.org/package=mxnorm)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/mxnorm?color=green)](https://cran.r-project.org/package=mxnorm)
-[![status](https://joss.theoj.org/papers/c18a1df622016c6ea8ed9e67dda73d07/status.svg)](https://joss.theoj.org/papers/c18a1df622016c6ea8ed9e67dda73d07)
+[![status](https://joss.theoj.org/papers/c18a1df622016c6ea8ed9e67dda73d07/status.svg)](https://joss.theoj.org/papers/10.21105/joss.04180)
 
 [![R-CMD-check](https://github.com/ColemanRHarris/mxnorm/workflows/R-CMD-check/badge.svg)](https://github.com/ColemanRHarris/mxnorm/actions)
-[![Codecov test coverage](https://codecov.io/gh/ColemanRHarris/mxnorm/branch/main/graph/badge.svg)](https://codecov.io/gh/ColemanRHarris/mxnorm?branch=main)
+[![Codecov test coverage](https://codecov.io/gh/ColemanRHarris/mxnorm/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ColemanRHarris/mxnorm?branch=main)
 <!-- badges: end -->
 
 A package designed to handle multiplexed imaging data in R, implementing normalization methods and quality metrics detailed in our paper [here](https://doi.org/10.1101/2021.07.16.452359). Further information about the package, usage, the vignettes, and more can be found on [CRAN](https://cran.r-project.org/package=mxnorm).

@@ -22,13 +22,13 @@ validate_mx_normalize_params <- function(mx_data,
                 call. = FALSE
              )
         }
-        if(class(method_override)!="function"){
+        if(!inherits(method_override, "function")){
             stop(
                 "method_override must be a function",
                 call. = FALSE
             )
         }
-        if(class(method_override_name)!="character"){
+        if(!inherits(method_override_name, "character")){
             stop(
                 "method_override_name must be a character",
                 call.=FALSE

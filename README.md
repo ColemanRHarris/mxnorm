@@ -7,11 +7,11 @@
 
 [![](https://www.r-pkg.org/badges/version/mxnorm)](https://cran.r-project.org/package=mxnorm)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/mxnorm?color=green)](https://cran.r-project.org/package=mxnorm)
-[![status](https://joss.theoj.org/papers/c18a1df622016c6ea8ed9e67dda73d07/status.svg)](https://joss.theoj.org/papers/c18a1df622016c6ea8ed9e67dda73d07)
+[![status](https://joss.theoj.org/papers/c18a1df622016c6ea8ed9e67dda73d07/status.svg)](https://joss.theoj.org/papers/10.21105/joss.04180)
 
 [![R-CMD-check](https://github.com/ColemanRHarris/mxnorm/workflows/R-CMD-check/badge.svg)](https://github.com/ColemanRHarris/mxnorm/actions)
 [![Codecov test
-coverage](https://codecov.io/gh/ColemanRHarris/mxnorm/branch/main/graph/badge.svg)](https://codecov.io/gh/ColemanRHarris/mxnorm?branch=main)
+coverage](https://codecov.io/gh/ColemanRHarris/mxnorm/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ColemanRHarris/mxnorm?branch=main)
 <!-- badges: end -->
 
 A package designed to handle multiplexed imaging data in R, implementing
@@ -49,7 +49,7 @@ This package imports `lme4` (and its dependency `nloptr`) which use
     - port install cmake         (MacOS; inside a terminal with MacPorts)
 
 This package also uses the `reticulate` package to interface with the
-`scikit-image` Python package. Depending on the user’s environment,
+`scikit-learn` Python package. Depending on the user’s environment,
 sometimes Python/`conda`/`Miniconda` is not detected, producing an
 option like the following:
 
@@ -242,15 +242,15 @@ summary(mx_var)
 #>  normalized              34.565                  24.111            0
 #>         raw              32.490                  22.525            0
 #> 
-#> Threshold discordance scores:
+#> Otsu discordance scores:
 #>       table mean_discordance sd_discordance
 #>  normalized            0.054          0.071
 #>         raw            0.373          0.141
 #> 
 #> Clustering consistency (UMAP):
 #>       table adj_rand_index cohens_kappa
-#>  normalized          0.055        0.013
-#>         raw          0.561        0.108
+#>  normalized          0.055       -0.077
+#>         raw          0.585       -0.141
 #> 
 #> Variance proportions (slide-level):
 #>       table  mean    sd

@@ -41,7 +41,7 @@ validate_var_proportions_params <- function(mx_data,
 
     ##check on formula override
     if(!is.null(formula_override)){
-        if(class(formula_override) != "character"){
+        if(!inherits(formula_override, "character")){
             stop(
                 "The formula_override provided is not a string.",
                 call. = FALSE
