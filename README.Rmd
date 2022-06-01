@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# mxnorm: An R package to normalize multiplexed imaging data.
+# mxnorm: An R package to normalize multiplexed imaging data. 
 
 <!-- badges: start -->
 [![](https://www.r-pkg.org/badges/version/mxnorm)](https://cran.r-project.org/package=mxnorm)

@@ -249,8 +249,8 @@ summary(mx_var)
 #> 
 #> Clustering consistency (UMAP):
 #>       table adj_rand_index cohens_kappa
-#>  normalized          0.055       -0.077
-#>         raw          0.585       -0.141
+#>  normalized          0.048       -0.083
+#>         raw          0.587        0.214
 #> 
 #> Variance proportions (slide-level):
 #>       table  mean    sd
