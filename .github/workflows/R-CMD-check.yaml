@@ -41,7 +41,8 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          extra-packages: rcmdcheck, MASS=?ignore-before-r=4.3.0
+          extra-packages: any::rcmdcheck, MASS=?ignore-before-r=4.3.0
+          needs: check
 
       - uses: r-lib/actions/check-r-package@v1
         env:
