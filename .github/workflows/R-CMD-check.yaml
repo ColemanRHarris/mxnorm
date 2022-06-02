@@ -41,9 +41,11 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          extra-packages: rcmdcheck
+          extra-packages: rcmdcheck, MASS=?ignore-before-r=4.3.0
 
       - uses: r-lib/actions/check-r-package@v1
+        env:
+          _R_CHECK_FORCE_SUGGESTS_: false
 
       - name: Show testthat output
         if: always()
