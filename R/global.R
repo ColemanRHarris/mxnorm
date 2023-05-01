@@ -12,4 +12,5 @@ utils::globalVariables(c("U1",
                          "std_ad_test_statistic",
                          "level",
                          "sd",
-                         "discordance_score"))
+                         "discordance_score",
+                         "proportions"))

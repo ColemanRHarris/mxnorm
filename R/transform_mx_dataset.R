@@ -39,6 +39,10 @@ transform_mx_dataset <- function(mx_data,
         ## divide
         x[,cols] = x[,cols]/y[,cols]
 
+        ## replace only values where slide mean = zero with zero
+        ## fixes https://github.com/ColemanRHarris/mxnorm/issues/8
+        x[,cols][y[,cols] == 0] <- 0
+
         ## rescale
         x = x %>%
              dplyr::mutate(dplyr::across(all_of(cols),function(a){a + -min(a)}))
