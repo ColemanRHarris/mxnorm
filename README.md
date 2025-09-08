@@ -57,7 +57,7 @@ option like the following:
     Would you like to download and install Miniconda?
     Miniconda is an open source environment management system for Python.
     See https://docs.conda.io/en/latest/miniconda.html for more details.
-    
+
     Would you like to install Miniconda? [Y/n]: 
 
 In this case, installing Miniconda within the R environment will ensure
@@ -65,8 +65,8 @@ that both Python and the `scikit-image` package are properly installed.
 However, if you want to use a separate Python installation, please
 respond `N` to this prompt and use `reticulate::py_config()` to setup
 your Python environment. Please also ensure that `scikit-image` is
-installed in your desired Python environment via `pip install
-scikit-image`.
+installed in your desired Python environment via
+`pip install scikit-image`.
 
 # Community Guidelines
 
@@ -140,8 +140,8 @@ summary(mx_norm)
 #> 
 #> Anderson-Darling tests:
 #>       table mean_test_statistic mean_std_test_statistic mean_p_value
-#>  normalized              34.565                  24.111            0
-#>         raw              32.490                  22.525            0
+#>  normalized              34.303                  23.911            0
+#>         raw              26.656                  18.070            0
 ```
 
 ## Otsu discordance scores with `run_otsu_discordance()`
@@ -165,6 +165,14 @@ First, we can visualize the densities of the marker values as follows:
 
 ``` r
 plot_mx_density(mx_otsu)
+#> Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
+#> ℹ Please use tidy evaluation idioms with `aes()`.
+#> ℹ See also `vignette("ggplot2-in-packages")` for more information.
+#> ℹ The deprecated feature was likely used in the mxnorm package.
+#>   Please report the issue at <https://github.com/ColemanRHarris/mxnorm/issues>.
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 ```
 
 <img src="man/figures/README-mx_dens-1.png" width="100%" />
@@ -239,18 +247,18 @@ summary(mx_var)
 #> 
 #> Anderson-Darling tests:
 #>       table mean_test_statistic mean_std_test_statistic mean_p_value
-#>  normalized              34.565                  24.111            0
-#>         raw              32.490                  22.525            0
+#>  normalized              34.303                  23.911            0
+#>         raw              26.656                  18.070            0
 #> 
-#> Otsu discordance scores:
+#> Threshold discordance scores:
 #>       table mean_discordance sd_discordance
 #>  normalized            0.054          0.071
 #>         raw            0.373          0.141
 #> 
 #> Clustering consistency (UMAP):
 #>       table adj_rand_index cohens_kappa
-#>  normalized          0.048       -0.083
-#>         raw          0.587        0.214
+#>  normalized          0.055       -0.089
+#>         raw          0.900       -0.317
 #> 
 #> Variance proportions (slide-level):
 #>       table  mean    sd

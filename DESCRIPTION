@@ -56,3 +56,5 @@ Imports:
     glue,
     methods
 VignetteBuilder: knitr
+URL: https://github.com/ColemanRHarris/mxnorm
+BugReports: https://github.com/ColemanRHarris/mxnorm/issues
