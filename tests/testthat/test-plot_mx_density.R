@@ -20,13 +20,13 @@ test_that("plotting ok", {
     ## check for normal operation of ggplots
     skip_if_no_skf()
     mx_data = run_otsu_discordance(mx_data, table="normalized")
-    expect_equal(class(plot_mx_density(mx_data)),c("gg","ggplot"))
+    expect_true(is_ggplot(plot_mx_density(mx_data)))
 
     mx_data = run_otsu_discordance(mx_data, table="raw")
-    expect_equal(class(plot_mx_density(mx_data)),c("gg","ggplot"))
+    expect_true(is_ggplot(plot_mx_density(mx_data)))
 
     mx_data = run_otsu_discordance(mx_data, table="both")
-    expect_equal(class(plot_mx_density(mx_data)),c("gg","ggplot"))
+    expect_true(is_ggplot(plot_mx_density(mx_data)))
 
     ## add error
     mx_data = run_otsu_discordance(mx_data, table="normalized")
