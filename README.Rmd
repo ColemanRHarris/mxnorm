@@ -42,7 +42,7 @@ devtools::install_github("ColemanRHarris/mxnorm")
 
 ## Dependencies
 
-This package imports `lme4` (and its dependency `nloptr`) which use `CMake` to build the packages. To install `CMake`, please see [here](https://cmake.org/install/) or select from the following:
+This package imports `lme4` (and its dependency `nloptr`) which use `CMake` to build the packages. To install `CMake`, please see [here](https://cmake.org/resources/) or select from the following:
 
 ```
 - yum install cmake          (Fedora/CentOS; inside a terminal)

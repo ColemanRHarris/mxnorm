@@ -13,5 +13,5 @@ test_that("plotting works", {
     mx_data = run_reduce_umap(mx_data, table="normalized",
                               c("marker1_vals","marker2_vals","marker3_vals"))
 
-    expect_equal(class(plot_mx_umap(mx_data)),c("gg","ggplot"))
+    expect_true(is_ggplot(plot_mx_umap(mx_data)))
 })

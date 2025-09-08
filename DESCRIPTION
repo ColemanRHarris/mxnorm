@@ -1,6 +1,6 @@
 Package: mxnorm
 Title: Apply Normalization Methods to Multiplexed Images
-Version: 1.0.3
+Version: 1.1.0
 Authors@R: 
     person(given = "Coleman",
            family = "Harris",
@@ -43,7 +43,6 @@ Imports:
     data.table,
     reticulate,
     caret,
-    e1071,
     ggplot2,
     tidyr,
     uwot,
@@ -53,6 +52,7 @@ Imports:
     kSamples,
     psych,
     fossil,
-    glue,
     methods
 VignetteBuilder: knitr
+URL: https://github.com/ColemanRHarris/mxnorm
+BugReports: https://github.com/ColemanRHarris/mxnorm/issues

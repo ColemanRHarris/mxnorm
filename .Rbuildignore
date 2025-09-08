@@ -9,3 +9,5 @@ R/.create_metrics.R
 ^doc$
 ^\.github$
 ^codecov\.yml$
+^cran-comments\.md$
+^CRAN-SUBMISSION$

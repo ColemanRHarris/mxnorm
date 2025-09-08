@@ -11,5 +11,5 @@ test_that("plotting works", {
     expect_error(plot_mx_proportions(rnorm(100)))
 
     mx_data = run_var_proportions(mx_data, table="both")
-    expect_equal(class(plot_mx_proportions(mx_data)),c("gg","ggplot"))
+    expect_true(is_ggplot(plot_mx_proportions(mx_data)))
 })
