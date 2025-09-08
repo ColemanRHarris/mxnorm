@@ -40,7 +40,7 @@ devtools::install_github("ColemanRHarris/mxnorm")
 
 This package imports `lme4` (and its dependency `nloptr`) which use
 `CMake` to build the packages. To install `CMake`, please see
-[here](https://cmake.org/install/) or select from the following:
+[here](https://cmake.org/resources/) or select from the following:
 
     - yum install cmake          (Fedora/CentOS; inside a terminal)
     - apt install cmake          (Debian/Ubuntu; inside a terminal).
@@ -257,8 +257,8 @@ summary(mx_var)
 #> 
 #> Clustering consistency (UMAP):
 #>       table adj_rand_index cohens_kappa
-#>  normalized          0.055       -0.089
-#>         raw          0.900       -0.317
+#>  normalized          0.045       -0.054
+#>         raw          0.884        0.297
 #> 
 #> Variance proportions (slide-level):
 #>       table  mean    sd
