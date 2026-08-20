@@ -1,4 +1,5 @@
 
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # mxnorm: An R package to normalize multiplexed imaging data.
@@ -29,7 +30,7 @@ install.packages("mxnorm")
 ```
 
 You can install the development version from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/ColemanRHarris/mxnorm) with:
 
 ``` r
 # install.packages("devtools")
